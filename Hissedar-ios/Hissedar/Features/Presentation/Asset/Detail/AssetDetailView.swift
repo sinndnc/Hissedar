@@ -25,6 +25,7 @@ struct AssetDetailView: View {
             isLoading: vm.isLoadingDetail,
             hasItem: detail != nil,
             emptyMessage: "Varlık bulunamadı",
+            assetDetail: detail,
             loadAction: { await vm.fetchDetail(id: assetId) },
             toDisplayItem: { detail!.toDisplayItem }
         ) {

@@ -2,93 +2,102 @@
 //  PriceAlertRowView.swift
 //  Hissedar
 //
-//  Tek bir alarm satırını render eden reusable component.
+//  Reusable alarm satırı (Alarmlarım listesi için).
 //
 
 import SwiftUI
 
 struct PriceAlertRowView: View {
 
-    let alert: PriceAlert
-    let propertyTitle: String?  // nil ise sadece koşul gösterilir (detay sayfasında olduğu gibi)
+    let alert: AssetPriceAlert
+    let assetTitle: String?  // nil = sadece koşul gösterilir
 
     var onToggle: (() -> Void)? = nil
-    var onDelete: (() -> Void)? = nil
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
+        HStack(alignment: .center, spacing: 12) {
             // İkon
             Image(systemName: alert.conditionType.systemIcon)
-                .font(.title2)
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(iconColor)
-                .frame(width: 36, height: 36)
+                .frame(width: 38, height: 38)
                 .background(iconColor.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
 
             // İçerik
             VStack(alignment: .leading, spacing: 4) {
-                if let title = propertyTitle {
-                    Text(title)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
+                if let assetTitle {
+                    Text(assetTitle)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Color.hsTextPrimary)
                         .lineLimit(1)
                 }
 
                 Text(alert.conditionDescription)
-                    .font(propertyTitle == nil ? .subheadline : .caption)
-                    .fontWeight(propertyTitle == nil ? .semibold : .regular)
-                    .foregroundStyle(propertyTitle == nil ? .primary : .secondary)
+                    .font(.system(size: assetTitle == nil ? 14 : 12,
+                                  weight: assetTitle == nil ? .semibold : .regular))
+                    .foregroundStyle(assetTitle == nil ? Color.hsTextPrimary : Color.hsTextSecondary)
+                    .lineLimit(1)
 
-                HStack(spacing: 8) {
-                    if alert.behavior == .recurring {
-                        Label("Sürekli", systemImage: "arrow.triangle.2.circlepath")
-                            .font(.caption2)
-                            .foregroundStyle(.blue)
-                    } else {
-                        Label("Tek sefer", systemImage: "1.circle")
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
+                HStack(spacing: 6) {
+                    // Asset type pill
+                    Text(alert.assetType.label.uppercased())
+                        .font(.system(size: 9, weight: .bold))
+                        .tracking(0.5)
+                        .foregroundStyle(alert.assetType.accentColor)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(alert.assetType.accentColor.opacity(0.12))
+                        .clipShape(Capsule())
+
+                    // Behavior pill
+                    HStack(spacing: 3) {
+                        Image(systemName: alert.behavior == .recurring
+                              ? "arrow.triangle.2.circlepath"
+                              : "1.circle")
+                            .font(.system(size: 9))
+                        Text(alert.behavior.displayName)
+                            .font(.system(size: 10, weight: .medium))
                     }
+                    .foregroundStyle(Color.hsTextSecondary)
 
                     if alert.triggerCount > 0 {
                         Text("•")
-                            .foregroundStyle(.secondary)
-                        Text("\(alert.triggerCount) kez tetiklendi")
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.hsTextSecondary)
+                        Text("\(alert.triggerCount)x")
+                            .font(.system(size: 10, weight: .medium, design: .monospaced))
+                            .foregroundStyle(Color.hsTextSecondary)
                     }
                 }
             }
 
             Spacer()
 
-            // Switch
-            if let onToggle = onToggle {
+            if let onToggle {
                 Toggle("", isOn: Binding(
                     get: { alert.isActive },
                     set: { _ in onToggle() }
                 ))
                 .labelsHidden()
+                .tint(Color.hsPurple600)
             }
         }
-        .padding(.vertical, 4)
-        .contentShape(Rectangle())
-        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            if let onDelete = onDelete {
-                Button(role: .destructive) {
-                    onDelete()
-                } label: {
-                    Label("Sil", systemImage: "trash")
-                }
-            }
-        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 14)
+        .background(Color.hsBackgroundSecondary)
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+        )
+        .opacity(alert.isActive ? 1.0 : 0.55)
     }
 
     private var iconColor: Color {
         switch alert.conditionType {
-        case .below:         return .red
-        case .above:         return .green
-        case .percentChange: return .orange
+        case .below:         return Color.hsError
+        case .above:         return Color.hsSuccess
+        case .percentChange: return Color.hsPurple400
         }
     }
 }

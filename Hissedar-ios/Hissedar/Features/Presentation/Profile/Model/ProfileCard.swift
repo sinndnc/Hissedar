@@ -36,8 +36,13 @@ struct ProfileCard: Hashable {
     static var featuresItems: [ProfileCard] {
         [
             ProfileCard(
+                icon: "bell",
+                title: "Alarms",
+                destination: .alarms
+            ),
+            ProfileCard(
                 icon: "plus",
-                title: "Add Property",
+                title: "Add Asset",
                 destination: .addProperty
             ),
             ProfileCard(

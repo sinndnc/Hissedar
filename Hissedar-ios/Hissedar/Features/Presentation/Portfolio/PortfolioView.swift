@@ -316,6 +316,11 @@ struct PortfolioView: View {
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(Color.hsTextSecondary)
                 }
+                
+                ProgressView(value: item.holdingPercent)
+                    .frame(height: 3)
+                    .progressViewStyle(.linear)
+                    .tint(item.isGainPositive ? Color.hsSuccess : Color.hsError)
             }
             
             Spacer()
@@ -335,6 +340,7 @@ struct PortfolioView: View {
                     isPositive: vm.isGainPositive
                 )
             }
+            
         }
         .padding(.vertical, 5)
         .padding(.horizontal, 15)

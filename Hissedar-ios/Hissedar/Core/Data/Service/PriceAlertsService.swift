@@ -1,22 +1,47 @@
 //
-//  NotificationService.swift
+//  PriceAlertsService.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/16/26.
+//  Fiyat alarmları için Service katmanı.
+//  Factory ile DI container'a kaydedilir.
 //
 
 import Foundation
+import Factory
 import Supabase
 
-extension SupabaseClient {
-    
-    // MARK: - Oluştur
-    
-    /// Yeni fiyat alarmı oluşturur.
-    @discardableResult
-    func createPriceAlert(_ request: CreatePriceAlertRequest) async throws -> PriceAlert {
-        let response: PriceAlert = try await self
-            .from("price_alerts")
+// MARK: - Protokol
+
+protocol PriceAlertsService {
+    func createAlert(_ request: CreateAssetPriceAlertRequest) async throws -> AssetPriceAlert
+
+    func fetchAlerts(userId: String) async throws -> [AssetPriceAlert]
+
+    func fetchAlerts(
+        userId: String,
+        assetId: String,
+        assetType: AssetType
+    ) async throws -> [AssetPriceAlert]
+
+    func fetchActiveAlerts(userId: String) async throws -> [AssetPriceAlert]
+
+    func setAlertActive(alertId: String, isActive: Bool) async throws
+
+    func deleteAlert(alertId: String) async throws
+}
+
+// MARK: - Supabase Implementation
+
+final class SupabasePriceAlertsService: PriceAlertsService {
+
+    private let supabase = Container.shared.supabaseClient()
+    private let tableName = "price_alerts"
+
+    // MARK: - Create
+
+    func createAlert(_ request: CreateAssetPriceAlertRequest) async throws -> AssetPriceAlert {
+        let response: AssetPriceAlert = try await supabase
+            .from(tableName)
             .insert(request)
             .select()
             .single()
@@ -26,12 +51,11 @@ extension SupabaseClient {
         return response
     }
 
-    // MARK: - Listele
+    // MARK: - Fetch
 
-    /// Kullanıcının tüm alarmlarını getirir (en yeniden en eskiye).
-    func fetchPriceAlerts(userId: String) async throws -> [PriceAlert] {
-        let response: [PriceAlert] = try await self
-            .from("price_alerts")
+    func fetchAlerts(userId: String) async throws -> [AssetPriceAlert] {
+        let response: [AssetPriceAlert] = try await supabase
+            .from(tableName)
             .select()
             .eq("user_id", value: userId)
             .order("created_at", ascending: false)
@@ -41,14 +65,17 @@ extension SupabaseClient {
         return response
     }
 
-    /// Kullanıcının belirli bir mülk için olan alarmlarını getirir.
-    /// PropertyDetailView'da "Alarm Kur" butonunun badge/count göstermesi için kullanılır.
-    func fetchPriceAlerts(userId: String, propertyId: String) async throws -> [PriceAlert] {
-        let response: [PriceAlert] = try await self
-            .from("price_alerts")
+    func fetchAlerts(
+        userId: String,
+        assetId: String,
+        assetType: AssetType
+    ) async throws -> [AssetPriceAlert] {
+        let response: [AssetPriceAlert] = try await supabase
+            .from(tableName)
             .select()
             .eq("user_id", value: userId)
-            .eq("property_id", value: propertyId)
+            .eq("asset_id", value: assetId)
+            .eq("asset_type", value: assetType.rawValue)
             .order("created_at", ascending: false)
             .execute()
             .value
@@ -56,10 +83,9 @@ extension SupabaseClient {
         return response
     }
 
-    /// Sadece aktif alarmları getirir.
-    func fetchActivePriceAlerts(userId: String) async throws -> [PriceAlert] {
-        let response: [PriceAlert] = try await self
-            .from("price_alerts")
+    func fetchActiveAlerts(userId: String) async throws -> [AssetPriceAlert] {
+        let response: [AssetPriceAlert] = try await supabase
+            .from(tableName)
             .select()
             .eq("user_id", value: userId)
             .eq("is_active", value: true)
@@ -70,28 +96,26 @@ extension SupabaseClient {
         return response
     }
 
-    // MARK: - Güncelle
+    // MARK: - Update
 
-    /// Alarmı aktif/pasif yap (örn. kullanıcı listede switch'i değiştirdiğinde).
-    func setPriceAlertActive(alertId: String, isActive: Bool) async throws {
+    func setAlertActive(alertId: String, isActive: Bool) async throws {
         struct UpdatePayload: Encodable {
             let isActive: Bool
             enum CodingKeys: String, CodingKey { case isActive = "is_active" }
         }
 
-        try await self
-            .from("price_alerts")
+        try await supabase
+            .from(tableName)
             .update(UpdatePayload(isActive: isActive))
             .eq("id", value: alertId)
             .execute()
     }
 
-    // MARK: - Sil
+    // MARK: - Delete
 
-    /// Alarmı tamamen sil.
-    func deletePriceAlert(alertId: String) async throws {
-        try await self
-            .from("price_alerts")
+    func deleteAlert(alertId: String) async throws {
+        try await supabase
+            .from(tableName)
             .delete()
             .eq("id", value: alertId)
             .execute()

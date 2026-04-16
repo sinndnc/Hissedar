@@ -175,6 +175,13 @@ extension AssetItem {
         }
         return meta
     }
+    
+    var holdingPercent: Double {
+        guard let owned = tokenAmount,
+              let total = totalTokens,
+              total > 0 else { return 0 }
+        return Double(owned) / Double(total)
+    }
 }
 
 // MARK: - Trade Computed

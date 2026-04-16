@@ -25,6 +25,9 @@ extension Container {
         }
         .singleton
     }
+    var appState: Factory<AppState> {
+        self { @MainActor in AppState() }.singleton
+    }
     
     // MARK: - User
     var userRepository: Factory<UserRepositoryProtocol> {
@@ -113,5 +116,11 @@ extension Container {
     
     var rentViewModel: Factory<RentHistoryViewModel> {
         self { @MainActor in RentHistoryViewModel() }.singleton
+    }
+    
+    // MARK: Price Alert
+    var priceAlertsService: Factory<PriceAlertsService> {
+        Factory(self) { @MainActor in SupabasePriceAlertsService() }
+            .singleton
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MarketView.swift
+//  DiscoverView.swift
 //  Hissedar
 //
 //  Created by Sinan Dinç on 3/23/26.
@@ -17,11 +17,11 @@ private enum ViewType {
     case list, map
 }
 
-struct MarketView: View {
+struct DiscoverView: View {
   
     @State private var vm = MarketViewModel()
-    @State private var notificationManager = NotificationManager.shared
     @State private var selectedTab: ViewType = .list
+    @State private var notificationManager = NotificationManager.shared
     
     // Map state
     @State private var selectedMapItem: AssetItem?
@@ -121,7 +121,7 @@ struct MarketView: View {
                         .transition(.opacity.combined(with: .move(edge: .trailing)))
                         .animation(.easeInOut(duration: 0.25), value: vm.selectedFilter)
                 } header: {
-                    MarketSegmentedControl(selected: $vm.selectedFilter)
+                    DiscoverSegmentedControl(selected: $vm.selectedFilter)
                         .padding()
                         .background(Color.hsBackground)
                 }
@@ -176,13 +176,8 @@ struct MarketView: View {
             // Bottom card
             if let selected = selectedMapItem {
                 PropertyMapCardView(item: selected) {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                        selectedMapItem = nil
-                    }
+                    selectedMapItem = nil
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .onChange(of: selectedMapItem) { _, newValue in
@@ -206,7 +201,7 @@ struct MarketView: View {
     @ViewBuilder
     private var tabContent: some View {
         let config = tabConfig(for: vm.selectedFilter)
-        MarketTabView(
+        DiscoverTabView(
             trendingItems: trendingAssets,
             filteredItems: vm.filteredAssets,
             trendingTitle: config.trendingTitle,

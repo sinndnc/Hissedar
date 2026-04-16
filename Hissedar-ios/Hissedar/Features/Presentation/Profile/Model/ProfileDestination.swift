@@ -16,6 +16,7 @@ enum ProfileDestination: String, Hashable {
     case privacyPolicy
     case security
     case profile
+    case alarms
     case theme
     case addProperty
 }

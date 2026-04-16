@@ -1,46 +1,21 @@
+//
+//  AssetDetailView.swift
+//  Hissedar
+//
+//
 // MARK: - TrendingCard.swift
 // Hissedar — Trend Kart Bileşeni (Yatay Kaydırma)
 
 import SwiftUI
 
 struct TrendingCard: View {
-    let accentColor: Color
-    let badge: String?
-    let title: String
-    let subtitle: String
-    let sparklineData: [Double]
-    let isPositive: Bool
-    let price: String
-    let change: String
-    let imageUrl: String
-
-    init(
-        accentColor: Color,
-        badge: String? = nil,
-        title: String,
-        subtitle: String,
-        sparklineData: [Double],
-        isPositive: Bool,
-        price: String,
-        change: String,
-        imageUrl: String
-    ) {
-        self.accentColor = accentColor
-        self.badge = badge
-        self.title = title
-        self.subtitle = subtitle
-        self.sparklineData = sparklineData
-        self.isPositive = isPositive
-        self.price = price
-        self.change = change
-        self.imageUrl = imageUrl
-    }
+    let item: AssetItem
 
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .bottom) {
                 // MARK: - Full-bleed image
-                if let imageURL = URL(string: imageUrl) {
+                if let urlString = item.imageUrl, let imageURL = URL(string: urlString) {
                     AsyncImage(url: imageURL) { phase in
                         switch phase {
                         case .success(let image):
@@ -64,14 +39,14 @@ struct TrendingCard: View {
                         .frame(width: geo.size.width, height: geo.size.height)
                         .background(Color.hsBackgroundTertiary)
                 }
-                
+
                 // MARK: - Top accent bar
                 VStack {
-                    accentColor
+                    Color.hsBackgroundTertiary
                         .frame(height: 3)
                         .mask(
                             LinearGradient(
-                                colors: [accentColor, .clear],
+                                colors: [Color.hsBackgroundTertiary, .clear],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -80,7 +55,7 @@ struct TrendingCard: View {
                 }
 
                 // MARK: - Top-trailing badge
-                if let badge {
+                if let badge = item.badge {
                     VStack {
                         HStack {
                             Spacer()
@@ -95,12 +70,12 @@ struct TrendingCard: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(title)
+                            Text(item.title)
                                 .font(.system(size: 15, weight: .bold))
                                 .foregroundStyle(.white)
                                 .lineLimit(1)
 
-                            Text(subtitle)
+                            Text(item.trendingSubtitle)
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundStyle(.white.opacity(0.7))
                                 .lineLimit(1)
@@ -109,21 +84,26 @@ struct TrendingCard: View {
                         Spacer()
 
                         VStack(alignment: .trailing, spacing: 4) {
-                            Text(price)
+                            Text(item.formattedPrice)
                                 .font(.system(size: 14, weight: .bold, design: .monospaced))
                                 .foregroundStyle(.white)
 
-                            Text(change)
+                            Text(item.formattedChange)
                                 .font(.system(size: 10, weight: .bold, design: .monospaced))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
-                                .foregroundStyle(isPositive ? Color.hsSuccess : Color.hsError)
-                                .background(isPositive ? Color.hsSuccess.opacity(0.15) : Color.hsError.opacity(0.15))
+                                .foregroundStyle(item.isPositive ? Color.hsSuccess : Color.hsError)
+                                .background(
+                                    item.isPositive
+                                        ? Color.hsSuccess.opacity(0.15)
+                                        : Color.hsError.opacity(0.15)
+                                )
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
                         }
                     }
 
-                    ProgressView(value: Double.random(in: 0.0...0.9))
+                    // Fonlama ilerlemesi (soldTokens / totalTokens)
+                    ProgressView(value: item.fundingPercent / 100)
                         .frame(height: 3)
                         .progressViewStyle(.linear)
                         .tint(Color.hsPurple400)

@@ -2,7 +2,7 @@
 //  WatchlistRow.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 3/24/26.
+//  Zil ikonu eklendi — alarm kurma kısayolu.
 //
 
 import Foundation
@@ -10,17 +10,17 @@ import SwiftUI
 
 struct WatchlistRow: View {
     let item: AssetItem
-    
+
     var body: some View {
         HStack(spacing: 15) {
             // Icon
-            ZStack{
+            ZStack {
                 if let imageUrl = item.imageUrl {
                     AsyncImage(url: URL(string: imageUrl)!)
                         .scaledToFit()
                         .frame(width: 44, height: 44)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                }else{
+                } else {
                     Text(item.imageUrl ?? "H")
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -30,7 +30,7 @@ struct WatchlistRow: View {
                 }
             }
             
-            VStack(alignment: .leading,spacing: 10){
+            VStack(alignment: .leading, spacing: 10) {
                 // Info
                 VStack(alignment: .leading, spacing: 3) {
                     Text(item.title)
@@ -44,7 +44,7 @@ struct WatchlistRow: View {
                         .lineLimit(1)
                 }
                 
-                ProgressView(value: Double.random(in: 0.0...0.9))
+                ProgressView(value: item.fundingPercent / 100)
                     .frame(height: 3)
                     .progressViewStyle(.linear)
                     .tint(Color.hsPurple400)

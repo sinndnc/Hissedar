@@ -7,6 +7,7 @@
 
 import Factory
 import SwiftUI
+
 @MainActor
 @Observable
 final class WatchlistViewModel {

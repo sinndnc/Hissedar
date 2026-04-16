@@ -11,7 +11,6 @@ import Factory
 struct MainTabView: View {
     
     @Binding var selectedTab: AppTab
-    @Environment(AppState.self) var appState: AppState
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,7 +32,7 @@ struct TabContent: View {
         Group {
             switch selectedTab {
             case .discover:
-                MarketView()
+                DiscoverView()
             case .watchlist:
                 WatchlistView()
             case .search:
@@ -114,5 +113,6 @@ struct TabBarItem: View {
 }
 
 #Preview {
-    MainTabView(selectedTab: .constant(.portfolio))
+    MainTabView(selectedTab: .constant(.discover))
+        .environment(AppState())
 }

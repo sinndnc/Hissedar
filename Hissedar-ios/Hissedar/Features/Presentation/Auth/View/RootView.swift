@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import Factory
 
 struct RootView: View {
     @Binding public var selectedTab: AppTab
     @State private var showPostRegister = false
     
-    @Environment(AppState.self) var appState: AppState
-    
+    var appState = Container.shared.appState()
     @AppStorage("onboardingCompleted") private var onboardingCompleted = false
     
     var body: some View {

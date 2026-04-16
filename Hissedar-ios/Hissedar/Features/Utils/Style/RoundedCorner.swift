@@ -1,3 +1,12 @@
+//
+//  RoundedCorner.swift
+//  Hissedar
+//
+//  Created by Sinan Dinç on 4/16/26.
+//
+
+import SwiftUI
+
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners

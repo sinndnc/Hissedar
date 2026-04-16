@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Factory
 
 struct NotificationSettingsView: View {
     
-    @Environment(AppState.self) var appState: AppState
+    private var appState = Container.shared.appState()
     @State private var vm = NotificationSettingsViewModel()
     
     var body: some View {

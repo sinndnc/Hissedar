@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MarketTabView: View {
+struct DiscoverTabView: View {
     
     let trendingItems: [AssetItem]
     let filteredItems: [AssetItem]
@@ -33,19 +33,9 @@ struct MarketTabView: View {
                             NavigationLink {
                                 destination(item)
                             } label: {
-                                TrendingCard(
-                                    accentColor: Color.hsBackgroundTertiary,
-                                    badge: item.badge,
-                                    title: item.title,
-                                    subtitle: subtitle(item),
-                                    sparklineData: item.sparklineData,
-                                    isPositive: item.isPositive,
-                                    price: item.formattedHSRPrice,
-                                    change: item.formattedChange,
-                                    imageUrl: item.imageUrl ?? ""
-                                )
-                                .padding(.vertical, 5)
-                                .frame(width: cardWidth, height: cardHeight)
+                                TrendingCard(item: item)
+                                    .padding(.vertical, 5)
+                                    .frame(width: cardWidth, height: cardHeight)
                             }
                         }
                     }
@@ -71,14 +61,9 @@ struct MarketTabView: View {
                     NavigationLink {
                         destination(item)
                     } label: {
-                        MarketListRow(
+                        DiscoverListRow(
                             rank: index + 1,
-                            title: item.title,
-                            meta: meta(item),
-                            sparklineData: item.sparklineData,
-                            isPositive: item.isPositive,
-                            price: item.formattedHSRPrice,
-                            change: item.formattedChange
+                            item: item
                         ) {
                             defaultIcon(for: item)
                         }

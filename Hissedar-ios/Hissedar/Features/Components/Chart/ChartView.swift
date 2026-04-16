@@ -55,7 +55,7 @@ struct PriceChartView: View {
                     .foregroundStyle(Color.hsTextPrimary)
                     .animation(.none, value: currentDisplayPrice) // titreme engelle
 
-                ChangeBadge(change: "+%1.20", isPositive: true)
+                ChangeBadge(change: "%1.20", isPositive: true)
                 Spacer()
             }
             .padding(.horizontal)

@@ -15,6 +15,7 @@ struct AssetDetailWrapper<Content: View>: View {
     let isLoading: Bool
     let hasItem: Bool
     let emptyMessage: String
+    let assetDetail: AssetDetail?
     let loadAction: () async -> Void
     let toDisplayItem: (() -> AssetItem)?
     @ViewBuilder let content: () -> Content
@@ -23,7 +24,8 @@ struct AssetDetailWrapper<Content: View>: View {
 
     @State private var showBuySheet = false
     @State private var showSellSheet = false
-
+    @State private var showPriceAlertSheet = false
+    
     var body: some View {
         Group {
             if hasItem {
@@ -52,6 +54,20 @@ struct AssetDetailWrapper<Content: View>: View {
                     },
                     onShare: { shareAsset() }
                 )
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showPriceAlertSheet = true
+                } label: {
+                    Image(systemName: "bell.badge")
+                }
+                .accessibilityLabel("Fiyat alarmı kur")
+            }
+        }
+        .sheet(isPresented: $showPriceAlertSheet) {
+            if let detail = assetDetail {
+                CreatePriceAlertSheet(asset: detail)
             }
         }
     }

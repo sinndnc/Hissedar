@@ -1,118 +1,139 @@
-//
-//  PropertyMapCardView.swift
-//  Hissedar
-//
-//  Created by Sinan Dinç on 4/15/26.
-//
-
 import SwiftUI
 
 struct PropertyMapCardView: View {
-    
     let item: AssetItem
     let onClose: () -> Void
     
+    @State private var offset: CGFloat = UIScreen.main.bounds.height
+    @State private var lastOffset: CGFloat = 0
+    @State private var isFullyClosed: Bool = false
+    
+    private let screenHeight = UIScreen.main.bounds.height
+    private let expandedOffset: CGFloat = 60
+    private let collapsedOffset: CGFloat = UIScreen.main.bounds.height * 0.6
+    private let dismissThreshold: CGFloat = UIScreen.main.bounds.height * 0.8 // Kapanma eşiği
+    
     var body: some View {
-        VStack(spacing: 0) {
-            // Drag indicator
-            Capsule()
-                .fill(Color.hsTextSecondary.opacity(0.3))
-                .frame(width: 36, height: 4)
-                .padding(.top, 10)
-            
-            HStack(alignment: .top, spacing: 14) {
-                // Thumbnail
-                AsyncImage(url: URL(string: item.imageUrl ?? "")) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    default:
-                        Color.hsBackgroundSecondary
-                            .overlay {
-                                Image(systemName: item.icon)
-                                    .foregroundStyle(Color.hsTextSecondary)
-                            }
+        ZStack(alignment: .top) {
+            if !isFullyClosed { // İçerik kontrolü
+                VStack(spacing: 0) {
+                    // MARK: - Drag Handle (Sürükleme Alanı)
+                    // Bu alan her zaman sürüklemeyi tetikler, scrollView ile çakışmaz
+                    VStack {
+                        Capsule()
+                            .fill(Color.hsTextSecondary.opacity(0.3))
+                            .frame(width: 36, height: 5)
+                            .padding(.top, 12)
                     }
-                }
-                .frame(width: 90, height: 90)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                
-                // Info
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(item.title)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(Color.hsTextPrimary)
-                        .lineLimit(1)
-                    
-                    if let city = item.propertyCity {
-                        Label(city, systemImage: "mappin")
-                            .font(.system(size: 13))
-                            .foregroundStyle(Color.hsTextSecondary)
-                    }
-                    
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Token Fiyatı")
-                                .font(.system(size: 11))
-                                .foregroundStyle(Color.hsTextSecondary)
-                            Text(item.formattedPrice)
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundStyle(Color.hsTextPrimary)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Getiri")
-                                .font(.system(size: 11))
-                                .foregroundStyle(Color.hsTextSecondary)
-                            Text("%\(String(format: "%.1f", item.annualYieldPercent))")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundStyle(Color.hsAccent)
-                        }
-                        
-                        Spacer()
-                    }
-                    
-                    // Funding bar
-                    VStack(alignment: .leading, spacing: 3) {
-                        GeometryReader { geo in
-                            ZStack(alignment: .leading) {
-                                Capsule()
-                                    .fill(Color.hsBackgroundSecondary)
-                                    .frame(height: 5)
-                                Capsule()
-                                    .fill(Color.hsAccent)
-                                    .frame(width: geo.size.width * min(item.fundingPercent / 100, 1.0), height: 5)
-                            }
-                        }
-                        .frame(height: 5)
-                        
-                        Text("%\(String(format: "%.0f", item.fundingPercent)) fonlandı")
-                            .font(.system(size: 10))
-                            .foregroundStyle(Color.hsTextSecondary)
-                    }
-                }
-            }
-            .padding(16)
-            
-            // Action button
-            NavigationLink {
-                AssetDetailView(assetId: item.id)
-            } label: {
-                Text("Detayları Gör")
-                    .font(.system(size: 15, weight: .semibold))
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 13)
-                    .foregroundStyle(Color.hsBackground)
-                    .background(Color.hsAccent)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .frame(height: 35)
+                    .background(Color.hsBackground)
+                    .gesture(dragGesture) // Özel sürükleme alanı
+                    
+                    // MARK: - Content
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            headerSection
+                            statsSection
+                            fundingSection
+                            
+                            Text("Mülk Detayları").font(.headline)
+                            Text("Burada mülk ile ilgili detaylı açıklamalar yer alacak...").foregroundStyle(.secondary)
+                            
+                            Spacer(minLength: 150)
+                        }
+                        .padding(20)
+                    }
+                    // ScrollView sadece kart en tepedeyken çalışsın
+                    .scrollDisabled(offset > expandedOffset + 10)
+                }
+                .frame(height: screenHeight - expandedOffset)
+                .background(Color.hsBackground)
+                .cornerRadius(24, corners: [.topLeft, .topRight])
+                .shadow(color: .black.opacity(0.15), radius: 20, y: -5)
+                .offset(y: offset)
+                .gesture(dragGesture)
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
         }
-        .background(Color.hsBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(color: .black.opacity(0.12), radius: 12, y: -4)
+        .ignoresSafeArea(edges: .bottom)
+        .onAppear {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                offset = collapsedOffset
+                lastOffset = collapsedOffset
+            }
+        }
+    }
+    
+    // MARK: - Gesture Logic
+    private var dragGesture: some Gesture {
+        DragGesture(minimumDistance: 5)
+            .onChanged { value in
+                let newOffset = lastOffset + value.translation.height
+                if newOffset < expandedOffset {
+                    offset = expandedOffset + (value.translation.height / 3)
+                } else {
+                    offset = newOffset
+                }
+            }
+            .onEnded { value in
+                let velocity = value.predictedEndTranslation.height
+                
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+                    if velocity > 300 || offset > dismissThreshold {
+                        // Kapanma animasyonunu başlat
+                        offset = screenHeight
+                        // Animasyonun bitmesini bekle ve üst view'ı bilgilendir
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                            isFullyClosed = true
+                            onClose()
+                        }
+                    } else if offset < (collapsedOffset + expandedOffset) / 2 || velocity < -200 {
+                        offset = expandedOffset
+                    } else {
+                        offset = collapsedOffset
+                    }
+                    lastOffset = offset
+                }
+            }
+    }
+    
+    // MARK: - Subviews (Kısa tutmak için)
+    private var headerSection: some View {
+        HStack(spacing: 16) {
+            AsyncImage(url: URL(string: item.imageUrl ?? "")) { phase in
+                if let image = phase.image {
+                    image.resizable().aspectRatio(contentMode: .fill)
+                } else {
+                    Color.hsBackgroundSecondary.overlay { Image(systemName: item.icon) }
+                }
+            }
+            .frame(width: 80, height: 80).clipShape(RoundedRectangle(cornerRadius: 12))
+            
+            VStack(alignment: .leading) {
+                Text(item.title).font(.headline)
+                Label(item.propertyCity ?? "", systemImage: "mappin").font(.subheadline).foregroundStyle(.secondary)
+            }
+        }
+    }
+    
+    private var statsSection: some View {
+        HStack(spacing: 30) {
+            VStack(alignment: .leading) {
+                Text("Token Fiyatı").font(.caption).foregroundStyle(.secondary)
+                Text(item.formattedPrice).font(.headline)
+            }
+            VStack(alignment: .leading) {
+                Text("Yıllık Getiri").font(.caption).foregroundStyle(.secondary)
+                Text("%\(String(format: "%.1f", item.annualYieldPercent))").font(.headline).foregroundStyle(Color.hsAccent)
+            }
+        }
+    }
+
+    private var fundingSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ProgressView(value: min(item.fundingPercent / 100, 1.0))
+                .tint(Color.hsAccent)
+            Text("%\(Int(item.fundingPercent)) fonlandı").font(.caption).foregroundStyle(.secondary)
+        }
     }
 }

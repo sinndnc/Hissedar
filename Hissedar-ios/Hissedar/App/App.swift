@@ -4,20 +4,20 @@
 //
 
 import SwiftUI
+import Factory
 
 @main
 struct HissedarApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @State private var appState = AppState()
+    private var appState = Container.shared.appState()
     @State private var selectedTab: AppTab = .discover
     
     var body: some Scene {
         WindowGroup {
             RootView(selectedTab: $selectedTab)
                 .tint(Color.hEmerald)
-                .environment(appState)
                 .onChange(of: NotificationManager.shared.pendingDeepLink) { _, link in
                     guard let link else { return }
                     handleDeepLink(link)

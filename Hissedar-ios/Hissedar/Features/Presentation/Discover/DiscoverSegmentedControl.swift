@@ -1,9 +1,9 @@
-// MARK: - MarketSegmentedControl.swift
+// MARK: - DiscoverSegmentedControl.swift
 // Hissedar — Özel Segmented Tab Bar
 
 import SwiftUI
 
-struct MarketSegmentedControl: View {
+struct DiscoverSegmentedControl: View {
     
     @Binding var selected: AssetFilter
     @Namespace private var namespace

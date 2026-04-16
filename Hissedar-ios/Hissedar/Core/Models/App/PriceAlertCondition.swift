@@ -1,9 +1,8 @@
 //
-//  PriceAlert.swift
+//  AssetPriceAlert.swift
 //  Hissedar
 //
-//  Fiyat alarm sistemi için model ve enum'lar.
-//  Backend: price_alerts tablosu ile uyumludur.
+//  Generic fiyat alarmı — property/art/nft için çalışır.
 //
 
 import Foundation
@@ -11,9 +10,9 @@ import Foundation
 // MARK: - Koşul Tipi
 
 enum PriceAlertCondition: String, Codable, CaseIterable, Identifiable {
-    case below          // Fiyat hedefin altına düşerse
-    case above          // Fiyat hedefin üstüne çıkarsa
-    case percentChange = "percent_change"  // Baz fiyattan yüzde X değişirse
+    case below
+    case above
+    case percentChange = "percent_change"
 
     var id: String { rawValue }
 
@@ -45,8 +44,8 @@ enum PriceAlertCondition: String, Codable, CaseIterable, Identifiable {
 // MARK: - Davranış Tipi
 
 enum PriceAlertBehavior: String, Codable, CaseIterable, Identifiable {
-    case oneShot = "one_shot"     // Bir kez tetiklendikten sonra kapanır
-    case recurring                 // Her koşul sağlandığında tetiklenir
+    case oneShot = "one_shot"
+    case recurring
 
     var id: String { rawValue }
 
@@ -65,18 +64,23 @@ enum PriceAlertBehavior: String, Codable, CaseIterable, Identifiable {
     }
 }
 
-// MARK: - PriceAlert Model
+// MARK: - AssetPriceAlert Model
 
-struct PriceAlert: Identifiable, Codable, Equatable {
+struct AssetPriceAlert: Identifiable, Codable, Equatable {
     let id: String
     let userId: String
-    let propertyId: String
 
+    // Generic asset referansı
+    let assetId: String
+    let assetType: AssetType
+
+    // Koşul
     let conditionType: PriceAlertCondition
     let targetPrice: Decimal?
     let percentDelta: Decimal?
     let basePrice: Decimal?
 
+    // Davranış
     let behavior: PriceAlertBehavior
     let isActive: Bool
     let lastTriggeredAt: Date?
@@ -88,7 +92,8 @@ struct PriceAlert: Identifiable, Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id
         case userId          = "user_id"
-        case propertyId      = "property_id"
+        case assetId         = "asset_id"
+        case assetType       = "asset_type"
         case conditionType   = "condition_type"
         case targetPrice     = "target_price"
         case percentDelta    = "percent_delta"
@@ -104,11 +109,10 @@ struct PriceAlert: Identifiable, Codable, Equatable {
 
 // MARK: - Insert Request
 
-/// Yeni alarm oluşturmak için kullanılan payload.
-/// Server-side alanlar (id, created_at, trigger_count) dışarıda tutulur.
-struct CreatePriceAlertRequest: Encodable {
+struct CreateAssetPriceAlertRequest: Encodable {
     let userId: String
-    let propertyId: String
+    let assetId: String
+    let assetType: AssetType
     let conditionType: PriceAlertCondition
     let targetPrice: Decimal?
     let percentDelta: Decimal?
@@ -118,7 +122,8 @@ struct CreatePriceAlertRequest: Encodable {
 
     enum CodingKeys: String, CodingKey {
         case userId        = "user_id"
-        case propertyId    = "property_id"
+        case assetId       = "asset_id"
+        case assetType     = "asset_type"
         case conditionType = "condition_type"
         case targetPrice   = "target_price"
         case percentDelta  = "percent_delta"
@@ -129,16 +134,17 @@ struct CreatePriceAlertRequest: Encodable {
 
     // MARK: - Factory
 
-    /// "Altına düşerse" alarm oluştur
     static func below(
         userId: String,
-        propertyId: String,
+        assetId: String,
+        assetType: AssetType,
         targetPrice: Decimal,
         behavior: PriceAlertBehavior = .oneShot
-    ) -> CreatePriceAlertRequest {
-        CreatePriceAlertRequest(
+    ) -> Self {
+        .init(
             userId: userId,
-            propertyId: propertyId,
+            assetId: assetId,
+            assetType: assetType,
             conditionType: .below,
             targetPrice: targetPrice,
             percentDelta: nil,
@@ -148,16 +154,17 @@ struct CreatePriceAlertRequest: Encodable {
         )
     }
 
-    /// "Üstüne çıkarsa" alarm oluştur
     static func above(
         userId: String,
-        propertyId: String,
+        assetId: String,
+        assetType: AssetType,
         targetPrice: Decimal,
         behavior: PriceAlertBehavior = .oneShot
-    ) -> CreatePriceAlertRequest {
-        CreatePriceAlertRequest(
+    ) -> Self {
+        .init(
             userId: userId,
-            propertyId: propertyId,
+            assetId: assetId,
+            assetType: assetType,
             conditionType: .above,
             targetPrice: targetPrice,
             percentDelta: nil,
@@ -167,19 +174,18 @@ struct CreatePriceAlertRequest: Encodable {
         )
     }
 
-    /// "Yüzde değişim" alarm oluştur
-    /// - Parameter percentDelta: Pozitif = artış, negatif = düşüş (ör. 5.0 = %5 artış, -3.0 = %3 düşüş)
-    /// - Parameter basePrice: Alarm kurulurken referans alınan güncel fiyat
     static func percentChange(
         userId: String,
-        propertyId: String,
+        assetId: String,
+        assetType: AssetType,
         percentDelta: Decimal,
         basePrice: Decimal,
         behavior: PriceAlertBehavior = .oneShot
-    ) -> CreatePriceAlertRequest {
-        CreatePriceAlertRequest(
+    ) -> Self {
+        .init(
             userId: userId,
-            propertyId: propertyId,
+            assetId: assetId,
+            assetType: assetType,
             conditionType: .percentChange,
             targetPrice: nil,
             percentDelta: percentDelta,
@@ -192,8 +198,7 @@ struct CreatePriceAlertRequest: Encodable {
 
 // MARK: - Kullanıcı Dostu Açıklama
 
-extension PriceAlert {
-    /// Alarm kartında gösterilecek kullanıcı dostu koşul açıklaması
+extension AssetPriceAlert {
     var conditionDescription: String {
         switch conditionType {
         case .below:
@@ -209,25 +214,11 @@ extension PriceAlert {
         }
     }
 
-    /// "Aktif" / "Pasif" / "Tetiklendi" gibi durum etiketi
     var statusLabel: String {
         if !isActive { return "Pasif" }
         if triggerCount > 0 && behavior == .recurring {
-            return "Aktif (son tetik: \(lastTriggeredAt?.shortRelative ?? "-"))"
+            return "Aktif"
         }
         return "Aktif"
-    }
-}
-
-// MARK: - Yardımcı Formatter
-// NOT: Decimal.tlFormatted projede zaten var, tekrar tanımlamıyoruz.
-// shortRelative için bu extension'ı koruyoruz.
-
-private extension Date {
-    var shortRelative: String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.locale = Locale(identifier: "tr_TR")
-        formatter.unitsStyle = .abbreviated
-        return formatter.localizedString(for: self, relativeTo: Date())
     }
 }

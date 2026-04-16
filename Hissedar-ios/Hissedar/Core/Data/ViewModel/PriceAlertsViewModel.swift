@@ -3,10 +3,11 @@
 //  Hissedar
 //
 //  Fiyat alarm sistemi için ViewModel.
-//  Hem "Alarmlarım" listesi hem de mülk detaydan alarm oluşturma için kullanılır.
+//  Factory @Injected ile PriceAlertsService kullanır.
 //
 
 import Foundation
+import Factory
 import Combine
 
 @MainActor
@@ -14,30 +15,23 @@ final class PriceAlertsViewModel: ObservableObject {
 
     // MARK: - Liste State
 
-    @Published var alerts: [PriceAlert] = []
+    @Published var alerts: [AssetPriceAlert] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    // MARK: - Form State (Alarm Oluşturma Sheet'i)
+    // MARK: - Form State
 
     @Published var isCreatingAlert = false
     @Published var formErrorMessage: String?
     @Published var successMessage: String?
 
-    // Seçili koşul tipi (segmented control)
     @Published var selectedCondition: PriceAlertCondition = .below
-
-    // Fiyat-hedef alanı (below/above için)
     @Published var targetPriceInput: String = ""
-
-    // Yüzde alanı (percent_change için)
     @Published var percentInput: String = ""
     @Published var percentDirection: PercentDirection = .down
-
-    // Davranış
     @Published var behavior: PriceAlertBehavior = .oneShot
 
-    // MARK: - Yardımcı tip
+    // MARK: - Yardımcı
 
     enum PercentDirection: String, CaseIterable, Identifiable {
         case up, down
@@ -56,35 +50,34 @@ final class PriceAlertsViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Deps
+    // MARK: - DI
 
-    private let supabase = SupabaseClient.shared
+    @Injected(\.priceAlertsService) private var service
 
     // MARK: - Liste İşlemleri
 
-    /// Tüm alarmları getir (Alarmlarım sayfası için)
     func loadAllAlerts(userId: String) async {
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }
 
         do {
-            alerts = try await supabase.fetchPriceAlerts(userId: userId)
+            alerts = try await service.fetchAlerts(userId: userId)
         } catch {
             errorMessage = "Alarmlar yüklenemedi: \(error.localizedDescription)"
         }
     }
 
-    /// Belirli bir mülk için alarmları getir (PropertyDetailView için)
-    func loadAlerts(userId: String, propertyId: String) async {
+    func loadAlerts(userId: String, assetId: String, assetType: AssetType) async {
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }
 
         do {
-            alerts = try await supabase.fetchPriceAlerts(
+            alerts = try await service.fetchAlerts(
                 userId: userId,
-                propertyId: propertyId
+                assetId: assetId,
+                assetType: assetType
             )
         } catch {
             errorMessage = "Alarmlar yüklenemedi: \(error.localizedDescription)"
@@ -93,23 +86,17 @@ final class PriceAlertsViewModel: ObservableObject {
 
     // MARK: - Alarm Oluştur
 
-    /// Form state'ine göre alarm oluşturur.
-    /// - Parameters:
-    ///   - userId: Oturum açan kullanıcı
-    ///   - propertyId: Alarm kurulacak mülk
-    ///   - currentPrice: Mülkün şu anki token_price'ı (percent_change için base_price olarak kullanılır)
-    /// - Returns: Başarılıysa true
     @discardableResult
     func createAlert(
         userId: String,
-        propertyId: String,
+        assetId: String,
+        assetType: AssetType,
         currentPrice: Decimal
     ) async -> Bool {
         formErrorMessage = nil
         successMessage = nil
 
-        // Validasyon + request oluştur
-        let request: CreatePriceAlertRequest
+        let request: CreateAssetPriceAlertRequest
         switch selectedCondition {
         case .below:
             guard let target = parseDecimal(targetPriceInput), target > 0 else {
@@ -122,7 +109,8 @@ final class PriceAlertsViewModel: ObservableObject {
             }
             request = .below(
                 userId: userId,
-                propertyId: propertyId,
+                assetId: assetId,
+                assetType: assetType,
                 targetPrice: target,
                 behavior: behavior
             )
@@ -138,7 +126,8 @@ final class PriceAlertsViewModel: ObservableObject {
             }
             request = .above(
                 userId: userId,
-                propertyId: propertyId,
+                assetId: assetId,
+                assetType: assetType,
                 targetPrice: target,
                 behavior: behavior
             )
@@ -151,20 +140,19 @@ final class PriceAlertsViewModel: ObservableObject {
             let signedPercent = percent * percentDirection.sign
             request = .percentChange(
                 userId: userId,
-                propertyId: propertyId,
+                assetId: assetId,
+                assetType: assetType,
                 percentDelta: signedPercent,
                 basePrice: currentPrice,
                 behavior: behavior
             )
         }
 
-        // Network
         isCreatingAlert = true
         defer { isCreatingAlert = false }
 
         do {
-            let newAlert = try await supabase.createPriceAlert(request)
-            // Yeni alarmı listenin en başına koy
+            let newAlert = try await service.createAlert(request)
             alerts.insert(newAlert, at: 0)
             successMessage = "Alarm başarıyla oluşturuldu"
             resetForm()
@@ -175,34 +163,26 @@ final class PriceAlertsViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Aktif/Pasif Toggle
+    // MARK: - Toggle / Delete (Optimistic)
 
-    func toggleActive(_ alert: PriceAlert) async {
-        // Optimistic update — önce UI'da değiştir, sonra backend
+    func toggleActive(_ alert: AssetPriceAlert) async {
         let newValue = !alert.isActive
         updateAlertLocally(id: alert.id, isActive: newValue)
 
         do {
-            try await supabase.setPriceAlertActive(
-                alertId: alert.id,
-                isActive: newValue
-            )
+            try await service.setAlertActive(alertId: alert.id, isActive: newValue)
         } catch {
-            // Hata olursa geri al
             updateAlertLocally(id: alert.id, isActive: alert.isActive)
             errorMessage = "Durum güncellenemedi: \(error.localizedDescription)"
         }
     }
 
-    // MARK: - Sil
-
-    func deleteAlert(_ alert: PriceAlert) async {
-        // Optimistic remove
+    func deleteAlert(_ alert: AssetPriceAlert) async {
         let backup = alerts
         alerts.removeAll { $0.id == alert.id }
 
         do {
-            try await supabase.deletePriceAlert(alertId: alert.id)
+            try await service.deleteAlert(alertId: alert.id)
         } catch {
             alerts = backup
             errorMessage = "Alarm silinemedi: \(error.localizedDescription)"
@@ -211,7 +191,6 @@ final class PriceAlertsViewModel: ObservableObject {
 
     // MARK: - Form Yardımcıları
 
-    /// Form state'ini sıfırla (sheet kapandığında veya başarılı create sonrası)
     func resetForm() {
         selectedCondition = .below
         targetPriceInput = ""
@@ -221,14 +200,10 @@ final class PriceAlertsViewModel: ObservableObject {
         formErrorMessage = nil
     }
 
-    /// TR locale'e uygun decimal parse ("2.500,50" veya "2500.50" her ikisi de çalışır)
     private func parseDecimal(_ input: String) -> Decimal? {
         let trimmed = input.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return nil }
 
-        // TR format: binlik . (nokta), ondalık , (virgül)
-        // EN format: binlik , (virgül), ondalık . (nokta)
-        // Basit yaklaşım: tüm . ve boşlukları kaldır, virgülü noktaya çevir
         let normalized = trimmed
             .replacingOccurrences(of: ".", with: "")
             .replacingOccurrences(of: " ", with: "")
@@ -240,10 +215,11 @@ final class PriceAlertsViewModel: ObservableObject {
     private func updateAlertLocally(id: String, isActive: Bool) {
         guard let idx = alerts.firstIndex(where: { $0.id == id }) else { return }
         let old = alerts[idx]
-        alerts[idx] = PriceAlert(
+        alerts[idx] = AssetPriceAlert(
             id: old.id,
             userId: old.userId,
-            propertyId: old.propertyId,
+            assetId: old.assetId,
+            assetType: old.assetType,
             conditionType: old.conditionType,
             targetPrice: old.targetPrice,
             percentDelta: old.percentDelta,
@@ -257,14 +233,12 @@ final class PriceAlertsViewModel: ObservableObject {
         )
     }
 
-    // MARK: - Computed Helpers
+    // MARK: - Computed
 
-    /// Aktif alarmların sayısı (Alarmlarım sayfasında header için)
     var activeCount: Int {
         alerts.filter { $0.isActive }.count
     }
 
-    /// Mesaj'ları temizle (sheet kapanırken)
     func clearMessages() {
         errorMessage = nil
         formErrorMessage = nil

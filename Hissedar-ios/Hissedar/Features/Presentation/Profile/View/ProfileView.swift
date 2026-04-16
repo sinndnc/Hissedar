@@ -13,7 +13,7 @@ struct ProfileView: View {
                 Section("General"){ generalSection }
                     .listRowBackground(Color.hsBackgroundSecondary)
                 
-                Section("Properties"){ featuresSection }
+                Section("Assets"){ featuresSection }
                     .listRowBackground(Color.hsBackgroundSecondary)
                 
                 Section("Security"){ secuirtySections }
@@ -44,6 +44,7 @@ struct ProfileView: View {
                 case .security: SecurityView()
                 case .rents: RentHistoryView()
                 case .wallets: WalletRootView()
+                case .alarms: PriceAlertsListView()
                 case .profile: ProfileSettingsView()
                 case .transactions: TransactionsView()
                 case .addProperty: AddAssetWizardView()
