@@ -156,7 +156,7 @@ struct TransactionRow: View {
                         .fill(Color.hsTextTertiary)
                         .frame(width: 3, height: 3)
                     
-                    Text(transaction.fullDate)
+                    Text(transaction.createdDate,style: .date)
                         .font(.system(size: 12))
                         .foregroundStyle(Color.hsTextSecondary)
                     
