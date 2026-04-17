@@ -4,8 +4,6 @@
 //
 //  Created by Sinan Dinç on 4/13/26.
 //
-//  Başarılı dönüşüm sonrası gösterilen sonuç ekranı.
-//
 
 import SwiftUI
 
@@ -23,15 +21,15 @@ struct ExchangeSuccessSheet: View {
             // Başarı ikonu
             ZStack {
                 Circle()
-                    .fill(Color.hEmerald.opacity(0.12))
+                    .fill(Color.hsPurple600.opacity(0.12))
                     .frame(width: 80, height: 80)
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 48))
-                    .foregroundStyle(Color.hEmerald)
+                    .foregroundStyle(Color.hsPurple600)
             }
 
             VStack(spacing: 6) {
-                Text("Dönüşüm Başarılı!")
+                Text(String.localized("exchange.success.title"))
                     .font(.title2.bold())
                     .foregroundStyle(Color.hsTextPrimary)
 
@@ -44,22 +42,22 @@ struct ExchangeSuccessSheet: View {
             // Detay kartı
             VStack(spacing: 12) {
                 if direction == .buyHSR {
-                    detailRow("Harcanan", value: formatTRY(result.trySpent ?? 0))
-                    detailRow("Alınan", value: formatHSR(result.hsrReceived ?? 0), highlight: true)
+                    detailRow(String.localized("exchange.success.spent"), value: formatTRY(result.trySpent ?? 0))
+                    detailRow(String.localized("exchange.success.received"), value: formatHSR(result.hsrReceived ?? 0), highlight: true)
                 } else {
-                    detailRow("Harcanan", value: formatHSR(result.hsrSpent ?? 0))
-                    detailRow("Alınan", value: formatTRY(result.tryReceived ?? 0), highlight: true)
+                    detailRow(String.localized("exchange.success.spent"), value: formatHSR(result.hsrSpent ?? 0))
+                    detailRow(String.localized("exchange.success.received"), value: formatTRY(result.tryReceived ?? 0), highlight: true)
                 }
 
                 Divider()
 
-                detailRow("Komisyon", value: formatTRY(result.fee))
-                detailRow("Kur", value: "1 HSR = \(formatTRY(result.exchangeRate))")
+                detailRow(String.localized("exchange.success.fee"), value: formatTRY(result.fee))
+                detailRow(String.localized("exchange.success.rate"), value: "1 HSR = \(formatTRY(result.exchangeRate))")
 
                 Divider()
 
-                detailRow("Yeni TRY Bakiye", value: formatTRY(result.newTryBalance))
-                detailRow("Yeni HSR Bakiye", value: formatHSR(result.newHsrBalance))
+                detailRow(String.localized("exchange.success.new_try"), value: formatTRY(result.newTryBalance))
+                detailRow(String.localized("exchange.success.new_hsr"), value: formatHSR(result.newHsrBalance))
             }
             .padding(16)
             .background(Color.hsTextSecondary)
@@ -74,11 +72,11 @@ struct ExchangeSuccessSheet: View {
             Button {
                 onDismiss()
             } label: {
-                Text("Tamam")
+                Text(String.localized("common.ok"))
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(Color.hEmerald)
+                    .background(Color.hsPurple600)
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
@@ -94,9 +92,9 @@ struct ExchangeSuccessSheet: View {
     private var summaryText: String {
         switch direction {
         case .buyHSR:
-            return "\(formatTRY(result.trySpent ?? 0)) karşılığında \(formatHSR(result.hsrReceived ?? 0)) satın aldınız."
+            return String(format: String.localized("exchange.success.summary_buy"), formatTRY(result.trySpent ?? 0), formatHSR(result.hsrReceived ?? 0))
         case .sellHSR:
-            return "\(formatHSR(result.hsrSpent ?? 0)) karşılığında \(formatTRY(result.tryReceived ?? 0)) aldınız."
+            return String(format: String.localized("exchange.success.summary_sell"), formatHSR(result.hsrSpent ?? 0), formatTRY(result.tryReceived ?? 0))
         }
     }
 
@@ -108,7 +106,7 @@ struct ExchangeSuccessSheet: View {
             Spacer()
             Text(value)
                 .font(highlight ? .subheadline.bold() : .subheadline)
-                .foregroundStyle(highlight ? Color.hEmerald : Color.hsTextPrimary)
+                .foregroundStyle(highlight ? Color.hsTextPrimary : Color.hsTextSecondary)
         }
     }
 

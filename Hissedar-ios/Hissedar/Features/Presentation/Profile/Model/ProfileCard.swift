@@ -17,18 +17,23 @@ struct ProfileCard: Hashable {
         [
             ProfileCard(
                 icon: "person.crop.circle",
-                title: "Profile",
+                title: String.localized("profile.general.section.profile"),
                 destination: .profile
             ),
             ProfileCard(
                 icon: "list.bullet",
-                title: "Notifications",
+                title: String.localized("profile.general.section.notification"),
                 destination: .notifications
             ),
             ProfileCard(
                 icon: "moon",
-                title: "theme",
+                title: String.localized("profile.general.section.theme"),
                 destination: .theme
+            ),
+            ProfileCard(
+                icon: "globe",
+                title: String.localized("profile.general.section.language"),
+                destination: .language
             )
         ]
     }
@@ -37,27 +42,27 @@ struct ProfileCard: Hashable {
         [
             ProfileCard(
                 icon: "bell",
-                title: "Alarms",
+                title: String.localized("profile.asset.section.alarm"),
                 destination: .alarms
             ),
             ProfileCard(
                 icon: "plus",
-                title: "Add Asset",
+                title: String.localized("profile.asset.section.add.asset"),
                 destination: .addProperty
             ),
             ProfileCard(
                 icon: "wallet.bifold",
-                title: "Wallets",
+                title: String.localized("profile.asset.section.wallet"),
                 destination: .wallets
             ),
             ProfileCard(
                 icon: "banknote",
-                title: "Rent Incomes",
+                title: String.localized("profile.asset.section.rent.income"),
                 destination: .rents
             ),
             ProfileCard(
                 icon: "document.badge.clock",
-                title: "Transactions",
+                title: String.localized("profile.asset.section.transaction"),
                 destination: .transactions
             )
         ]
@@ -67,17 +72,17 @@ struct ProfileCard: Hashable {
         [
             ProfileCard(
                 icon: "lock.shield",
-                title: "Güvenlik",
+                title: String.localized("profile.security.section.security"),
                 destination: .security
             ),
             ProfileCard(
                 icon: "questionmark.circle",
-                title: "Yardım ve Destek",
+                title: String.localized("profile.security.section.support"),
                 destination: .support
             ),
             ProfileCard(
                 icon: "doc.text",
-                title: "Gizlilik Politikası",
+                title: String.localized("profile.security.section.policy"),
                 destination: .privacyPolicy
             ),
         ]

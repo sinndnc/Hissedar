@@ -15,6 +15,7 @@ struct SegmentedBar<T: Hashable & CaseIterable>: View {
     var animation: Animation = .easeInOut(duration: 0.25)
     
     @Namespace private var segmentNS
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(spacing: 0) {
@@ -35,12 +36,19 @@ struct SegmentedBar<T: Hashable & CaseIterable>: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.plain)
-                    .foregroundStyle(isSelected ? Color.hsPurple600 : Color.hsTextSecondary)
+                    .foregroundStyle(
+                        isSelected
+                        ? themeManager.theme.accent :
+                            themeManager.theme.textSecondary
+                    )
                     
                     Rectangle()
                         .frame(height: isSelected ? 2 : 0.5)
                         .foregroundStyle(
-                            isSelected ? Color.hsPurple600 : Color.gray.opacity(0.2)
+                            isSelected ?
+                            themeManager.theme.accent :
+                                Color.gray
+                                .opacity(0.2)
                         )
                 }
             }

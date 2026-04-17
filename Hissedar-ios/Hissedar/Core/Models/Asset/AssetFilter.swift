@@ -2,8 +2,6 @@
 //  AssetFilter.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/13/26.
-//
 
 import Foundation
 
@@ -11,7 +9,6 @@ enum AssetFilter: CaseIterable, Hashable, Identifiable {
     case all
     case type(AssetType)
     
-    // CaseIterable manuel — associated value olduğu için
     static var allCases: [AssetFilter] {
         [.all] + AssetType.allCases.map { .type($0) }
     }
@@ -25,14 +22,16 @@ enum AssetFilter: CaseIterable, Hashable, Identifiable {
     
     var label: String {
         switch self {
-        case .all:            return "All"
-        case .type(let t):    return t.label
+        case .all:
+            return String.localized("asset.filter.all")
+        case .type(let t):
+            return t.label
         }
     }
     
     var icon: String {
         switch self {
-        case .all:            return "square.grid.2x2.fill" // ya da dilediğin
+        case .all:            return "square.grid.2x2.fill"
         case .type(let t):    return t.icon
         }
     }

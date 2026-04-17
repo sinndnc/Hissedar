@@ -27,12 +27,14 @@ let mockData: [PriceData] = [
 
 struct PriceChartView: View {
     let data: [PriceData] = mockData
-    let brandPurple = Color.hsPurple600
-
+    
     @State private var selectedDate: Date? = nil
     @State private var selectedTimeRange: String = "1G"
     let timeRanges = ["1G", "1H", "1A", "3A", "1Y", "Tümü"]
-
+    
+    @Environment(ThemeManager.self) private var themeManager
+    var brandPurple : Color { themeManager.theme.accent }
+    
     var currentDisplayPrice: Double {
         guard let selectedDate else {
             return data.last?.price ?? 0.0
@@ -42,25 +44,25 @@ struct PriceChartView: View {
             abs($0.date.timeIntervalSince(selectedDate)) < abs($1.date.timeIntervalSince(selectedDate))
         })?.price ?? data.last?.price ?? 0.0
     }
-
+    
     var minY: Double { (data.map { $0.price }.min() ?? 0) * 0.995 }
     var maxY: Double { (data.map { $0.price }.max() ?? 0) * 1.005 }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             // MARK: - Header
             HStack(alignment: .firstTextBaseline) {
                 Text("$\(currentDisplayPrice, specifier: "%.2f")")
                     .font(.system(size: 30, weight: .bold, design: .monospaced))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .animation(.none, value: currentDisplayPrice) // titreme engelle
-
+                
                 ChangeBadge(change: "%1.20", isPositive: true)
                 Spacer()
             }
             .padding(.horizontal)
             .padding(.top)
-
+            
             // MARK: - Chart
             Chart {
                 ForEach(data) { item in
@@ -82,7 +84,7 @@ struct PriceChartView: View {
                         LinearGradient(
                             colors: [
                                 brandPurple.opacity(0.4),
-                                .hsBackgroundSecondary
+                                themeManager.theme.backgroundSecondary
                             ],
                             startPoint: .top,
                             endPoint: .bottom
@@ -92,16 +94,16 @@ struct PriceChartView: View {
                 
                 if let selectedDate {
                     RuleMark(x: .value("Selected", selectedDate))
-                        .foregroundStyle(Color.hsTextPrimary.opacity(0.5))
+                        .foregroundStyle(themeManager.theme.textPrimary.opacity(0.5))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
                         .annotation(position: .top, overflowResolution: .init(
-                            x: .fit(to: .chart), // <-- kenar taşmasını engeller
+                            x: .fit(to: .chart),
                             y: .disabled
                         )) {
                             Text(selectedDate, format: .dateTime.hour().minute())
                                 .font(.caption2)
                                 .padding(4)
-                                .background(Color.hsBackgroundSecondary)
+                                .background(themeManager.theme.backgroundSecondary)
                                 .cornerRadius(4)
                         }
                 }
@@ -116,7 +118,7 @@ struct PriceChartView: View {
                         if let v = value.as(Double.self) {
                             Text("$\(v, specifier: "%.0f")")
                                 .font(.system(size: 10))
-                                .foregroundColor(.gray)
+                                .foregroundColor(themeManager.theme.textSecondary)
                         }
                     }
                 }
@@ -158,8 +160,8 @@ struct PriceChartView: View {
                         }
                 }
             }
-            .background(Color.hsBackgroundSecondary)
-
+            .background(themeManager.theme.backgroundSecondary)
+            
             Divider()
         }
     }

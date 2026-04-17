@@ -12,6 +12,7 @@ struct NotificationsView: View {
     
     private var appState = Container.shared.appState()
     @State private var vm = NotificationsViewModel()
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         Group {
@@ -20,17 +21,16 @@ struct NotificationsView: View {
             } else if vm.notifications.isEmpty {
                 EmptyStateView(
                     icon: "bell",
-                    title: "Bildirim yok",
-                    message: "Kira gelirleri, token transferleri ve mülk güncellemeleri burada görünecek"
+                    title: String.localized("notifications.empty.title"),
+                    message: String.localized("notifications.empty.message")
                 )
             } else {
                 notificationList
             }
         }
-        .background(Color.hsBackground)
-        .navigationTitle("Bildirimler")
+        .background(themeManager.theme.background)
+        .navigationTitle(String.localized("notifications.nav_title"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .onDisappear {
             Task { await vm.unsubscribeFromRealtime() }
@@ -38,15 +38,14 @@ struct NotificationsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if vm.unreadCount > 0 {
-                    Button("Tümünü Oku") {
+                    Button(String.localized("notifications.action.mark_all_read")) {
                         guard let uid = appState.currentUser?.id else { return }
                         Task { await vm.markAllAsRead(userId: uid) }
                     }
-                    .foregroundStyle(Color.hsTextPrimary)
-                    .font(.system(size: 12,weight: .medium))
+                    .foregroundStyle(themeManager.theme.textPrimary)
+                    .font(.system(size: 12, weight: .medium))
                 }
             }
-            .sharedBackgroundVisibility(.hidden)
         }
         .task {
             guard let uid = appState.currentUser?.id else { return }
@@ -68,7 +67,7 @@ struct NotificationsView: View {
                     .buttonStyle(.plain)
                     
                     if notification.id != vm.notifications.last?.id {
-                        Divider().padding(.leading, 70)
+                        Divider().padding(.leading, 16)
                     }
                 }
             }

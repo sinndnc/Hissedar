@@ -1,5 +1,5 @@
 //
-//  MarketTabView.swift
+//  DiscoverTabView.swift
 //  Hissedar
 //
 //  Created by Sinan Dinç on 4/8/26.
@@ -22,7 +22,7 @@ struct DiscoverTabView: View {
         VStack(spacing: 5) {
             
             // MARK: Trending
-            SectionHeaderView(trendingTitle, actionTitle: "Tümünü Gör →")
+            SectionHeaderView(trendingTitle, actionTitle: String.localized("common.see_all_arrow"))
             
             GeometryReader { screen in
                 let cardWidth = screen.size.width * 0.6
@@ -45,7 +45,7 @@ struct DiscoverTabView: View {
             .frame(height: UIScreen.main.bounds.width * 0.6 * 3 / 4)
             
             // MARK: List
-            SectionHeaderView(listTitle, actionTitle: "Sırala ↓")
+            SectionHeaderView(listTitle, actionTitle: String.localized("common.sort_arrow"))
             
             FilterBar(
                 items: AssetSort.allCases,
@@ -79,9 +79,20 @@ struct DiscoverTabView: View {
     @ViewBuilder
     private func defaultIcon(for item: AssetItem) -> some View {
         if let url = item.imageUrl, let parsed = URL(string: url) {
-            AsyncImage(url: parsed).scaledToFit()
+            AsyncImage(url: parsed) { phase in
+                switch phase {
+                case .success(let image):
+                    image.resizable().scaledToFill()
+                default:
+                    placeholderIcon(for: item)
+                }
+            }
         } else {
-            Text(item.title.prefix(1)).font(.title2)
+            placeholderIcon(for: item)
         }
+    }
+
+    private func placeholderIcon(for item: AssetItem) -> some View {
+        Text(item.title.prefix(1)).font(.title2)
     }
 }

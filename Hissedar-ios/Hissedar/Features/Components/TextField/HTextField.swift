@@ -37,7 +37,7 @@ struct HTextField: View {
             .overlay(
                 RoundedRectangle(cornerRadius: .hRadiusSm)
                     .strokeBorder(
-                        focused ? Color.hJade : Color.hsBorder,
+                        focused ? Color.hsPurple600 : Color.hsBorder,
                         lineWidth: focused ? 1.5 : 1
                     )
                     .animation(.easeInOut(duration: 0.15), value: focused)

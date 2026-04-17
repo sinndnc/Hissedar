@@ -18,7 +18,7 @@ private enum ViewType {
 }
 
 struct DiscoverView: View {
-  
+    
     @State private var vm = MarketViewModel()
     @State private var selectedTab: ViewType = .list
     @State private var notificationManager = NotificationManager.shared
@@ -26,6 +26,8 @@ struct DiscoverView: View {
     // Map state
     @State private var selectedMapItem: AssetItem?
     @State private var mapPosition: MapCameraPosition = .automatic
+    
+    @Environment(ThemeManager.self) private var themeManager
     
     private var trendingAssets: [AssetItem] {
         vm.filteredAssets
@@ -47,7 +49,8 @@ struct DiscoverView: View {
         @Bindable var vm = vm
         NavigationStack {
             ZStack(alignment: .top) {
-                Color.hsBackground.ignoresSafeArea()
+                
+                themeManager.theme.background.ignoresSafeArea()
                 
                 switch selectedTab {
                 case .list:
@@ -61,8 +64,9 @@ struct DiscoverView: View {
             .refreshable{ await vm.refresh() }
             .navigationBarTitleDisplayMode(.inline)
             .toolbarVisibility(.visible, for: .navigationBar)
-            .toolbarBackground(Color.hsBackground, for: .navigationBar)
             .toolbar { leadingToolBar; centerToolBar; trailingToolBar }
+            .toolbarBackground(themeManager.theme.background, for: .navigationBar)
+            .animation(.easeInOut(duration: 0.3), value: themeManager.currentThemeType)
         }
     }
     
@@ -70,11 +74,11 @@ struct DiscoverView: View {
     
     @ToolbarContentBuilder
     private var centerToolBar: some ToolbarContent {
-        ToolbarItem(placement: .title) {
+        ToolbarItem(placement: .principal) {
             Picker("", selection: $selectedTab) {
-                Text("List")
+                Text(String.localized("discover.tab.list"))
                     .tag(ViewType.list)
-                Text("Map")
+                Text(String.localized("discover.tab.map"))
                     .tag(ViewType.map)
             }
             .pickerStyle(.segmented)
@@ -97,12 +101,12 @@ struct DiscoverView: View {
                     .overlay(alignment: .topLeading) {
                         if notificationManager.unreadCount > 0 {
                             Text("\(notificationManager.unreadCount)")
-                                .padding(5)
-                                .background(.red)
+                                .padding(4)
+                                .background(themeManager.theme.error)
                                 .clipShape(Circle())
-                                .offset(x: -5, y: -5)
-                                .foregroundStyle(Color.hsTextPrimary)
-                                .font(.system(size: 10, weight: .medium))
+                                .offset(x: 4, y: -4)
+                                .foregroundStyle(.white)
+                                .font(.system(size: 10, weight: .bold))
                         }
                     }
             }
@@ -121,9 +125,7 @@ struct DiscoverView: View {
                         .transition(.opacity.combined(with: .move(edge: .trailing)))
                         .animation(.easeInOut(duration: 0.25), value: vm.selectedFilter)
                 } header: {
-                    DiscoverSegmentedControl(selected: $vm.selectedFilter)
-                        .padding()
-                        .background(Color.hsBackground)
+                     DiscoverSegmentedControl(selected: $vm.selectedFilter)
                 }
             }
         }
@@ -153,20 +155,21 @@ struct DiscoverView: View {
                     }
                 }
             }
-            .mapStyle(.standard(pointsOfInterest: .excludingAll))
+            .mapStyle(themeManager.currentThemeType == .dark ? .standard(emphasis: .muted) : .standard)
             .ignoresSafeArea(edges: .bottom)
             
             // Asset count badge
             VStack {
                 HStack {
                     Spacer()
-                    Text("\(mappableAssets.count) mülk")
+                    Text(String(format: String.localized("discover.map.property_count"), mappableAssets.count))
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
-                        .background(.ultraThinMaterial)
+                        .background(themeManager.theme.backgroundSecondary.opacity(0.8))
                         .clipShape(Capsule())
+                        .overlay(Capsule().stroke(themeManager.theme.border, lineWidth: 1))
                         .padding(.trailing, 16)
                         .padding(.top, 8)
                 }
@@ -197,7 +200,6 @@ struct DiscoverView: View {
     }
     
     // MARK: - Tab Content
-    
     @ViewBuilder
     private var tabContent: some View {
         let config = tabConfig(for: vm.selectedFilter)
@@ -223,10 +225,18 @@ struct DiscoverView: View {
     
     private func tabConfig(for filter: AssetFilter) -> TabConfig {
         switch filter {
-        case .all:             TabConfig(trendingTitle: "Trendler",              listTitle: "Tüm Varlıklar")
-        case .type(.property): TabConfig(trendingTitle: "Trend Mülkler",         listTitle: "Mülkler")
-        case .type(.art):      TabConfig(trendingTitle: "Öne Çıkan Eserler",     listTitle: "Sanat Piyasası")
-        case .type(.nft):      TabConfig(trendingTitle: "Popüler Koleksiyonlar", listTitle: "NFT Koleksiyonları")
+        case .all:
+            return TabConfig(trendingTitle: String.localized("discover.section.trending"),
+                             listTitle: String.localized("discover.section.all_assets"))
+        case .type(.property):
+            return TabConfig(trendingTitle: String.localized("discover.section.trending_properties"),
+                             listTitle: String.localized("discover.section.properties"))
+        case .type(.art):
+            return TabConfig(trendingTitle: String.localized("discover.section.featured_art"),
+                             listTitle: String.localized("discover.section.art_market"))
+        case .type(.nft):
+            return TabConfig(trendingTitle: String.localized("discover.section.popular_nfts"),
+                             listTitle: String.localized("discover.section.nft_collections"))
         }
     }
     
@@ -242,7 +252,10 @@ struct DiscoverView: View {
     private func headerButton(icon: String) -> some View {
         Image(systemName: icon)
             .frame(width: 40, height: 40)
-            .foregroundStyle(Color.hsTextPrimary)
+            .foregroundStyle(themeManager.theme.textPrimary)
+            .background(themeManager.theme.backgroundSecondary)
+            .clipShape(Circle())
             .font(.system(size: 16, weight: .medium))
+            .overlay(Circle().stroke(themeManager.theme.border, lineWidth: 0.5))
     }
 }

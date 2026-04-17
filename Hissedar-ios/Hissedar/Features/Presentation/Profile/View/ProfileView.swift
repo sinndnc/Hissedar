@@ -3,69 +3,55 @@ import Factory
 
 struct ProfileView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
     @Injected(\.profileViewModel) private var vm
+    
+    @Environment(\.dismiss) private var dismiss
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         NavigationStack {
             List{
-                Section("General"){ generalSection }
-                    .listRowBackground(Color.hsBackgroundSecondary)
+                Section(String.localized("profile.general.section.title")){ generalSection }
+                    .listRowBackground(themeManager.theme.backgroundSecondary)
                 
-                Section("Assets"){ featuresSection }
-                    .listRowBackground(Color.hsBackgroundSecondary)
+                Section(String.localized("profile.asset.section.title")){ featuresSection }
+                    .listRowBackground(themeManager.theme.backgroundSecondary)
                 
-                Section("Security"){ secuirtySections }
-                    .listRowBackground(Color.hsBackgroundSecondary)
+                Section(String.localized("profile.security.section.title")){ secuirtySections }
+                    .listRowBackground(themeManager.theme.backgroundSecondary)
                 
                 Section {
                     VStack {
                         versionInfo
-//                        signOutButton
+                        //                        signOutButton
                     }
                 }
                 .listRowBackground(Color.clear)
             }
             .listStyle(.grouped)
             .scrollIndicators(.hidden)
-            .navigationTitle("Profile")
-            .background(Color.hsBackground)
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.large)
+            .background(themeManager.theme.background)
             .toolbarVisibility(.visible, for: .navigationBar)
-            .toolbarBackground(Color.hsBackground, for: .navigationBar)
-//            .toolbar{ ToolbarItem(placement: .principal) { toolbarTitleItem} }
-//                ToolbarItem(placement: .topBarLeading){ toolbarCloseItem}
+            .navigationTitle(String.localized("profile.title"))
+            .toolbarBackground(themeManager.theme.background, for: .navigationBar)
             .navigationDestination(for: ProfileDestination.self) { route in
                 switch route {
                 case .theme: ThemeView()
+                case .wallets: WalletView()
                 case .support: SupportView()
                 case .security: SecurityView()
                 case .rents: RentHistoryView()
-                case .wallets: WalletRootView()
                 case .alarms: PriceAlertsListView()
                 case .profile: ProfileSettingsView()
                 case .transactions: TransactionsView()
+                case .language: LanguageSettingsView()
                 case .addProperty: AddAssetWizardView()
                 case .privacyPolicy: PrivacyPolicyView()
                 case .notifications: NotificationSettingsView()
                 }
             }
-        }
-    }
-    
-    private var toolbarTitleItem : some View {
-        Text("Profil")
-            .font(.hHeadline)
-            .foregroundStyle(Color.hWhite)
-    }
-    
-    private var toolbarCloseItem : some View {
-        Button{ dismiss() } label:{
-            Image(systemName: "xmark")
-                .font(.hCaptionMed)
-                .foregroundStyle(Color.hWhite)
         }
     }
     
@@ -98,10 +84,10 @@ struct ProfileView: View {
     // MARK: - Version Info
     private var versionInfo: some View {
         VStack(spacing: 4) {
-            Text("Hissedar v1.0")
-                .font(.hCaption).foregroundStyle(Color.hsTextPrimary)
-            Text("© 2026 Hissedar. Tüm hakları saklıdır.")
-                .font(.hLabel).foregroundStyle(Color.hsTextPrimary.opacity(0.5))
+            Text("\(String.localized("common.app_name")) v1.0")
+                .font(.hCaption).foregroundStyle(themeManager.theme.textPrimary)
+            Text(String.localized("profile.version.copyright"))
+                .font(.hLabel).foregroundStyle(themeManager.theme.textPrimary.opacity(0.5))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 6)
@@ -113,9 +99,10 @@ struct ProfileView: View {
             HStack(spacing: 8) {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
                     .font(.system(size: 15))
-                Text("Çıkış Yap")
+                Text(String.localized("profile.action.logout"))
                     .font(.hBodyMedium)
             }
         }
     }
+    
 }

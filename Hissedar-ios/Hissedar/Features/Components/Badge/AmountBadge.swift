@@ -11,9 +11,11 @@ struct AmountBadge: View {
     
     let price: String
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         Text(price)
             .font(.system(size: 14, weight: .bold, design: .monospaced))
-            .foregroundColor(Color.hsTextPrimary)
+            .foregroundColor(themeManager.theme.textPrimary)
     }
 }

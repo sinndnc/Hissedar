@@ -14,6 +14,10 @@ enum AppTab: String, CaseIterable {
     case portfolio = "Portfolio"
     case profile = "Profile"
     
+    var label: String{
+        return String.localized("app_tab.type.\(self.rawValue)")
+    }
+    
     var icon: String {
         switch self {
         case .discover: return "safari"

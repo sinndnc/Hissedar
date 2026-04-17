@@ -7,6 +7,7 @@ struct DiscoverSegmentedControl: View {
     
     @Binding var selected: AssetFilter
     @Namespace private var namespace
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(spacing: 4) {
@@ -22,14 +23,18 @@ struct DiscoverSegmentedControl: View {
                         Text(tab.label)
                             .font(.system(size: 13, weight: .semibold))
                     }
-                    .foregroundColor(isActive ? Color.hsTextPrimary : Color.hsTextTertiary)
+                    .foregroundColor(
+                        isActive ?
+                        themeManager.theme.textPrimary :
+                            themeManager.theme.textSecondary
+                    )
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
                     .background {
                         if isActive {
                             RoundedRectangle(cornerRadius: 13)
-                                .fill(Color.hsBackgroundTertiary)
-                                .shadow(color: Color.hsBackgroundSecondary.opacity(0.3),radius: 8,y: 2)
+                                .fill(themeManager.theme.backgroundTertiary)
+                                .shadow(color: themeManager.theme.backgroundSecondary.opacity(0.3),radius: 8,y: 2)
                                 .matchedGeometryEffect(id: "activeTab", in: namespace)
                         }
                     }
@@ -38,9 +43,9 @@ struct DiscoverSegmentedControl: View {
             }
         }
         .padding(4)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 15))
+        .padding()
+        .background(themeManager.theme.background)
     }
 }
-
-

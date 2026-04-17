@@ -2,8 +2,6 @@
 //  AssetType.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/8/26.
-//
 
 import Foundation
 
@@ -13,18 +11,21 @@ enum AssetType: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
     
     var label: String {
-        switch self {
-        case .property: "Property"
-        case .art:      "Art"
-        case .nft:      "NFT"
+        return switch self {
+        case .property:
+            String.localized("asset.type.property")
+        case .art:
+            String.localized("asset.type.art")
+        case .nft:
+            String.localized("asset.type.nft")
         }
     }
     
     var icon: String {
         switch self {
-        case .property: "building.2.fill"
-        case .art:      "paintpalette.fill"
-        case .nft:      "seal.fill"
+        case .property: return "building.2.fill"
+        case .art:      return "paintpalette.fill"
+        case .nft:      return "seal.fill"
         }
     }
     

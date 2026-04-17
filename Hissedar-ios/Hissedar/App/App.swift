@@ -12,12 +12,17 @@ struct HissedarApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     private var appState = Container.shared.appState()
+    
     @State private var selectedTab: AppTab = .discover
+    @State private var themeManager = ThemeManager.shared
     
     var body: some Scene {
         WindowGroup {
             RootView(selectedTab: $selectedTab)
-                .tint(Color.hEmerald)
+                .environment(themeManager)
+                .preferredColorScheme(
+                    themeManager.currentThemeType == .dark ? .dark : .light
+                )
                 .onChange(of: NotificationManager.shared.pendingDeepLink) { _, link in
                     guard let link else { return }
                     handleDeepLink(link)

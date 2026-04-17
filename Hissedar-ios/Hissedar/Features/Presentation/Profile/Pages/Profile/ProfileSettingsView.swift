@@ -1,4 +1,5 @@
 import SwiftUI
+import Factory
 
 // MARK: - Profile Settings View
 struct ProfileSettingsView: View {
@@ -8,6 +9,8 @@ struct ProfileSettingsView: View {
     @State private var showKYCView = false
     @State private var showIBANEditor = false
     @State private var showLogoutAlert = false
+    
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -22,13 +25,13 @@ struct ProfileSettingsView: View {
             .padding(.top, 8)
             .padding(.bottom, 40)
         }
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Profil Bilgileri")
+                Text(String.localized("profile.settings.nav_title"))
                     .font(.hHeadline)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
         .sheet(isPresented: $showKYCView) {
@@ -37,13 +40,13 @@ struct ProfileSettingsView: View {
         .sheet(isPresented: $showIBANEditor) {
             IBANEditorView(iban: $viewModel.iban)
         }
-        .alert("Çıkış Yap", isPresented: $showLogoutAlert) {
-            Button("Vazgeç", role: .cancel) { }
-            Button("Çıkış Yap", role: .destructive) {
+        .alert(String.localized("profile.settings.logout.title"), isPresented: $showLogoutAlert) {
+            Button(String.localized("common.cancel"), role: .cancel) { }
+            Button(String.localized("profile.settings.logout.confirm"), role: .destructive) {
                 viewModel.logout()
             }
         } message: {
-            Text("Hesabınızdan çıkış yapmak istediğinize emin misiniz?")
+            Text(String.localized("profile.settings.logout.message"))
         }
         .onAppear {
             viewModel.loadProfile()
@@ -59,35 +62,28 @@ struct ProfileSettingsView: View {
                 ZStack(alignment: .bottomTrailing) {
                     ZStack {
                         Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [Color.hJade.opacity(0.3), Color.hEmerald.opacity(0.15)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
+                            .fill(themeManager.theme.backgroundSecondary)
                             .frame(width: 100, height: 100)
                         
                         if let initials = viewModel.initials {
                             Text(initials)
                                 .font(.system(size: 34, weight: .bold, design: .rounded))
-                                .foregroundStyle(Color.hWhite)
+                                .foregroundStyle(themeManager.theme.textPrimary)
                         } else {
                             Image(systemName: "person.fill")
                                 .font(.system(size: 34))
-                                .foregroundStyle(Color.hWhite.opacity(0.6))
+                                .foregroundStyle(themeManager.theme.textPrimary.opacity(0.6))
                         }
                     }
                     
-                    // Camera badge
                     ZStack {
                         Circle()
-                            .fill(Color.hJade)
+                            .fill(themeManager.theme.textSecondary)
                             .frame(width: 30, height: 30)
                         
                         Image(systemName: "camera.fill")
                             .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Color.hCharcoal)
+                            .foregroundStyle(themeManager.theme.accent)
                     }
                     .offset(x: 2, y: 2)
                 }
@@ -97,7 +93,7 @@ struct ProfileSettingsView: View {
             VStack(spacing: 4) {
                 Text(viewModel.fullName)
                     .font(.hBodyMedium)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 
                 kycBadgeLabel
             }
@@ -108,329 +104,160 @@ struct ProfileSettingsView: View {
     
     @ViewBuilder
     private var kycBadgeLabel: some View {
-        switch viewModel.kycStatus {
-        case .verified:
-            HStack(spacing: 4) {
-                Image(systemName: "checkmark.seal.fill")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Color.hJade)
-                Text("Doğrulanmış Hesap")
-                    .font(.hLabel)
-                    .foregroundStyle(Color.hJade)
-            }
-        case .pending:
-            HStack(spacing: 4) {
-                Image(systemName: "clock.fill")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Color.hGold)
-                Text("Doğrulama Bekleniyor")
-                    .font(.hLabel)
-                    .foregroundStyle(Color.hGold)
-            }
-        case .rejected:
-            HStack(spacing: 4) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Color.hsError)
-                Text("Doğrulama Reddedildi")
-                    .font(.hLabel)
-                    .foregroundStyle(Color.hsError)
-            }
-        case .notStarted:
-            HStack(spacing: 4) {
-                Image(systemName: "person.badge.clock")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Color.hsTextPrimary)
-                Text("Doğrulama Gerekli")
-                    .font(.hLabel)
-                    .foregroundStyle(Color.hsTextPrimary)
-            }
+        HStack(spacing: 4) {
+            Image(systemName: viewModel.kycStatus.icon)
+                .font(.system(size: 11))
+            Text(viewModel.kycStatus.localizedLabel)
+                .font(.hLabel)
         }
+        .foregroundStyle(viewModel.kycStatus == .rejected ? themeManager.theme.error : themeManager.theme.textSecondary)
     }
     
     // MARK: - KYC Status Banner
     @ViewBuilder
     private var kycStatusBanner: some View {
-        switch viewModel.kycStatus {
-        case .verified:
-            kycVerifiedBanner
-        case .pending:
-            kycPendingBanner
-        case .rejected:
-            kycRejectedBanner
-        case .notStarted:
-            kycStartBanner
-        }
-    }
-    
-    private var kycVerifiedBanner: some View {
         Button {
             showKYCView = true
         } label: {
             HStack(spacing: 14) {
                 ZStack {
                     Circle()
-                        .fill(Color.hJade.opacity(0.12))
+                        .fill(themeManager.theme.textSecondary.opacity(0.12))
                         .frame(width: 44, height: 44)
                     
-                    Image(systemName: "checkmark.shield.fill")
+                    Image(systemName: viewModel.kycStatus.displayTitle)
                         .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(Color.hJade)
+                        .foregroundStyle(viewModel.kycStatus == .rejected ? themeManager.theme.error : themeManager.theme.textSecondary)
                 }
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("KYC Doğrulaması Tamamlandı")
+                    Text(viewModel.kycStatus.bannerTitle)
                         .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     
-                    Text("MASAK uyumlu kimlik doğrulaması aktif")
+                    Text(viewModel.kycStatus.bannerDesc)
                         .font(.hLabel)
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                 }
                 
                 Spacer()
                 
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Color.hsTextPrimary)
-            }
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.hJade.opacity(0.12), lineWidth: 1)
-                    )
-            )
-        }
-        .buttonStyle(.plain)
-    }
-    
-    private var kycPendingBanner: some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(Color.hGold.opacity(0.12))
-                    .frame(width: 44, height: 44)
-                
-                Image(systemName: "hourglass")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(Color.hGold)
-                    .symbolEffect(.pulse, options: .repeating)
-            }
-            
-            VStack(alignment: .leading, spacing: 3) {
-                Text("Doğrulama İnceleniyor")
-                    .font(.hBody)
-                    .foregroundStyle(Color.hWhite)
-                
-                Text("Kimlik doğrulama süreci devam ediyor")
-                    .font(.hLabel)
-                    .foregroundStyle(Color.hsTextPrimary)
-            }
-            
-            Spacer()
-        }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.hsBackgroundSecondary)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.hGold.opacity(0.15), lineWidth: 1)
-                )
-        )
-    }
-    
-    private var kycRejectedBanner: some View {
-        Button {
-            showKYCView = true
-        } label: {
-            HStack(spacing: 14) {
-                ZStack {
-                    Circle()
-                        .fill(Color.hsError.opacity(0.12))
-                        .frame(width: 44, height: 44)
-                    
-                    Image(systemName: "xmark.shield.fill")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(Color.hsError)
-                }
-                
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("Doğrulama Reddedildi")
-                        .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
-                    
-                    Text("Tekrar deneyin veya destek ile iletişime geçin")
+                if viewModel.kycStatus == .rejected {
+                    Text(String.localized("common.retry"))
                         .font(.hLabel)
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.error)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(themeManager.theme.error.opacity(0.12)))
+                } else {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(themeManager.theme.textPrimary)
                 }
-                
-                Spacer()
-                
-                Text("Tekrarla")
-                    .font(.hLabel)
-                    .foregroundStyle(Color.hsError)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(
-                        Capsule().fill(Color.hsError.opacity(0.12))
-                    )
             }
             .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
+                    .fill(themeManager.theme.backgroundSecondary)
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.hsError.opacity(0.15), lineWidth: 1)
+                            .stroke(viewModel.kycStatus == .rejected ? themeManager.theme.error.opacity(0.2) : themeManager.theme.textSecondary.opacity(0.12), lineWidth: 1)
                     )
             )
         }
         .buttonStyle(.plain)
-    }
-    
-    private var kycStartBanner: some View {
-        Button {
-            showKYCView = true
-        } label: {
-            HStack(spacing: 14) {
-                ZStack {
-                    Circle()
-                        .fill(Color.hJade.opacity(0.12))
-                        .frame(width: 44, height: 44)
-                    
-                    Image(systemName: "person.badge.shield.checkmark.fill")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(Color.hJade)
-                }
-                
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("Kimlik Doğrulaması Gerekli")
-                        .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
-                    
-                    Text("Yatırım yapmak için KYC doğrulamasını tamamlayın")
-                        .font(.hLabel)
-                        .foregroundStyle(Color.hsTextPrimary)
-                }
-                
-                Spacer()
-                
-                Image(systemName: "arrow.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.hJade)
-            }
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.hJade.opacity(0.2), lineWidth: 1)
-                    )
-            )
-        }
-        .buttonStyle(.plain)
+        .disabled(viewModel.kycStatus == .pending)
     }
     
     // MARK: - Personal Info
     private var personalInfoSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionHeader(title: "Kişisel Bilgiler")
+            SectionHeader(title: String.localized("profile.settings.section.personal"))
             
             VStack(spacing: 0) {
                 ProfileInfoRow(
                     icon: "person.fill",
-                    label: "Ad Soyad",
+                    label: String.localized("profile.settings.label.fullname"),
                     value: viewModel.fullName,
-                    color: .hJade,
+                    color: themeManager.theme.textSecondary,
                     isEditable: true
                 ) {
                     TextField("", text: $viewModel.fullName)
                         .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
-                        .tint(Color.hJade)
+                        .foregroundStyle(themeManager.theme.textPrimary)
+                        .tint(themeManager.theme.textSecondary)
                 }
                 
-                ProfileDivider()
+                Divider().padding(.leading, 64)
                 
                 ProfileInfoRow(
                     icon: "envelope.fill",
-                    label: "E-posta",
+                    label: String.localized("profile.settings.label.email"),
                     value: viewModel.email,
-                    color: .hGold,
+                    color: themeManager.theme.textSecondary,
                     isEditable: true
                 ) {
                     TextField("", text: $viewModel.email)
                         .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
-                        .tint(Color.hJade)
+                        .foregroundStyle(themeManager.theme.textPrimary)
+                        .tint(themeManager.theme.textSecondary)
                         .keyboardType(.emailAddress)
-                        .textContentType(.emailAddress)
                         .autocapitalization(.none)
                 }
                 
-                ProfileDivider()
+                Divider().padding(.leading, 64)
                 
                 ProfileInfoRow(
                     icon: "phone.fill",
-                    label: "Telefon",
+                    label: String.localized("profile.settings.label.phone"),
                     value: viewModel.phone,
-                    color: .hMint,
+                    color: themeManager.theme.textSecondary,
                     isEditable: true
                 ) {
                     TextField("", text: $viewModel.phone)
                         .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
-                        .tint(Color.hJade)
+                        .foregroundStyle(themeManager.theme.textPrimary)
+                        .tint(themeManager.theme.textSecondary)
                         .keyboardType(.phonePad)
-                        .textContentType(.telephoneNumber)
                 }
                 
-                ProfileDivider()
+                Divider().padding(.leading, 64)
                 
-                // TC Kimlik - Read only, masked
                 ProfileInfoRow(
                     icon: "person.text.rectangle.fill",
-                    label: "TC Kimlik No",
+                    label: String.localized("profile.settings.label.tcno"),
                     value: viewModel.maskedTCNo,
-                    color: .hSilver,
+                    color: themeManager.theme.textSecondary,
                     isEditable: false,
                     isLocked: true
                 )
             }
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
-            )
+            .background(RoundedRectangle(cornerRadius: 16).fill(themeManager.theme.backgroundSecondary))
         }
     }
     
     // MARK: - Financial Info
     private var financialInfoSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionHeader(title: "Finansal Bilgiler")
+            SectionHeader(title: String.localized("profile.settings.section.financial"))
             
             VStack(spacing: 0) {
                 HStack(spacing: 14) {
-                    IconBadge(icon: "creditcard.fill", color: .hGold)
+                    IconBadge(icon: "creditcard.fill", color: themeManager.theme.textSecondary)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("IBAN")
+                        Text(String.localized("profile.settings.label.iban"))
                             .font(.hLabel)
-                            .foregroundStyle(Color.hsTextPrimary)
+                            .foregroundStyle(themeManager.theme.textPrimary)
                         
                         if viewModel.iban.isEmpty {
-                            Text("Henüz eklenmedi")
+                            Text(String.localized("profile.settings.iban.empty"))
                                 .font(.hBody)
-                                .foregroundStyle(Color.hWhite.opacity(0.3))
+                                .foregroundStyle(themeManager.theme.textPrimary.opacity(0.3))
                         } else {
                             Text(viewModel.maskedIBAN)
                                 .font(.system(size: 14, design: .monospaced))
-                                .foregroundStyle(Color.hWhite)
+                                .foregroundStyle(themeManager.theme.textPrimary)
                         }
                     }
                     
@@ -439,18 +266,15 @@ struct ProfileSettingsView: View {
                     Button {
                         showIBANEditor = true
                     } label: {
-                        Text(viewModel.iban.isEmpty ? "Ekle" : "Düzenle")
+                        Text(viewModel.iban.isEmpty ? String.localized("common.add") : String.localized("common.edit"))
                             .font(.hLabel)
-                            .foregroundStyle(Color.hJade)
+                            .foregroundStyle(themeManager.theme.textSecondary)
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
             }
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
-            )
+            .background(RoundedRectangle(cornerRadius: 16).fill(themeManager.theme.backgroundSecondary))
         }
     }
     
@@ -461,28 +285,22 @@ struct ProfileSettingsView: View {
         } label: {
             HStack(spacing: 8) {
                 if viewModel.isSaving {
-                    ProgressView()
-                        .tint(Color.hCharcoal)
+                    ProgressView().tint(themeManager.theme.textSecondary)
                 } else {
-                    Text("Değişiklikleri Kaydet")
+                    Text(String.localized("profile.settings.button.save"))
                         .font(.hBodyMedium)
                 }
             }
-            .foregroundStyle(Color.hCharcoal)
+            .foregroundStyle(themeManager.theme.textSecondary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .background(
                 RoundedRectangle(cornerRadius: 14)
-                    .fill(
-                        viewModel.hasChanges
-                            ? Color.hJade
-                            : Color.hJade.opacity(0.4)
-                    )
+                    .fill(viewModel.hasChanges ? themeManager.theme.textSecondary : themeManager.theme.textSecondary.opacity(0.4))
             )
         }
         .buttonStyle(.plain)
         .disabled(!viewModel.hasChanges || viewModel.isSaving)
-        .animation(.easeInOut(duration: 0.2), value: viewModel.hasChanges)
     }
 }
 
@@ -490,11 +308,12 @@ struct ProfileSettingsView: View {
 
 struct SectionHeader: View {
     let title: String
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         Text(title)
             .font(.hCaptionMed)
-            .foregroundStyle(Color.hsTextPrimary)
+            .foregroundStyle(themeManager.theme.textPrimary)
             .padding(.leading, 4)
     }
 }
@@ -517,14 +336,6 @@ struct IconBadge: View {
     }
 }
 
-struct ProfileDivider: View {
-    var body: some View {
-        Divider()
-            .background(Color.hWhite.opacity(0.06))
-            .padding(.leading, 68)
-    }
-}
-
 struct ProfileInfoRow<Content: View>: View {
     let icon: String
     let label: String
@@ -533,6 +344,8 @@ struct ProfileInfoRow<Content: View>: View {
     var isEditable: Bool = false
     var isLocked: Bool = false
     let content: Content
+    
+    @Environment(ThemeManager.self) private var themeManager
     
     init(
         icon: String,
@@ -559,7 +372,7 @@ struct ProfileInfoRow<Content: View>: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(label)
                     .font(.hLabel)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 
                 if isEditable, !(content is EmptyView) {
                     content
@@ -568,8 +381,8 @@ struct ProfileInfoRow<Content: View>: View {
                         .font(.hBody)
                         .foregroundStyle(
                             isLocked
-                                ? Color.hWhite.opacity(0.5)
-                                : Color.hWhite
+                            ? themeManager.theme.textPrimary.opacity(0.5)
+                            : themeManager.theme.textPrimary
                         )
                 }
             }
@@ -579,7 +392,7 @@ struct ProfileInfoRow<Content: View>: View {
             if isLocked {
                 Image(systemName: "lock.fill")
                     .font(.system(size: 11))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
         .padding(.horizontal, 16)
@@ -593,6 +406,8 @@ struct AccountActionRow: View {
     let color: Color
     let action: () -> Void
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         Button(action: action) {
             HStack(spacing: 14) {
@@ -600,17 +415,46 @@ struct AccountActionRow: View {
                 
                 Text(title)
                     .font(.hBody)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
         }
         .buttonStyle(.plain)
+    }
+}
+
+extension KYCStatus {
+    var localizedLabel: String {
+        switch self {
+        case .verified: return String.localized("profile.kyc.verified")
+        case .pending: return String.localized("profile.kyc.pending")
+        case .rejected: return String.localized("profile.kyc.rejected")
+        case .notStarted: return String.localized("profile.kyc.not_started")
+        }
+    }
+    
+    var bannerTitle: String {
+        switch self {
+        case .verified: return String.localized("profile.kyc.banner.verified_title")
+        case .pending: return String.localized("profile.kyc.banner.pending_title")
+        case .rejected: return String.localized("profile.kyc.banner.rejected_title")
+        case .notStarted: return String.localized("profile.kyc.banner.start_title")
+        }
+    }
+    
+    var bannerDesc: String {
+        switch self {
+        case .verified: return String.localized("profile.kyc.banner.verified_desc")
+        case .pending: return String.localized("profile.kyc.banner.pending_desc")
+        case .rejected: return String.localized("profile.kyc.banner.rejected_desc")
+        case .notStarted: return String.localized("profile.kyc.banner.start_desc")
+        }
     }
 }

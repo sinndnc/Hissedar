@@ -40,15 +40,17 @@ struct TransactionItem: Codable, Identifiable {
     }
     
     var createdDate: Date {
-        ISO8601DateFormatter().date(from: createdAt) ?? .now
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.date(from: createdAt) ?? .now
     }
     
     var formattedAmount: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = "TRY"
-        formatter.maximumFractionDigits = 0
-        return formatter.string(from: NSNumber(value: amount ?? 0)) ?? "₺\(amount ?? 0)"
+        formatter.currencyCode = currency // Dinamik kur desteği
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: NSNumber(value: amount ?? 0)) ?? "\(currency)\(amount ?? 0)"
     }
     
     var truncatedHash: String {
@@ -60,6 +62,7 @@ struct TransactionItem: Codable, Identifiable {
     
     var polygonscanURL: URL? {
         guard let hash = txHash, hash.count > 10, hash != "pending" else { return nil }
+        // Testnet Amoy kullanıldığı için Amoy URL'i kalmıştır
         return URL(string: "https://amoy.polygonscan.com/tx/\(hash)")
     }
     
@@ -72,25 +75,22 @@ struct TransactionItem: Codable, Identifiable {
         status == .pendingBlockchain
     }
     
+    // Dile duyarlı göreceli tarih (Örn: "2 saat önce" veya "2 hours ago")
     var relativeDate: String {
-        let interval = Date().timeIntervalSince(createdDate)
-        if interval < 3600 { return "Az önce" }
-        if interval < 86400 { return "\(Int(interval / 3600)) saat önce" }
-        if interval < 172800 { return "Dün" }
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "tr_TR")
-        formatter.dateFormat = "d MMM"
-        return formatter.string(from: createdDate)
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        // Sistem dilini otomatik kullanır (tr veya en)
+        return formatter.localizedString(for: createdDate, relativeTo: Date())
     }
     
+    // Dile duyarlı tam tarih (Örn: "17 Nisan 2026")
     var fullDate: String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "tr_TR")
-        formatter.dateFormat = "d MMMM yyyy, HH:mm"
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
         return formatter.string(from: createdDate)
     }
 }
-
 
 enum TransactionType: String, Codable, CaseIterable {
     case buy, sell, deposit, withdraw, dividend
@@ -98,75 +98,54 @@ enum TransactionType: String, Codable, CaseIterable {
     case sellHsr = "sell_hsr"
     
     var label: String {
-        switch self {
-        case .buy: "Alım"
-        case .sell: "Satım"
-        case .deposit: "Yatırma"
-        case .withdraw: "Çekme"
-        case .dividend: "Kâr Payı"
-        case .buyHsr: "HSR Alım"
-        case .sellHsr: "HSR Satım"
-        }
+        return String.localized("transactions.type.\(self.rawValue)")
     }
     
     var icon: String {
         switch self {
-        case .buy: "arrow.down.left"
-        case .sell: "arrow.up.right"
-        case .deposit: "plus.circle"
-        case .withdraw: "minus.circle"
-        case .dividend: "sparkles"
-        case .buyHsr: "arrow.left.arrow.right"
-        case .sellHsr: "arrow.left.arrow.right"
+        case .buy: return "arrow.down.left"
+        case .sell: return "arrow.up.right"
+        case .deposit: return "plus.circle"
+        case .withdraw: return "minus.circle"
+        case .dividend: return "sparkles"
+        case .buyHsr, .sellHsr: return "arrow.left.arrow.right"
         }
     }
     
     var color: Color {
         switch self {
-        case .buy: .hsPurple600
-        case .sell: Color(hex: "#F472B6")
-        case .deposit: .hsSuccess
-        case .withdraw: .hsWarning
-        case .dividend: Color(hex: "#60A5FA")
-        case .buyHsr: .hsPurple400
-        case .sellHsr: Color(hex: "#F472B6")
+        case .buy: return .hsPurple600
+        case .sell: return Color(hex: "#F472B6")
+        case .deposit: return .hsSuccess
+        case .withdraw: return .hsWarning
+        case .dividend: return Color(hex: "#60A5FA")
+        case .buyHsr: return .hsPurple400
+        case .sellHsr: return Color(hex: "#F472B6")
         }
     }
     
     var isPositive: Bool {
         switch self {
-        case .sell, .deposit, .dividend, .sellHsr: true
-        case .buy, .withdraw, .buyHsr: false
+        case .sell, .deposit, .dividend, .sellHsr: return true
+        case .buy, .withdraw, .buyHsr: return false
         }
     }
 }
 
 enum TransactionStatus: String, Codable {
-    case confirmed
-    case completed
-    case pending
-    case failed
+    case confirmed, completed, pending, failed
     case pendingBlockchain = "pending_blockchain"
-    
-//    case unknown
 
     var label: String {
-        switch self {
-        case .confirmed: "Tamamlandı"
-        case .completed: "Tamamlandı"
-        case .pending: "Beklemede"
-        case .failed: "Başarısız"
-        case .pendingBlockchain: "Blockchain Bekleniyor"
-        }
+        return String.localized("transactions.status.\(self.rawValue)")
     }
     
     var color: Color {
         switch self {
-        case .confirmed: .hsSuccess
-        case .completed: .hsSuccess
-        case .pending: .hsWarning
-        case .failed: .hsError
-        case .pendingBlockchain: .hsPurple400
+        case .confirmed, .completed: return .hsSuccess
+        case .pending: return .hsWarning
+        case .failed: return .hsError
+        case .pendingBlockchain: return .hsPurple400
         }
     }
 }

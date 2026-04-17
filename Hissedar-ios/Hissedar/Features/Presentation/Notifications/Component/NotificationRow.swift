@@ -1,49 +1,54 @@
 //
-//  NotificationRow.swift
+//  NotificationSection.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 3/23/26.
+//  Created by Sinan Dinç on 4/13/26.
 //
 
 import SwiftUI
 
 struct NotificationRow: View {
     let notification: AppNotification
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
                     Text(notification.title)
-                        .foregroundStyle(Color.hsTextPrimary)
-                        .font(.system(size: 14,weight: .medium))
+                        .foregroundStyle(themeManager.theme.textPrimary)
+                        .font(.system(size: 14, weight: .medium))
                         .lineLimit(1)
+                    
                     if !notification.read {
                         Circle()
-                            .fill(Color.hsPurple700)
+                            .fill(themeManager.theme.accent)
                             .frame(width: 7, height: 7)
                     }
+                    
                     Spacer()
                     
-                    Text(notification.createdAt)
-                        .foregroundStyle(Color.hsTextTertiary)
-                        .font(.system(size: 12,weight: .medium))
+                    Text(notification.createdAt) // ViewModel'den gelen localize edilmiş tarih
+                        .foregroundStyle(themeManager.theme.textTertiary)
+                        .font(.system(size: 11, weight: .medium))
                 }
+                
                 Text(notification.body)
-                    .font(.system(size: 12,weight: .medium))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundStyle(themeManager.theme.textSecondary)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
             }
             
             Spacer()
             
             Image(systemName: "chevron.right")
-                .foregroundStyle(Color.hsTextPrimary)
-                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(themeManager.theme.textTertiary)
+                .font(.system(size: 10, weight: .semibold))
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
-        .opacity(notification.read ? 0.7 : 1)
-        .background(Color.hsBackgroundSecondary)
+        .background(notification.read ? Color.clear : themeManager.theme.accent.opacity(0.03))
+        .background(themeManager.theme.backgroundSecondary)
     }
 }

@@ -13,34 +13,39 @@ struct NotificationToggleRow: View {
     let title: String
     let subtitle: String
     @Binding var isOn: Bool
-    let accentColor: Color
+    
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(spacing: 14) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(accentColor.opacity(isOn ? 0.12 : 0.05))
+                    .fill(themeManager.theme.accent.opacity(isOn ? 0.12 : 0.05))
                     .frame(width: 38, height: 38)
                 
                 Image(systemName: icon)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(isOn ? accentColor : Color.hsTextPrimary)
+                    .foregroundStyle(
+                        isOn ?
+                        themeManager.theme.accent :
+                        themeManager.theme.textPrimary
+                    )
             }
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .font(.system(size: 13,weight: .semibold))
                 
                 Text(subtitle)
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                     .font(.system(size: 12,weight: .semibold))
             }
             
             Spacer()
             
             Toggle("", isOn: $isOn)
-                .toggleStyle(SwitchToggleStyle(tint: Color.hJade))
+                .toggleStyle(SwitchToggleStyle(tint: themeManager.theme.accent))
                 .labelsHidden()
         }
         .padding(15)

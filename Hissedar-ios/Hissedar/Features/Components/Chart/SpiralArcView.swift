@@ -125,16 +125,17 @@ struct ArcConfig : Identifiable{
 
 struct ArcLabelView: View {
     let arc: ArcConfig
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(alignment: .center, spacing: 4) {
             Text(arc.title)
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .font(.system(size: 11, weight: .light))
             
             Text("%\(Int(arc.progress * 100))")
                 .frame(width: 25, alignment: .trailing)
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
         }
         .padding(.horizontal, 4)

@@ -48,7 +48,7 @@ struct EmptyStateView: View {
                     }
                     .foregroundStyle(.white)
                     .padding(.horizontal, 24).padding(.vertical, 12)
-                    .background(Color.hEmerald)
+                    .background(Color.hsBackgroundSecondary)
                     .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)

@@ -19,12 +19,12 @@ enum CurrencyType: String, Codable, CaseIterable {
 
     var symbol: String {
         switch self {
-        case .TRY:  "₺"
-        case .USD:  "$"
-        case .EUR:  "€"
-        case .ETH:  "Ξ"
-        case .USDT: "$"
-        case .HSR:  "HSR "
+        case .TRY:  return "₺"
+        case .USD:  return "$"
+        case .EUR:  return "€"
+        case .ETH:  return "Ξ"
+        case .USDT: return "$"
+        case .HSR:  return "HSR "
         }
     }
 
@@ -32,23 +32,23 @@ enum CurrencyType: String, Codable, CaseIterable {
 
     var locale: Locale {
         switch self {
-        case .TRY:  Locale(identifier: "tr_TR")
-        case .USD:  Locale(identifier: "en_US")
-        case .EUR:  Locale(identifier: "de_DE")
-        case .ETH:  Locale(identifier: "en_US")
-        case .USDT: Locale(identifier: "en_US")
-        case .HSR:  Locale(identifier: "tr_TR")
+        case .TRY:  return Locale(identifier: "tr_TR")
+        case .USD:  return Locale(identifier: "en_US")
+        case .EUR:  return Locale(identifier: "de_DE")
+        case .ETH:  return Locale(identifier: "en_US")
+        case .USDT: return Locale(identifier: "en_US")
+        case .HSR:  return Locale(identifier: "tr_TR")
         }
     }
 
     var defaultFractionDigits: Int {
         switch self {
-        case .TRY:  0
-        case .USD:  2
-        case .EUR:  2
-        case .ETH:  4
-        case .USDT: 2
-        case .HSR:  0
+        case .TRY:  return 0
+        case .USD:  return 2
+        case .EUR:  return 2
+        case .ETH:  return 4
+        case .USDT: return 2
+        case .HSR:  return 0
         }
     }
 }
@@ -109,9 +109,9 @@ enum CurrencyFormatter {
         currency: CurrencyType,
         fractionDigits: Int? = nil
     ) -> String {
-        let sign = value >= 0 ? "+" : ""
+        let sign = value > 0 ? "+" : (value < 0 ? "-" : "")
         let formatted = format(abs(value), currency: currency, fractionDigits: fractionDigits)
-        return value < 0 ? "-\(formatted)" : "\(sign)\(formatted)"
+        return "\(sign)\(formatted)"
     }
 
     static func formatCompact(

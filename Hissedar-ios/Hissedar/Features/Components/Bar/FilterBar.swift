@@ -14,6 +14,7 @@ struct FilterBar<T: Hashable & CaseIterable>: View {
     @Binding var selected: T
     var animation: Animation = .easeInOut(duration: 0.2)
     
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {

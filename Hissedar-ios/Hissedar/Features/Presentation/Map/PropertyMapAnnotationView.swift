@@ -12,6 +12,8 @@ struct PropertyMapAnnotationView: View {
     let item: AssetItem
     let isSelected: Bool
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         VStack(spacing: 0) {
             // Pin bubble
@@ -25,14 +27,26 @@ struct PropertyMapAnnotationView: View {
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
-            .foregroundStyle(isSelected ? Color.hsBackground : Color.hsTextPrimary)
-            .background(isSelected ? Color.hsAccent : Color.hsBackgroundSecondary)
+            .foregroundStyle(
+                isSelected ?
+                themeManager.theme.background :
+                    themeManager.theme.textPrimary
+            )
+            .background(
+                isSelected ?
+                themeManager.theme.accent :
+                    themeManager.theme.backgroundSecondary
+            )
             .clipShape(Capsule())
             .shadow(color: .black.opacity(0.15), radius: 4, y: 2)
             
             // Arrow
             Triangle()
-                .fill(isSelected ? Color.hsAccent : Color.hsBackgroundSecondary)
+                .fill(
+                    isSelected ?
+                    themeManager.theme.accent :
+                        themeManager.theme.backgroundSecondary
+                )
                 .frame(width: 12, height: 6)
         }
         .scaleEffect(isSelected ? 1.15 : 1.0)

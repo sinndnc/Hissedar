@@ -12,6 +12,8 @@ struct SectionHeaderView: View {
     let actionTitle: String?
     var action: (() -> Void)?
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     init(_ title: String, actionTitle: String? = nil, action: (() -> Void)? = nil) {
         self.title = title
         self.actionTitle = actionTitle
@@ -22,7 +24,7 @@ struct SectionHeaderView: View {
         HStack {
             Text(title)
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.hsTextPrimary)
+                .foregroundColor(themeManager.theme.textPrimary)
             
             Spacer()
             
@@ -32,7 +34,7 @@ struct SectionHeaderView: View {
                 } label: {
                     Text(actionTitle)
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(Color.hsPurple400)
+                        .foregroundColor(themeManager.theme.textSecondary)
                 }
             }
         }

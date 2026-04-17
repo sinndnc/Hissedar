@@ -2,8 +2,6 @@
 //  AddAssetStep3View.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/15/26.
-//
 
 import SwiftUI
 
@@ -43,19 +41,14 @@ struct AddAssetStep3View: View {
         VStack(spacing: 24) {
             sectionHeader(
                 icon: "building.2.fill",
-                title: "Gayrimenkul Detayları",
-                subtitle: "Mülkün konum ve hukuki bilgilerini girin",
+                title: String.localized("wizard.step.2.property_title"),
+                subtitle: String.localized("wizard.step.2.property_subtitle"),
                 color: .blue
             )
             
-            // Kategori Seçimi
             VStack(spacing: 16) {
-                sectionLabel("Kategori")
-                
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 10) {
+                sectionLabel(String.localized("wizard.field.category.label"))
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                     ForEach(PropertyCategory.allCases) { category in
                         categoryCard(category)
                     }
@@ -63,172 +56,73 @@ struct AddAssetStep3View: View {
             }
             .formSection()
             
-            // Konum Bilgileri
             VStack(spacing: 16) {
-                sectionLabel("Konum Bilgileri")
+                sectionLabel(String.localized("wizard.section.location"))
                 
-                // Şehir Picker
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Şehir")
+                    Text(String.localized("wizard.field.city.label"))
                         .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(.secondary)
                     
                     Menu {
                         ForEach(TurkishCities.all, id: \.self) { city in
-                            Button(city) {
-                                viewModel.city = city
-                            }
+                            Button(city) { viewModel.city = city }
                         }
                     } label: {
                         HStack {
-                            Image(systemName: "mappin.circle.fill")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.tertiary)
-                            
-                            Text(viewModel.city.isEmpty ? "Şehir seçin..." : viewModel.city)
-                                .font(.system(size: 16))
+                            Image(systemName: "mappin.circle.fill").foregroundStyle(.tertiary)
+                            Text(viewModel.city.isEmpty ? String.localized("wizard.field.city.placeholder") : viewModel.city)
                                 .foregroundStyle(viewModel.city.isEmpty ? .tertiary : .primary)
-                            
                             Spacer()
-                            
-                            Image(systemName: "chevron.down")
-                                .font(.system(size: 12, weight: .semibold))
-                                .foregroundStyle(.tertiary)
+                            Image(systemName: "chevron.down").font(.system(size: 12)).foregroundStyle(.tertiary)
                         }
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 12)
-                        .background(Color(.systemGray6))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.horizontal, 14).padding(.vertical, 12)
+                        .background(Color(.systemGray6)).clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }
                 
-                FormTextField(
-                    label: "Adres",
-                    placeholder: "Tam adres girin...",
-                    text: $viewModel.address,
-                    icon: "location.fill"
-                )
-                .focused($focusedField, equals: .address)
+                FormTextField(label: String.localized("wizard.field.address.label"), placeholder: String.localized("wizard.field.address.placeholder"), text: $viewModel.address, icon: "location.fill")
+                    .focused($focusedField, equals: .address)
                 
                 HStack(spacing: 12) {
-                    FormTextField(
-                        label: "Enlem",
-                        placeholder: "40.9827",
-                        text: $viewModel.latitude,
-                        icon: "globe",
-                        keyboardType: .decimalPad
-                    )
-                    .focused($focusedField, equals: .latitude)
-                    
-                    FormTextField(
-                        label: "Boylam",
-                        placeholder: "29.0277",
-                        text: $viewModel.longitude,
-                        icon: "globe",
-                        keyboardType: .decimalPad
-                    )
-                    .focused($focusedField, equals: .longitude)
+                    FormTextField(label: String.localized("wizard.field.lat.label"), placeholder: "40.9827", text: $viewModel.latitude, icon: "globe", keyboardType: .decimalPad)
+                        .focused($focusedField, equals: .latitude)
+                    FormTextField(label: String.localized("wizard.field.lng.label"), placeholder: "29.0277", text: $viewModel.longitude, icon: "globe", keyboardType: .decimalPad)
+                        .focused($focusedField, equals: .longitude)
                 }
-            }
-            .formSection()
-            
-            // SPV Bilgileri
-            VStack(spacing: 16) {
-                sectionLabel("SPV Bilgileri (Opsiyonel)")
-                
-                FormTextField(
-                    label: "SPV Şirket Adı",
-                    placeholder: "örn: Kadıköy Sahil SPV A.Ş.",
-                    text: $viewModel.spvName,
-                    icon: "building.columns.fill"
-                )
-                .focused($focusedField, equals: .spvName)
-                
-                FormTextField(
-                    label: "SPV Vergi Numarası",
-                    placeholder: "1234567890",
-                    text: $viewModel.spvTaxNumber,
-                    icon: "number.circle.fill",
-                    keyboardType: .numberPad
-                )
-                .focused($focusedField, equals: .spvTaxNumber)
             }
             .formSection()
         }
     }
     
     // MARK: - Art Form
-    
     private var artDetailsForm: some View {
         VStack(spacing: 24) {
-            sectionHeader(
-                icon: "paintpalette.fill",
-                title: "Sanat Eseri Detayları",
-                subtitle: "Eserin sanatçı ve teknik bilgilerini girin",
-                color: .purple
-            )
-            
+            sectionHeader(icon: "paintpalette.fill", title: String.localized("wizard.step.2.art_title"), subtitle: String.localized("wizard.step.2.art_subtitle"), color: .purple)
             VStack(spacing: 16) {
-                FormTextField(
-                    label: "Sanatçı Adı",
-                    placeholder: "örn: Devrim Erbil",
-                    text: $viewModel.artistName,
-                    icon: "person.fill"
-                )
-                .focused($focusedField, equals: .artistName)
+                FormTextField(label: String.localized("wizard.field.artist.label"), placeholder: "örn: Devrim Erbil", text: $viewModel.artistName, icon: "person.fill")
+                    .focused($focusedField, equals: .artistName)
                 
-                // Teknik Picker
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Teknik")
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(.secondary)
-                    
+                    Text(String.localized("wizard.field.technique.label")).font(.system(size: 13, weight: .medium)).foregroundStyle(.secondary)
                     Menu {
-                        ForEach(ArtTechnique.allCases) { technique in
-                            Button(technique.title) {
-                                viewModel.artTechnique = technique
-                            }
+                        ForEach(ArtTechnique.allCases) { tech in
+                            Button(tech.title) { viewModel.artTechnique = tech }
                         }
                     } label: {
                         HStack {
-                            Image(systemName: "paintbrush.fill")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.tertiary)
-                            
-                            Text(viewModel.artTechnique.title)
-                                .font(.system(size: 16))
-                                .foregroundStyle(.primary)
-                            
+                            Image(systemName: "paintbrush.fill").foregroundStyle(.tertiary)
+                            Text(viewModel.artTechnique.title).foregroundStyle(.primary)
                             Spacer()
-                            
-                            Image(systemName: "chevron.down")
-                                .font(.system(size: 12, weight: .semibold))
-                                .foregroundStyle(.tertiary)
+                            Image(systemName: "chevron.down").font(.system(size: 12)).foregroundStyle(.tertiary)
                         }
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 12)
-                        .background(Color(.systemGray6))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.horizontal, 14).padding(.vertical, 12).background(Color(.systemGray6)).clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }
                 
                 HStack(spacing: 12) {
-                    FormTextField(
-                        label: "Boyutlar",
-                        placeholder: "120x80 cm",
-                        text: $viewModel.artDimensions,
-                        icon: "ruler.fill"
-                    )
-                    .focused($focusedField, equals: .artDimensions)
-                    
-                    FormTextField(
-                        label: "Yapım Yılı",
-                        placeholder: "2023",
-                        text: $viewModel.artYear,
-                        icon: "calendar",
-                        keyboardType: .numberPad
-                    )
-                    .focused($focusedField, equals: .artYear)
+                    FormTextField(label: String.localized("wizard.field.dimensions.label"), placeholder: "120x80 cm", text: $viewModel.artDimensions, icon: "ruler.fill")
+                    FormTextField(label: String.localized("wizard.field.year.label"), placeholder: "2023", text: $viewModel.artYear, icon: "calendar", keyboardType: .numberPad)
                 }
             }
             .formSection()
@@ -236,150 +130,156 @@ struct AddAssetStep3View: View {
     }
     
     // MARK: - NFT Form
-    
     private var nftDetailsForm: some View {
         VStack(spacing: 24) {
-            sectionHeader(
-                icon: "cube.transparent.fill",
-                title: "NFT Detayları",
-                subtitle: "Dijital varlığın blockchain bilgilerini girin",
-                color: .orange
-            )
-            
+            sectionHeader(icon: "cube.transparent.fill", title: String.localized("wizard.step.2.nft_title"), subtitle: String.localized("wizard.step.2.nft_subtitle"), color: .orange)
             VStack(spacing: 16) {
-                FormTextField(
-                    label: "Koleksiyon Adı",
-                    placeholder: "örn: Hissedar Genesis",
-                    text: $viewModel.collectionName,
-                    icon: "square.stack.3d.up.fill"
-                )
-                .focused($focusedField, equals: .collectionName)
-                
-                // Blockchain Picker
+                FormTextField(label: String.localized("wizard.field.collection.label"), placeholder: "örn: Hissedar Genesis", text: $viewModel.collectionName, icon: "square.stack.3d.up.fill")
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Blockchain")
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(.secondary)
-                    
+                    Text("Blockchain").font(.system(size: 13, weight: .medium)).foregroundStyle(.secondary)
                     HStack(spacing: 8) {
                         ForEach(NFTBlockchain.allCases) { chain in
                             blockchainChip(chain)
                         }
                     }
                 }
-                
-                FormTextField(
-                    label: "Kontrat Adresi (Opsiyonel)",
-                    placeholder: "0x...",
-                    text: $viewModel.contractAddress,
-                    icon: "link"
-                )
-                .focused($focusedField, equals: .contractAddress)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
+                FormTextField(label: String.localized("wizard.field.contract.label"), placeholder: "0x...", text: $viewModel.contractAddress, icon: "link")
+                    .textInputAutocapitalization(.never)
             }
             .formSection()
         }
     }
     
-    // MARK: - Empty State
-    
     private var emptyState: some View {
         VStack(spacing: 16) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 40))
-                .foregroundStyle(.orange)
-            
-            Text("Lütfen önce varlık türü seçin")
-                .font(.system(size: 17, weight: .medium))
-                .foregroundStyle(.secondary)
-            
-            Button("Geri Dön") {
-                viewModel.goBack()
-            }
-            .font(.system(size: 15, weight: .medium))
+            Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 40)).foregroundStyle(.orange)
+            Text(String.localized("wizard.error.select_type")).font(.system(size: 17, weight: .medium)).foregroundStyle(.secondary)
+            Button(String.localized("common.back")) { viewModel.goBack() }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.top, 80)
+        .frame(maxWidth: .infinity, maxHeight: .infinity).padding(.top, 80)
     }
     
-    // MARK: - Components
+    // MARK: - Components (categoryCard, blockchainChip, etc. are kept internal)
     
     private func categoryCard(_ category: PropertyCategory) -> some View {
         let isSelected = viewModel.propertyCategory == category
-        
-        return Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                viewModel.propertyCategory = category
-            }
-        } label: {
+        return Button { withAnimation { viewModel.propertyCategory = category } } label: {
             VStack(spacing: 8) {
-                Image(systemName: category.icon)
-                    .font(.system(size: 22))
-                    .foregroundStyle(isSelected ? .white : .blue)
-                
-                Text(category.title)
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(isSelected ? .white : .primary)
+                Image(systemName: category.icon).font(.system(size: 22)).foregroundStyle(isSelected ? .white : .blue)
+                Text(category.title).font(.system(size: 13, weight: .medium)).foregroundStyle(isSelected ? .white : .primary)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(isSelected ? Color.blue : Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
-            )
+            .frame(maxWidth: .infinity).padding(.vertical, 16)
+            .background(isSelected ? Color.blue : Color(.systemGray6)).clipShape(RoundedRectangle(cornerRadius: 12))
         }
         .buttonStyle(.plain)
     }
-    
+
     private func blockchainChip(_ chain: NFTBlockchain) -> some View {
         let isSelected = viewModel.nftBlockchain == chain
-        
-        return Button {
-            viewModel.nftBlockchain = chain
-        } label: {
-            Text(chain.title)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(isSelected ? .white : .primary)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(isSelected ? Color.orange : Color(.systemGray6))
-                .clipShape(Capsule())
+        return Button { viewModel.nftBlockchain = chain } label: {
+            Text(chain.title).font(.system(size: 13, weight: .medium)).foregroundStyle(isSelected ? .white : .primary)
+                .padding(.horizontal, 14).padding(.vertical, 8)
+                .background(isSelected ? Color.orange : Color(.systemGray6)).clipShape(Capsule())
         }
         .buttonStyle(.plain)
     }
     
     private func sectionHeader(icon: String, title: String, subtitle: String, color: Color) -> some View {
         VStack(spacing: 8) {
-            Image(systemName: icon)
-                .font(.system(size: 36))
-                .foregroundStyle(color)
-            
-            Text(title)
-                .font(.system(size: 22, weight: .bold))
-            
-            Text(subtitle)
-                .font(.system(size: 14))
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+            Image(systemName: icon).font(.system(size: 36)).foregroundStyle(color)
+            Text(title).font(.system(size: 22, weight: .bold))
+            Text(subtitle).font(.system(size: 14)).foregroundStyle(.secondary).multilineTextAlignment(.center)
         }
-        .padding(.bottom, 8)
     }
     
     private func sectionLabel(_ text: String) -> some View {
-        HStack {
-            Text(text)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(.primary)
-            Spacer()
+        HStack { Text(text).font(.system(size: 15, weight: .semibold)); Spacer() }
+    }
+}
+
+
+// MARK: - Form TextField
+struct FormTextField: View {
+    let label: String
+    let placeholder: String
+    @Binding var text: String
+    var icon: String? = nil
+    var keyboardType: UIKeyboardType = .default
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(label)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundStyle(.secondary)
+            
+            HStack(spacing: 10) {
+                if let icon {
+                    Image(systemName: icon)
+                        .font(.system(size: 16))
+                        .foregroundStyle(.tertiary)
+                        .frame(width: 20)
+                }
+                
+                TextField(placeholder, text: $text)
+                    .font(.system(size: 16))
+                    .keyboardType(keyboardType)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }
 }
 
-#Preview {
-    let vm = AddAssetViewModel()
-    vm.selectedAssetType = .property
-    return AddAssetStep3View(viewModel: vm)
+// MARK: - Form TextEditor
+struct FormTextEditor: View {
+    let label: String
+    let placeholder: String
+    @Binding var text: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(label)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundStyle(.secondary)
+            
+            ZStack(alignment: .topLeading) {
+                if text.isEmpty {
+                    Text(placeholder)
+                        .font(.system(size: 16))
+                        .foregroundStyle(.tertiary)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 12)
+                }
+                
+                TextEditor(text: $text)
+                    .font(.system(size: 16))
+                    .scrollContentBackground(.hidden)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .frame(minHeight: 100, maxHeight: 160)
+            }
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+    }
+}
+
+// MARK: - View Extension for formSection
+extension View {
+    func formSection() -> some View {
+        self.padding(16)
+            .background(Color(.secondarySystemBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+}
+
+// MARK: - Turkish Cities Model
+struct TurkishCities {
+    static let all: [String] = [
+        "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
+        "Adana", "Konya", "Gaziantep", "Mersin", "Kayseri"
+        // ... diğerlerini ekleyebilirsin
+    ]
 }

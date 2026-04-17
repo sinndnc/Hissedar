@@ -13,6 +13,8 @@ struct FilterPill: View {
     let isSelected: Bool
     let action: () -> Void
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         Button(action: action) {
             Text(label)
@@ -21,21 +23,21 @@ struct FilterPill: View {
                 .padding(.vertical, 6)
                 .background(
                     isSelected
-                    ? Color.hsBackgroundTertiary
+                    ? themeManager.theme.backgroundTertiary
                     : Color.clear
                 )
                 .foregroundColor(
                     isSelected
-                    ? Color.hsTextPrimary
-                    : Color.hsTextTertiary
+                    ? themeManager.theme.textPrimary
+                    : themeManager.theme.textTertiary
                 )
                 .clipShape(Capsule())
                 .overlay(
                     Capsule()
                         .strokeBorder(
                             isSelected
-                            ? Color.hsBackgroundSecondary.opacity(0.3)
-                            : Color.hsBorder,
+                            ? themeManager.theme.border.opacity(0.3)
+                            : themeManager.theme.border,
                             lineWidth: 1
                         )
                 )

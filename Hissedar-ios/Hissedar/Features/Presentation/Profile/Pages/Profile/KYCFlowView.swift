@@ -43,9 +43,9 @@ struct KYCFlowView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Kimlik Doğrulama")
+                    Text(String.localized("kyc.nav_title"))
                         .font(.hHeadline)
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(Color.hsTextPrimary)
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
@@ -68,26 +68,26 @@ struct KYCFlowView: View {
                 // Hero illustration
                 ZStack {
                     Circle()
-                        .fill(Color.hJade.opacity(0.08))
+                        .fill(Color.hsTextSecondary.opacity(0.08))
                         .frame(width: 140, height: 140)
                     
                     Circle()
-                        .fill(Color.hJade.opacity(0.12))
+                        .fill(Color.hsTextSecondary.opacity(0.12))
                         .frame(width: 100, height: 100)
                     
                     Image(systemName: "person.badge.shield.checkmark.fill")
                         .font(.system(size: 44))
-                        .foregroundStyle(Color.hJade)
+                        .foregroundStyle(Color.hsTextSecondary)
                 }
                 .padding(.top, 24)
                 
                 // Title & Subtitle
                 VStack(spacing: 12) {
-                    Text("Kimliğinizi Doğrulayın")
+                    Text(String.localized("kyc.intro.title"))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(Color.hsTextPrimary)
                     
-                    Text("Yatırım yapabilmek için MASAK düzenlemelerine uygun kimlik doğrulaması gereklidir.")
+                    Text(String.localized("kyc.intro.desc"))
                         .font(.hBody)
                         .foregroundStyle(Color.hsTextPrimary)
                         .multilineTextAlignment(.center)
@@ -99,24 +99,24 @@ struct KYCFlowView: View {
                     KYCInfoStepRow(
                         step: 1,
                         icon: "person.text.rectangle",
-                        title: "Kimlik Bilgileri",
-                        description: "TC Kimlik numaranız ve kişisel bilgileriniz",
+                        title: String.localized("kyc.step1.title"),
+                        description: String.localized("kyc.step1.desc"),
                         isLast: false
                     )
                     
                     KYCInfoStepRow(
                         step: 2,
                         icon: "camera.viewfinder",
-                        title: "Belge Fotoğrafı",
-                        description: "Kimlik kartınızın ön ve arka yüzü",
+                        title: String.localized("kyc.step2.title"),
+                        description: String.localized("kyc.step2.desc"),
                         isLast: false
                     )
                     
                     KYCInfoStepRow(
                         step: 3,
                         icon: "faceid",
-                        title: "Yüz Doğrulama",
-                        description: "Canlılık kontrolü için selfie çekimi",
+                        title: String.localized("kyc.step3.title"),
+                        description: String.localized("kyc.step3.desc"),
                         isLast: true
                     )
                 }
@@ -126,20 +126,20 @@ struct KYCFlowView: View {
                 HStack(alignment: .top, spacing: 12) {
                     Image(systemName: "lock.shield.fill")
                         .font(.system(size: 16))
-                        .foregroundStyle(Color.hJade)
+                        .foregroundStyle(Color.hsTextSecondary)
                         .padding(.top, 2)
                     
-                    Text("Bilgileriniz 256-bit SSL şifreleme ile korunmaktadır ve yalnızca yasal zorunluluklar kapsamında kullanılır.")
+                    Text(String.localized("kyc.intro.security_note"))
                         .font(.hLabel)
                         .foregroundStyle(Color.hsTextPrimary)
                 }
                 .padding(16)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.hJade.opacity(0.06))
+                        .fill(Color.hsTextSecondary.opacity(0.06))
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.hJade.opacity(0.1), lineWidth: 1)
+                                .stroke(Color.hsTextSecondary.opacity(0.1), lineWidth: 1)
                         )
                 )
                 .padding(.horizontal, 20)
@@ -168,20 +168,20 @@ struct KYCFlowView: View {
                     HStack(spacing: 8) {
                         if isLoading {
                             ProgressView()
-                                .tint(Color.hCharcoal)
+                                .tint(Color.hsTextSecondary)
                         } else {
-                            Text("Doğrulamayı Başlat")
+                            Text(String.localized("kyc.intro.button_start"))
                                 .font(.hBodyMedium)
                             Image(systemName: "arrow.right")
                                 .font(.system(size: 14, weight: .semibold))
                         }
                     }
-                    .foregroundStyle(Color.hCharcoal)
+                    .foregroundStyle(Color.hsTextSecondary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.hJade)
+                            .fill(Color.hsTextSecondary)
                     )
                 }
                 .buttonStyle(.plain)
@@ -192,7 +192,7 @@ struct KYCFlowView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "clock")
                         .font(.system(size: 12))
-                    Text("Tahmini süre: 3-5 dakika")
+                    Text(String.localized("kyc.intro.est_time"))
                         .font(.hLabel)
                 }
                 .foregroundStyle(Color.hsTextPrimary)
@@ -205,10 +205,7 @@ struct KYCFlowView: View {
     private var kycWebViewStep: some View {
         VStack {
             if let url = kycFormURL {
-                // TODO: KycaidWebView(url: url) ile değiştir
-                // WKWebView based Kycaid form burada yüklenir
                 KYCWebViewPlaceholder(url: url) {
-                    // onComplete callback
                     withAnimation {
                         currentStep = .processing
                         kycStatus = .pending
@@ -217,8 +214,8 @@ struct KYCFlowView: View {
             } else {
                 VStack(spacing: 16) {
                     ProgressView()
-                        .tint(Color.hJade)
-                    Text("Form yükleniyor...")
+                        .tint(Color.hsTextSecondary)
+                    Text(String.localized("common.loading"))
                         .font(.hBody)
                         .foregroundStyle(Color.hsTextPrimary)
                 }
@@ -231,27 +228,28 @@ struct KYCFlowView: View {
         VStack(spacing: 24) {
             Spacer()
             
+            // Illustration
             ZStack {
                 Circle()
-                    .fill(Color.hGold.opacity(0.08))
+                    .fill(Color.hsPurple600.opacity(0.08))
                     .frame(width: 140, height: 140)
                 
                 Circle()
-                    .fill(Color.hGold.opacity(0.12))
+                    .fill(Color.hsPurple600.opacity(0.12))
                     .frame(width: 100, height: 100)
                 
                 Image(systemName: "hourglass")
                     .font(.system(size: 44))
-                    .foregroundStyle(Color.hGold)
+                    .foregroundStyle(Color.hsPurple600)
                     .symbolEffect(.pulse, options: .repeating)
             }
             
             VStack(spacing: 12) {
-                Text("Doğrulama İnceleniyor")
+                Text(String.localized("kyc.processing.title"))
                     .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(Color.hsTextPrimary)
                 
-                Text("Bilgileriniz inceleniyor. Bu işlem genellikle birkaç dakika sürer. Sonuç bildirim olarak gönderilecektir.")
+                Text(String.localized("kyc.processing.desc"))
                     .font(.hBody)
                     .foregroundStyle(Color.hsTextPrimary)
                     .multilineTextAlignment(.center)
@@ -263,14 +261,14 @@ struct KYCFlowView: View {
             Button {
                 dismiss()
             } label: {
-                Text("Tamam")
+                Text(String.localized("common.ok"))
                     .font(.hBodyMedium)
-                    .foregroundStyle(Color.hCharcoal)
+                    .foregroundStyle(Color.hsTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.hJade)
+                            .fill(Color.hsTextSecondary)
                     )
             }
             .buttonStyle(.plain)
@@ -288,26 +286,26 @@ struct KYCFlowView: View {
             
             ZStack {
                 Circle()
-                    .fill((isVerified ? Color.hJade : Color.hsError).opacity(0.08))
+                    .fill((isVerified ? Color.hsTextSecondary : Color.hsError).opacity(0.08))
                     .frame(width: 140, height: 140)
                 
                 Circle()
-                    .fill((isVerified ? Color.hJade : Color.hsError).opacity(0.12))
+                    .fill((isVerified ? Color.hsTextSecondary : Color.hsError).opacity(0.12))
                     .frame(width: 100, height: 100)
                 
                 Image(systemName: isVerified ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(.system(size: 48))
-                    .foregroundStyle(isVerified ? Color.hJade : Color.hsError)
+                    .foregroundStyle(isVerified ? Color.hsTextSecondary : Color.hsError)
             }
             
             VStack(spacing: 12) {
-                Text(isVerified ? "Doğrulama Tamamlandı!" : "Doğrulama Başarısız")
+                Text(isVerified ? String.localized("kyc.result.success_title") : String.localized("kyc.result.fail_title"))
                     .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(Color.hsTextPrimary)
                 
                 Text(isVerified
-                     ? "Hesabınız başarıyla doğrulandı. Artık yatırım yapabilirsiniz."
-                     : "Doğrulama işlemi başarısız oldu. Lütfen tekrar deneyin veya destek ekibimize ulaşın.")
+                     ? String.localized("kyc.result.success_desc")
+                     : String.localized("kyc.result.fail_desc"))
                     .font(.hBody)
                     .foregroundStyle(Color.hsTextPrimary)
                     .multilineTextAlignment(.center)
@@ -324,9 +322,9 @@ struct KYCFlowView: View {
                             errorMessage = nil
                         }
                     } label: {
-                        Text("Tekrar Dene")
+                        Text(String.localized("common.retry"))
                             .font(.hBodyMedium)
-                            .foregroundStyle(Color.hCharcoal)
+                            .foregroundStyle(Color.hsTextSecondary)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
                             .background(
@@ -340,14 +338,16 @@ struct KYCFlowView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text(isVerified ? "Tamam" : "Kapat")
+                    Text(isVerified ? String.localized("common.ok") : String.localized("common.close"))
                         .font(.hBodyMedium)
-                        .foregroundStyle(isVerified ? Color.hCharcoal : Color.hWhite)
+                        .foregroundStyle(
+                            isVerified ? Color.hsTextSecondary : Color.hsTextPrimary
+                        )
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 14)
-                                .fill(isVerified ? Color.hJade : Color.hsBackgroundSecondary)
+                                .fill(isVerified ? Color.hsTextSecondary : Color.hsBackgroundSecondary)
                         )
                 }
                 .buttonStyle(.plain)
@@ -361,18 +361,6 @@ struct KYCFlowView: View {
     private func startKYC() {
         isLoading = true
         errorMessage = nil
-        
-        // TODO: Kycaid Edge Function çağrısı
-        // KYCService.shared.getFormURL { result in
-        //     switch result {
-        //     case .success(let url):
-        //         kycFormURL = url
-        //         currentStep = .webView
-        //     case .failure(let error):
-        //         errorMessage = error.localizedDescription
-        //     }
-        //     isLoading = false
-        // }
         
         // Mock: Simüle edilmiş yükleme
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -399,17 +387,17 @@ struct KYCInfoStepRow: View {
             VStack(spacing: 0) {
                 ZStack {
                     Circle()
-                        .fill(Color.hJade.opacity(0.15))
+                        .fill(Color.hsTextSecondary.opacity(0.15))
                         .frame(width: 36, height: 36)
                     
                     Text("\(step)")
                         .font(.system(size: 14, weight: .bold, design: .rounded))
-                        .foregroundStyle(Color.hJade)
+                        .foregroundStyle(Color.hsTextSecondary)
                 }
                 
                 if !isLast {
                     Rectangle()
-                        .fill(Color.hJade.opacity(0.15))
+                        .fill(Color.hsTextSecondary.opacity(0.15))
                         .frame(width: 2, height: 32)
                 }
             }
@@ -419,11 +407,11 @@ struct KYCInfoStepRow: View {
                 HStack(spacing: 8) {
                     Image(systemName: icon)
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(Color.hJade)
+                        .foregroundStyle(Color.hsTextSecondary)
                     
                     Text(title)
                         .font(.hBodyMedium)
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(Color.hsTextPrimary)
                 }
                 
                 Text(description)
@@ -437,7 +425,7 @@ struct KYCInfoStepRow: View {
     }
 }
 
-// MARK: - Placeholder WebView (replace with actual WKWebView)
+// MARK: - Placeholder WebView
 struct KYCWebViewPlaceholder: View {
     let url: URL
     let onComplete: () -> Void
@@ -449,20 +437,20 @@ struct KYCWebViewPlaceholder: View {
             VStack(spacing: 16) {
                 Image(systemName: "globe")
                     .font(.system(size: 40))
-                    .foregroundStyle(Color.hJade)
+                    .foregroundStyle(Color.hsTextSecondary)
                 
-                Text("Kycaid Formu")
+                Text(String.localized("kyc.webview.mock_title"))
                     .font(.hHeadline)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(Color.hsTextPrimary)
                 
-                Text("Burada WKWebView ile Kycaid formu yüklenecek")
+                Text(String.localized("kyc.webview.mock_desc"))
                     .font(.hBody)
                     .foregroundStyle(Color.hsTextPrimary)
                     .multilineTextAlignment(.center)
                 
                 Text(url.absoluteString)
                     .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(Color.hJade.opacity(0.6))
+                    .foregroundStyle(Color.hsTextSecondary.opacity(0.6))
             }
             .padding(24)
             .background(
@@ -471,25 +459,24 @@ struct KYCWebViewPlaceholder: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
                             .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [6]))
-                            .foregroundStyle(Color.hJade.opacity(0.3))
+                            .foregroundStyle(Color.hsTextSecondary.opacity(0.3))
                     )
             )
             .padding(.horizontal, 20)
             
             Spacer()
             
-            // Simulated complete button (dev only)
             Button {
                 onComplete()
             } label: {
-                Text("Doğrulamayı Tamamla (Test)")
+                Text(String.localized("kyc.webview.mock_button"))
                     .font(.hBodyMedium)
-                    .foregroundStyle(Color.hCharcoal)
+                    .foregroundStyle(Color.hsTextSecondary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.hGold)
+                            .fill(Color.hsPurple600)
                     )
             }
             .buttonStyle(.plain)
@@ -498,6 +485,13 @@ struct KYCWebViewPlaceholder: View {
         }
     }
 }
+
+//
+//  IBANEditorView.swift
+//  Hissedar
+//
+
+import SwiftUI
 
 // MARK: - IBAN Editor Sheet
 struct IBANEditorView: View {
@@ -510,14 +504,14 @@ struct IBANEditorView: View {
         NavigationStack {
             VStack(spacing: 24) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("IBAN Numaranız")
+                    Text(String.localized("iban.field.label"))
                         .font(.hCaptionMed)
                         .foregroundStyle(Color.hsTextPrimary)
                     
                     TextField("TR00 0000 0000 0000 0000 0000 00", text: $editedIBAN)
                         .font(.system(size: 16, design: .monospaced))
-                        .foregroundStyle(Color.hWhite)
-                        .tint(Color.hJade)
+                        .foregroundStyle(Color.hsTextPrimary)
+                        .tint(Color.hsTextSecondary)
                         .padding(16)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
@@ -525,7 +519,9 @@ struct IBANEditorView: View {
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
                                         .stroke(
-                                            isValid ? Color.hJade.opacity(0.3) : Color.hWhite.opacity(0.06),
+                                            isValid ? Color.hsTextSecondary
+                                                .opacity(0.3) : Color.hsTextPrimary
+                                                .opacity(0.06),
                                             lineWidth: 1
                                         )
                                 )
@@ -533,7 +529,6 @@ struct IBANEditorView: View {
                         .keyboardType(.asciiCapable)
                         .autocapitalization(.allCharacters)
                         .onChange(of: editedIBAN) { _, newValue in
-                            // Basic TR IBAN validation (26 chars)
                             let cleaned = newValue.replacingOccurrences(of: " ", with: "")
                             isValid = cleaned.count == 26 && cleaned.hasPrefix("TR")
                         }
@@ -542,7 +537,7 @@ struct IBANEditorView: View {
                         HStack(spacing: 4) {
                             Image(systemName: "exclamationmark.circle.fill")
                                 .font(.system(size: 11))
-                            Text("Geçerli bir TR IBAN numarası girin (26 karakter)")
+                            Text(String.localized("iban.error.invalid"))
                                 .font(.hLabel)
                         }
                         .foregroundStyle(Color.hsError)
@@ -557,14 +552,14 @@ struct IBANEditorView: View {
                     iban = editedIBAN.replacingOccurrences(of: " ", with: "")
                     dismiss()
                 } label: {
-                    Text("Kaydet")
+                    Text(String.localized("common.save"))
                         .font(.hBodyMedium)
-                        .foregroundStyle(Color.hCharcoal)
+                        .foregroundStyle(Color.hsTextPrimary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 14)
-                                .fill(isValid ? Color.hJade : Color.hJade.opacity(0.4))
+                                .fill(isValid ? Color.hsTextSecondary : Color.hsTextSecondary.opacity(0.4))
                         )
                 }
                 .buttonStyle(.plain)
@@ -576,13 +571,13 @@ struct IBANEditorView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("IBAN Düzenle")
+                    Text(String.localized("iban.editor.title"))
                         .font(.hHeadline)
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(Color.hsTextPrimary)
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Vazgeç") {
+                    Button(String.localized("common.cancel")) {
                         dismiss()
                     }
                     .foregroundStyle(Color.hsTextPrimary)

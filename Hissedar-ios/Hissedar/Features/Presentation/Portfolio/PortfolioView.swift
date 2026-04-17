@@ -17,12 +17,7 @@ enum PortfolioSort: String, CaseIterable {
     case rent       = "rent"
     
     var label: String {
-        switch self {
-        case .value:      return "Değer"
-        case .gain:       return "Kâr/Zarar"
-        case .returnRate: return "Getiri"
-        case .rent:       return "Kira"
-        }
+        return String.localized("portfolio.sort.\(self.rawValue)")
     }
     
     var icon: String {
@@ -48,10 +43,12 @@ struct PortfolioView: View {
     @State private var selectedAsset: AssetFilter = .all
     @State private var selectedSort: AssetSort = .popular
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.hsBackground.ignoresSafeArea()
+                themeManager.theme.background.ignoresSafeArea()
                 
                 if vm.isLoading && vm.items.isEmpty {
                     loadingView
@@ -66,7 +63,7 @@ struct PortfolioView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.visible, for: .navigationBar)
             .sheet(isPresented: $showExchange) {  ExchangeView() }
-            .toolbarBackground(Color.hsBackground, for: .navigationBar)
+            .toolbarBackground(themeManager.theme.background, for: .navigationBar)
             .navigationDestination(for: String.self) { assetId in
                 AssetDetailView(assetId: assetId)
             }
@@ -78,17 +75,17 @@ struct PortfolioView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text("Portföy")
+            Text(String.localized("portfolio.nav_title"))
                 .font(.system(size: 17, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
         }
         
         ToolbarItem(placement: .topBarLeading) {
             if isScrolled, let summary = vm.summary {
                 HStack(spacing: 4) {
-                    Text(summary.formattedNetWorth)
+                    Text(hideBalance ? hidingText : vm.netWorth.tlFormatted)
                         .font(.system(size: 15, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     
                     ChangeBadge(
                         change: summary.formattedReturnRate,
@@ -105,7 +102,7 @@ struct PortfolioView: View {
             Button {} label: {
                 Image(systemName: "line.3.horizontal")
                     .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
     }
@@ -119,12 +116,11 @@ struct PortfolioView: View {
                 portfolioInfoSection
                     .padding()
                 
-                
                 filteredBar
                 
                 if vm.items.isEmpty {
                     emptyState
-                }else{
+                } else {
                     holdingsSection
                     
                     holdingDistributionSection
@@ -148,22 +144,22 @@ struct PortfolioView: View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 6) {
-                    Text("Portföy Değerim")
+                    Text(String.localized("portfolio.hero.title"))
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Color.hsTextSecondary)
-                    Button{
-                        withAnimation{
+                        .foregroundStyle(themeManager.theme.textSecondary)
+                    Button {
+                        withAnimation {
                             hideBalance.toggle()
                         }
-                    }label: {
+                    } label: {
                         Image(systemName: hideBalance ? "eye.slash" : "eye")
                             .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(Color.hsTextPrimary)
+                            .foregroundStyle(themeManager.theme.textPrimary)
                     }
                 }
                 
                 Text(hideBalance ? hidingText : vm.netWorth.tlFormatted)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .font(.system(size: 28, weight: .bold, design: .monospaced))
                     .contentTransition(.numericText(value: Double(truncating: vm.totalValue as NSDecimalNumber)))
                 
@@ -175,7 +171,7 @@ struct PortfolioView: View {
                     
                     Text(vm.gainPercent.percentFormatted)
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(vm.isGainPositive ? Color.hsSuccess : Color.hsError)
+                        .foregroundStyle(vm.isGainPositive ? themeManager.theme.success : themeManager.theme.error)
                 }
             }
             Spacer()
@@ -189,30 +185,28 @@ struct PortfolioView: View {
             Button { showExchange.toggle() } label: {
                 Image(systemName: "arrow.up.arrow.down")
                     .padding(15)
-                    .foregroundStyle(Color.hsTextPrimary)
-                    .background(Color.hsBackground)
+                    .foregroundStyle(themeManager.theme.textPrimary)
+                    .background(themeManager.theme.background)
                     .clipShape(Circle())
-                    .font(.system(size: 13,weight: .semibold,design: .monospaced))
+                    .font(.system(size: 13, weight: .semibold, design: .monospaced))
                     .overlay {
-                        Circle()
-                            .stroke(.gray.opacity(0.2), lineWidth: 1)
+                        Circle().stroke(themeManager.theme.border.opacity(0.2), lineWidth: 1)
                     }
             }
             .zIndex(999)
             
-            VStack(spacing: 5){
+            VStack(spacing: 5) {
                 cashBalanceRow(
-                    label: "Cash",
+                    label: String.localized("portfolio.balance.cash"),
                     totalbalance: vm.cashBalance.tlFormatted,
                     availableBalance: vm.cashAvailableBalance.tlFormatted,
                     lockedBalance: vm.cashLockedBalance.tlFormatted
                 )
                 
                 Divider()
-                    .foregroundStyle(.gray)
                 
                 cashBalanceRow(
-                    label: "Token",
+                    label: String.localized("portfolio.balance.token"),
                     totalbalance: vm.tokenBalance.tokenFormatted,
                     availableBalance: vm.tokenAvailableBalance.tokenFormatted,
                     lockedBalance: vm.tokenLockedBalance.tokenFormatted
@@ -221,16 +215,16 @@ struct PortfolioView: View {
         }
     }
     
-    private var holdingDistributionSection: some View{
-        VStack{
-            HStack{
-                Text("Holding distribution")
-                    .foregroundStyle(Color.hsTextPrimary)
-                    .font(.system(size: 16,weight: .semibold))
+    private var holdingDistributionSection: some View {
+        VStack {
+            HStack {
+                Text(String.localized("portfolio.holdings.distribution"))
+                    .foregroundStyle(themeManager.theme.textPrimary)
+                    .font(.system(size: 16, weight: .semibold))
                 Spacer()
-                Text("See All")
-                    .foregroundStyle(Color.hsTextSecondary)
-                    .font(.system(size: 12,weight: .medium))
+                Text(String.localized("common.see_all"))
+                    .foregroundStyle(themeManager.theme.textSecondary)
+                    .font(.system(size: 12, weight: .medium))
             }
             SpiralArcView(items: vm.items)
                 .frame(height: 300)
@@ -239,7 +233,7 @@ struct PortfolioView: View {
     }
     
     private var filteredBar: some View {
-        VStack{
+        VStack {
             SegmentedBar(
                 items: AssetFilter.allCases,
                 icon: \.icon,
@@ -255,7 +249,7 @@ struct PortfolioView: View {
             )
             .padding()
         }
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
     }
     
     // MARK: - Holdings List
@@ -301,26 +295,21 @@ struct PortfolioView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.title)
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .lineLimit(1)
                 
                 HStack(spacing: 3) {
                     Text(item.category)
                         .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(Color.hsTextSecondary)
+                        .foregroundStyle(themeManager.theme.textSecondary)
                     
                     Text("•")
-                        .foregroundStyle(Color.hsTextTertiary)
+                        .foregroundStyle(themeManager.theme.textTertiary)
                     
                     Text("\(item.tokenAmount ?? 1) token")
                         .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(Color.hsTextSecondary)
+                        .foregroundStyle(themeManager.theme.textSecondary)
                 }
-                
-                ProgressView(value: item.holdingPercent)
-                    .frame(height: 3)
-                    .progressViewStyle(.linear)
-                    .tint(item.isGainPositive ? Color.hsSuccess : Color.hsError)
             }
             
             Spacer()
@@ -328,11 +317,11 @@ struct PortfolioView: View {
             // Value & Change
             VStack(alignment: .trailing, spacing: 4) {
                 Text(hideBalance ? hidingText : item.formattedTotalTokenPrice)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .font(.system(size: 15, weight: .bold, design: .monospaced))
                 
                 Text(hideBalance ? hidingText : item.formattedTotalCashPrice)
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                     .font(.system(size: 12, weight: .bold, design: .monospaced))
                 
                 ChangeBadge(
@@ -344,7 +333,7 @@ struct PortfolioView: View {
         }
         .padding(.vertical, 5)
         .padding(.horizontal, 15)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
     }
     
     private func cashBalanceRow(
@@ -354,33 +343,33 @@ struct PortfolioView: View {
         lockedBalance: String
     ) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack{
+            HStack {
                 Text(label)
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 Spacer()
                 Text(hideBalance ? hidingText : totalbalance)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .font(.system(size: 15, weight: .bold, design: .monospaced))
             }
             
             HStack {
-                Text("Available")
+                Text(String.localized("portfolio.balance.available"))
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                 Spacer()
                 Text(hideBalance ? hidingText : availableBalance)
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                     .font(.system(size: 12, weight: .bold, design: .monospaced))
             }
             
             HStack {
-                Text("Locked")
+                Text(String.localized("portfolio.balance.locked"))
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(Color.hsTextTertiary)
+                    .foregroundStyle(themeManager.theme.textTertiary)
                 Spacer()
                 Text(hideBalance ? hidingText : lockedBalance)
-                    .foregroundStyle(Color.hsTextTertiary)
+                    .foregroundStyle(themeManager.theme.textTertiary)
                     .font(.system(size: 12, weight: .bold, design: .monospaced))
             }
         }
@@ -391,10 +380,10 @@ struct PortfolioView: View {
     private var loadingView: some View {
         VStack(spacing: 16) {
             ProgressView()
-                .tint(Color.hsPurple400)
-            Text("Portföy yükleniyor...")
+                .tint(themeManager.theme.accent)
+            Text(String.localized("portfolio.loading"))
                 .font(.system(size: 14))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
     }
     
@@ -402,22 +391,22 @@ struct PortfolioView: View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 40, weight: .light))
-                .foregroundStyle(Color.hsError)
+                .foregroundStyle(themeManager.theme.error)
             
             Text(message)
                 .font(.system(size: 14))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .multilineTextAlignment(.center)
             
             Button {
                 Task { await vm.load() }
             } label: {
-                Text("Tekrar Dene")
+                Text(String.localized("common.retry"))
                     .font(.system(size: 14, weight: .bold))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 10)
-                    .background(Color.hsPurple600)
+                    .background(themeManager.theme.accent)
                     .clipShape(Capsule())
             }
         }
@@ -428,15 +417,15 @@ struct PortfolioView: View {
         VStack(spacing: 16) {
             Image(systemName: "chart.pie")
                 .font(.system(size: 48, weight: .light))
-                .foregroundStyle(Color.hsPurple400.opacity(0.5))
+                .foregroundStyle(themeManager.theme.accent.opacity(0.5))
             
-            Text("Henüz Yatırımın Yok")
+            Text(String.localized("portfolio.empty.title"))
                 .font(.system(size: 18, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
             
-            Text("Keşfet sekmesinden ilk token'ını\nsatın alarak portföyünü oluştur.")
+            Text(String.localized("portfolio.empty.desc"))
                 .font(.system(size: 14))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .padding(.top, 80)
@@ -448,20 +437,20 @@ struct PortfolioView: View {
         HStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(Color.hsPurple400)
+                .foregroundStyle(themeManager.theme.accent)
             Text(text)
                 .font(.system(size: 17, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
         }
     }
     
     private var propertyPlaceholder: some View {
         Rectangle()
-            .fill(Color.hsBackgroundSecondary)
+            .fill(themeManager.theme.backgroundSecondary)
             .overlay {
                 Image(systemName: "building.2.fill")
                     .font(.system(size: 20))
-                    .foregroundStyle(Color.hsPurple400.opacity(0.5))
+                    .foregroundStyle(themeManager.theme.accent.opacity(0.5))
             }
     }
 }

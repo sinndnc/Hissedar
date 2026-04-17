@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HissedarLogoView: View {
     var size: CGFloat   = 40
-    var foreground: Color = .hWhite
 
     var body: some View {
         Image("AppLogo")

@@ -5,13 +5,13 @@
 //  Created by Sinan Dinç on 3/27/26.
 //
 
-
 import SwiftUI
 
 // MARK: - Privacy Policy View
 struct PrivacyPolicyView: View {
     
     @State private var expandedSection: PrivacySection? = nil
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -29,13 +29,13 @@ struct PrivacyPolicyView: View {
             .padding(.top, 8)
             .padding(.bottom, 40)
         }
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Gizlilik Politikası")
+                Text(String.localized("privacy.nav_title"))
                     .font(.hHeadline)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
     }
@@ -45,22 +45,22 @@ struct PrivacyPolicyView: View {
         VStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .fill(Color.hJade.opacity(0.12))
+                    .fill(themeManager.theme.textPrimary.opacity(0.12))
                     .frame(width: 64, height: 64)
                 
                 Image(systemName: "shield.checkerboard")
                     .font(.system(size: 28, weight: .semibold))
-                    .foregroundStyle(Color.hJade)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
             
             VStack(spacing: 6) {
-                Text("Verileriniz Güvende")
+                Text(String.localized("privacy.header_title"))
                     .font(.hBodyMedium)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 
-                Text("Hissedar olarak kişisel verilerinizin korunması en önemli önceliğimizdir.")
+                Text(String.localized("privacy.header_desc"))
                     .font(.hCaption)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
             }
@@ -69,7 +69,7 @@ struct PrivacyPolicyView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.hsBackgroundSecondary)
+                .fill(themeManager.theme.backgroundSecondary)
         )
     }
     
@@ -78,10 +78,10 @@ struct PrivacyPolicyView: View {
         HStack(spacing: 8) {
             Image(systemName: "clock")
                 .font(.system(size: 12))
-            Text("Son güncelleme: 1 Mart 2026")
+            Text("\(String.localized("privacy.last_updated")): 1 Mart 2026")
                 .font(.hLabel)
         }
-        .foregroundStyle(Color.hsTextPrimary)
+        .foregroundStyle(themeManager.theme.textPrimary)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.leading, 4)
     }
@@ -97,23 +97,23 @@ struct PrivacyPolicyView: View {
                 HStack(spacing: 14) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(section.color.opacity(0.12))
+                            .fill(themeManager.theme.textSecondary.opacity(0.12))
                             .frame(width: 38, height: 38)
                         
                         Image(systemName: section.icon)
                             .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(section.color)
+                            .foregroundStyle(themeManager.theme.textSecondary)
                     }
                     
                     Text(section.title)
                         .font(.hBody)
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     
                     Spacer()
                     
                     Image(systemName: "chevron.down")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                         .rotationEffect(.degrees(expandedSection == section ? 180 : 0))
                 }
                 .padding(.horizontal, 16)
@@ -123,19 +123,20 @@ struct PrivacyPolicyView: View {
             
             if expandedSection == section {
                 Divider()
-                    .background(Color.hWhite.opacity(0.06))
+                    .background(themeManager.theme.textPrimary.opacity(0.06))
                 
                 Text(section.content)
                     .font(.hCaption)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                     .lineSpacing(6)
                     .padding(16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.hsBackgroundSecondary)
+                .fill(themeManager.theme.backgroundSecondary)
         )
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
@@ -143,30 +144,33 @@ struct PrivacyPolicyView: View {
     // MARK: - Contact Info
     private var contactInfo: some View {
         VStack(spacing: 12) {
-            Text("Sorularınız mı var?")
+            Text(String.localized("privacy.contact_title"))
                 .font(.hBodyMedium)
-                .foregroundStyle(Color.hWhite)
+                .foregroundStyle(themeManager.theme.textPrimary)
             
-            Text("Gizlilik politikamızla ilgili sorularınız için bize ulaşın.")
+            Text(String.localized("privacy.contact_desc"))
                 .font(.hCaption)
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
                 .multilineTextAlignment(.center)
             
             Button {
-                // Open email
+                let email = "privacy@hissedar.com"
+                if let url = URL(string: "mailto:\(email)") {
+                    UIApplication.shared.open(url)
+                }
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "envelope.fill")
                         .font(.system(size: 13))
-                    Text("privacy@hissedar.com")
+                    Text(String.localized("common.privacy.mail"))
                         .font(.hCaptionMed)
                 }
-                .foregroundStyle(Color.hJade)
+                .foregroundStyle(themeManager.theme.textPrimary)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .background(
                     Capsule()
-                        .fill(Color.hJade.opacity(0.12))
+                        .fill(themeManager.theme.textPrimary.opacity(0.12))
                 )
             }
             .buttonStyle(.plain)
@@ -175,7 +179,7 @@ struct PrivacyPolicyView: View {
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.hsBackgroundSecondary)
+                .fill(themeManager.theme.backgroundSecondary)
         )
     }
 }
@@ -185,7 +189,6 @@ struct PrivacySection: Identifiable, Equatable {
     let id = UUID()
     let title: String
     let icon: String
-    let color: Color
     let content: String
     
     static func == (lhs: PrivacySection, rhs: PrivacySection) -> Bool {
@@ -194,40 +197,34 @@ struct PrivacySection: Identifiable, Equatable {
     
     static let allSections: [PrivacySection] = [
         PrivacySection(
-            title: "Toplanan Veriler",
+            title: String.localized("privacy.section.data_collection.title"),
             icon: "doc.text.fill",
-            color: .hJade,
-            content: "Hissedar, hizmetlerimizi sunmak için ad-soyad, e-posta, telefon numarası, TC kimlik numarası ve adres bilgilerinizi toplar. Finansal işlemler için banka hesap bilgileriniz ve yatırım geçmişiniz de saklanır. Tüm veriler KVKK kapsamında işlenir."
+            content: String.localized("privacy.section.data_collection.content")
         ),
         PrivacySection(
-            title: "Veri Kullanımı",
+            title: String.localized("privacy.section.usage.title"),
             icon: "gearshape.fill",
-            color: .hGold,
-            content: "Topladığımız veriler yalnızca hizmet sunumu, yasal yükümlülükler, güvenlik doğrulaması ve hizmet iyileştirmeleri için kullanılır. Verileriniz hiçbir koşulda üçüncü taraflarla pazarlama amacıyla paylaşılmaz."
+            content: String.localized("privacy.section.usage.content")
         ),
         PrivacySection(
-            title: "Veri Güvenliği",
+            title: String.localized("privacy.section.security.title"),
             icon: "lock.shield.fill",
-            color: .hMint,
-            content: "AES-256 şifreleme, TLS 1.3 iletişim protokolü ve çok katmanlı güvenlik altyapısı kullanılır. Finansal veriler banka seviyesi güvenlik standartlarında korunur. Düzenli güvenlik denetimleri gerçekleştirilir."
+            content: String.localized("privacy.section.security.content")
         ),
         PrivacySection(
-            title: "Çerezler ve İzleme",
+            title: String.localized("privacy.section.tracking.title"),
             icon: "eye.slash.fill",
-            color: .hSilver,
-            content: "Uygulama deneyimini iyileştirmek için analitik araçlar kullanılır. Çerezler yalnızca oturum yönetimi ve kullanıcı tercihlerini hatırlamak amacıyla kullanılır. Üçüncü taraf izleme çerezleri kullanılmaz."
+            content: String.localized("privacy.section.tracking.content")
         ),
         PrivacySection(
-            title: "Haklarınız",
+            title: String.localized("privacy.section.rights.title"),
             icon: "person.crop.circle.badge.checkmark",
-            color: .hJade,
-            content: "KVKK kapsamında verilerinize erişim, düzeltme, silme ve taşıma haklarınız bulunmaktadır. Bu haklarınızı kullanmak için uygulama içinden veya privacy@hissedar.com adresinden bize ulaşabilirsiniz."
+            content: String.localized("privacy.section.rights.content")
         ),
         PrivacySection(
-            title: "SPK Uyumluluğu",
+            title: String.localized("privacy.section.compliance.title"),
             icon: "building.columns.fill",
-            color: .hGold,
-            content: "Hissedar, Sermaye Piyasası Kurulu düzenlemelerine tam uyumlu şekilde faaliyet gösterir. Yatırımcı bilgileri SPK mevzuatı gereği belirlenen süre boyunca saklanır ve denetim otoritelerine gerektiğinde sunulur."
+            content: String.localized("privacy.section.compliance.content")
         ),
     ]
 }

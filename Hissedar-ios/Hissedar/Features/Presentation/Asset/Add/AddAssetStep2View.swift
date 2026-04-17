@@ -2,8 +2,6 @@
 //  AddAssetStep2View.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/15/26.
-//
 
 import SwiftUI
 
@@ -21,10 +19,10 @@ struct AddAssetStep2View: View {
                         .font(.system(size: 36))
                         .foregroundStyle(Color.accentColor)
                     
-                    Text("Varlık Türü Seçin")
+                    Text(String.localized("wizard.step.1.title"))
                         .font(.system(size: 22, weight: .bold))
                     
-                    Text("Tokenize etmek istediğiniz varlık türünü belirleyin")
+                    Text(String.localized("wizard.step.1.subtitle"))
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -42,8 +40,6 @@ struct AddAssetStep2View: View {
         }
     }
     
-    // MARK: - Asset Type Card
-    
     private func assetTypeCard(_ type: AssetTypeOption) -> some View {
         let isSelected = viewModel.selectedAssetType == type
         
@@ -53,7 +49,6 @@ struct AddAssetStep2View: View {
             }
         } label: {
             HStack(spacing: 16) {
-                // Icon
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
                         .fill(iconColor(for: type).opacity(isSelected ? 0.2 : 0.1))
@@ -64,7 +59,6 @@ struct AddAssetStep2View: View {
                         .foregroundStyle(iconColor(for: type))
                 }
                 
-                // Text
                 VStack(alignment: .leading, spacing: 4) {
                     Text(type.title)
                         .font(.system(size: 17, weight: .semibold))
@@ -74,11 +68,11 @@ struct AddAssetStep2View: View {
                         .font(.system(size: 13))
                         .foregroundStyle(.secondary)
                         .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                 }
                 
                 Spacer()
                 
-                // Checkmark
                 ZStack {
                     Circle()
                         .stroke(isSelected ? Color.accentColor : Color(.systemGray4), lineWidth: 2)
@@ -88,7 +82,6 @@ struct AddAssetStep2View: View {
                         Circle()
                             .fill(Color.accentColor)
                             .frame(width: 24, height: 24)
-                        
                         Image(systemName: "checkmark")
                             .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(.white)
@@ -114,8 +107,4 @@ struct AddAssetStep2View: View {
         case .nft: return .orange
         }
     }
-}
-
-#Preview {
-    AddAssetStep2View(viewModel: AddAssetViewModel())
 }

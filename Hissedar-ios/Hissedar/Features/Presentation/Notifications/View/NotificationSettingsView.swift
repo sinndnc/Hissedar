@@ -12,6 +12,7 @@ struct NotificationSettingsView: View {
     
     private var appState = Container.shared.appState()
     @State private var vm = NotificationSettingsViewModel()
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -22,13 +23,13 @@ struct NotificationSettingsView: View {
             }
             .padding(.bottom, 40)
         }
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Bildirimler")
+                Text(String.localized("profile.notification.title"))
                     .font(.hHeadline)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
         .task {
@@ -44,16 +45,15 @@ struct NotificationSettingsView: View {
     
     // MARK: - Channels
     private var channelSection: some View {
-        NotificationSection(title: "Bildirim Kanalları") {
+        NotificationSection(title: String.localized("profile.notification.section.title")) {
             NotificationToggleRow(
                 icon: "iphone",
-                title: "Push Bildirimleri",
-                subtitle: "Anlık bildirimler",
+                title: String.localized("profile.notification.push.title"),
+                subtitle: String.localized("profile.notification.push.subtitle"),
                 isOn: Binding(
                     get: { vm.prefs.pushEnabled },
                     set: { vm.prefs.pushEnabled = $0; save() }
-                ),
-                accentColor: Color.hCloud
+                )
             )
         }
     }
@@ -61,72 +61,66 @@ struct NotificationSettingsView: View {
     // MARK: - Alerts
     
     private var alertsSection: some View {
-        NotificationSection(title: "Yatırım Uyarıları") {
+        NotificationSection(title: String.localized("profile.alert.section.title")) {
             NotificationToggleRow(
                 icon: "building.2.fill",
-                title: "Kira Gelirleri",
-                subtitle: "Kira yatırıldığında bildir",
+                title: String.localized("profile.alert.section.rent.income.title"),
+                subtitle: String.localized("profile.alert.section.rent.income.subtitle"),
                 isOn: Binding(
                     get: { vm.prefs.dividendEnabled },
                     set: { vm.prefs.dividendEnabled = $0; save() }
-                ),
-                accentColor: .hJade
+                )
             )
             
             Divider()
             
             NotificationToggleRow(
                 icon: "chart.line.uptrend.xyaxis",
-                title: "Fiyat Değişimleri",
-                subtitle: "±%\(Int(vm.prefs.priceAlertThreshold)) fiyat hareketlerinde bildir",
+                title: String.localized("profile.alert.section.price.changes.title"),
+                subtitle:  String.localized("profile.alert.section.price.changes.subtitle"),
                 isOn: Binding(
                     get: { vm.prefs.priceAlertsEnabled },
                     set: { vm.prefs.priceAlertsEnabled = $0; save() }
-                ),
-                accentColor: .hGold
+                )
             )
             
             Divider()
             
             NotificationToggleRow(
                 icon: "star.fill",
-                title: "Yeni Fırsatlar",
-                subtitle: "Yeni varlık listelendiğinde bildir",
+                title: String.localized("profile.alert.section.new.opportunities.title"),
+                subtitle: String.localized("profile.alert.section.new.opportunities.subtitle"),
                 isOn: Binding(
                     get: { vm.prefs.opportunityEnabled },
                     set: { vm.prefs.opportunityEnabled = $0; save() }
-                ),
-                accentColor: .hGold
+                )
             )
         }
     }
 
     // MARK: - Other
-    
     private var otherSection: some View {
-        NotificationSection(title: "Diğer") {
+        NotificationSection(title:  String.localized("profile.other.section.title")) {
             NotificationToggleRow(
                 icon: "gearshape.fill",
-                title: "Sistem Bildirimleri",
-                subtitle: "Uygulama güncellemeleri ve duyurular",
+                title: String.localized("profile.other.section.system.title"),
+                subtitle: String.localized("profile.other.section.system.subtitle"),
                 isOn: Binding(
                     get: { vm.prefs.systemEnabled },
                     set: { vm.prefs.systemEnabled = $0; save() }
-                ),
-                accentColor: Color.hCloud
+                )
             )
             
             Divider()
             
             NotificationToggleRow(
                 icon: "shield.fill",
-                title: "Güvenlik Uyarıları",
-                subtitle: "Giriş ve cihaz bildirimleri",
+                title: String.localized("profile.other.section.security.title"),
+                subtitle: String.localized("profile.other.section.security.subtitle"),
                 isOn: Binding(
                     get: { vm.prefs.securityEnabled },
                     set: { vm.prefs.securityEnabled = $0; save() }
-                ),
-                accentColor: .hRust
+                )
             )
         }
     }

@@ -16,12 +16,7 @@ enum AddAssetStep: Int, CaseIterable {
     case preview = 3
     
     var title: String {
-        switch self {
-        case .generalInfo: return "Genel Bilgiler"
-        case .assetType: return "Varlık Türü"
-        case .typeDetails: return "Detay Bilgiler"
-        case .preview: return "Önizleme"
-        }
+        return String.localized("wizard.step.\(self.rawValue).title")
     }
     
     var stepNumber: Int { rawValue + 1 }
@@ -38,19 +33,11 @@ enum AssetTypeOption: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     
     var title: String {
-        switch self {
-        case .property: return "Gayrimenkul"
-        case .art: return "Sanat Eseri"
-        case .nft: return "NFT"
-        }
+        return String.localized("asset.type.\(self.rawValue).title")
     }
     
     var subtitle: String {
-        switch self {
-        case .property: return "Konut, ticari, otel ve arsa yatırımları"
-        case .art: return "Tablo, heykel ve değerli sanat eserleri"
-        case .nft: return "Dijital varlıklar ve koleksiyonlar"
-        }
+        return String.localized("asset.type.\(self.rawValue).subtitle")
     }
     
     var icon: String {
@@ -60,33 +47,17 @@ enum AssetTypeOption: String, CaseIterable, Identifiable {
         case .nft: return "cube.transparent.fill"
         }
     }
-    
-    var color: String {
-        switch self {
-        case .property: return "blue"
-        case .art: return "purple"
-        case .nft: return "orange"
-        }
-    }
 }
 
 // MARK: - Property Category
 
 enum PropertyCategory: String, CaseIterable, Identifiable {
-    case konut
-    case ticari
-    case otel
-    case arsa
+    case konut, ticari, otel, arsa
     
     var id: String { rawValue }
     
     var title: String {
-        switch self {
-        case .konut: return "Konut"
-        case .ticari: return "Ticari"
-        case .otel: return "Otel"
-        case .arsa: return "Arsa"
-        }
+        return String.localized("property.category.\(self.rawValue)")
     }
     
     var icon: String {
@@ -102,65 +73,31 @@ enum PropertyCategory: String, CaseIterable, Identifiable {
 // MARK: - Art Technique
 
 enum ArtTechnique: String, CaseIterable, Identifiable {
-    case yagliBoya = "yağlı boya"
-    case akrilik
-    case suluboya = "suluboya"
-    case heykel
-    case karma
-    case dijitalBaski = "dijital baskı"
-    case seramik
-    case diger = "diğer"
+    case yagliBoya = "yagli_boya"
+    case akrilik, suluboya, heykel, karma
+    case dijitalBaski = "dijital_baski"
+    case seramik, diger
     
     var id: String { rawValue }
     
     var title: String {
-        switch self {
-        case .yagliBoya: return "Yağlı Boya"
-        case .akrilik: return "Akrilik"
-        case .suluboya: return "Suluboya"
-        case .heykel: return "Heykel"
-        case .karma: return "Karma"
-        case .dijitalBaski: return "Dijital Baskı"
-        case .seramik: return "Seramik"
-        case .diger: return "Diğer"
-        }
+        return String.localized("art.technique.\(self.rawValue)")
     }
 }
 
 // MARK: - NFT Blockchain
 
 enum NFTBlockchain: String, CaseIterable, Identifiable {
-    case polygon
-    case ethereum
-    case solana
-    case avalanche
+    case polygon, ethereum, solana, avalanche
     
     var id: String { rawValue }
     
     var title: String {
-        switch self {
-        case .polygon: return "Polygon"
-        case .ethereum: return "Ethereum"
-        case .solana: return "Solana"
-        case .avalanche: return "Avalanche"
-        }
+        return rawValue.capitalized
     }
 }
 
-// MARK: - City List (Turkey)
-
-struct TurkishCities {
-    static let all: [String] = [
-        "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
-        "Adana", "Konya", "Gaziantep", "Mersin", "Kayseri",
-        "Eskişehir", "Trabzon", "Samsun", "Denizli", "Muğla",
-        "Sakarya", "Tekirdağ", "Manisa", "Diyarbakır", "Hatay",
-        "Balıkesir", "Kocaeli", "Aydın", "Malatya", "Erzurum",
-        "Elazığ", "Van", "Mardin", "Şanlıurfa", "Kahramanmaraş"
-    ]
-}
-
-// MARK: - Add Asset Request (for Supabase)
+// MARK: - Add Asset Request Models (Supabase)
 
 struct AddPropertyRequest: Encodable {
     let title: String

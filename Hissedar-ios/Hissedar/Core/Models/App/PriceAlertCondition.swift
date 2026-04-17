@@ -17,19 +17,11 @@ enum PriceAlertCondition: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
 
     var displayName: String {
-        switch self {
-        case .below:         return "Fiyat altına düşerse"
-        case .above:         return "Fiyat üstüne çıkarsa"
-        case .percentChange: return "Yüzde değişim"
-        }
+        return String.localized("alert.condition.\(self.rawValue).display")
     }
 
     var shortLabel: String {
-        switch self {
-        case .below:         return "Altına düşerse"
-        case .above:         return "Üstüne çıkarsa"
-        case .percentChange: return "% değişim"
-        }
+        return String.localized("alert.condition.\(self.rawValue).short")
     }
 
     var systemIcon: String {
@@ -50,17 +42,11 @@ enum PriceAlertBehavior: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
 
     var displayName: String {
-        switch self {
-        case .oneShot:   return "Tek seferlik"
-        case .recurring: return "Sürekli"
-        }
+        return String.localized("alert.behavior.\(self.rawValue).display")
     }
 
     var description: String {
-        switch self {
-        case .oneShot:   return "Bir kez tetiklendikten sonra otomatik kapanır"
-        case .recurring: return "Koşul her sağlandığında bildirim gönderilir"
-        }
+        return String.localized("alert.behavior.\(self.rawValue).desc")
     }
 }
 
@@ -70,17 +56,14 @@ struct AssetPriceAlert: Identifiable, Codable, Equatable {
     let id: String
     let userId: String
 
-    // Generic asset referansı
     let assetId: String
     let assetType: AssetType
 
-    // Koşul
     let conditionType: PriceAlertCondition
     let targetPrice: Decimal?
     let percentDelta: Decimal?
     let basePrice: Decimal?
 
-    // Davranış
     let behavior: PriceAlertBehavior
     let isActive: Bool
     let lastTriggeredAt: Date?
@@ -132,8 +115,6 @@ struct CreateAssetPriceAlertRequest: Encodable {
         case isActive      = "is_active"
     }
 
-    // MARK: - Factory
-
     static func below(
         userId: String,
         assetId: String,
@@ -141,17 +122,7 @@ struct CreateAssetPriceAlertRequest: Encodable {
         targetPrice: Decimal,
         behavior: PriceAlertBehavior = .oneShot
     ) -> Self {
-        .init(
-            userId: userId,
-            assetId: assetId,
-            assetType: assetType,
-            conditionType: .below,
-            targetPrice: targetPrice,
-            percentDelta: nil,
-            basePrice: nil,
-            behavior: behavior,
-            isActive: true
-        )
+        .init(userId: userId, assetId: assetId, assetType: assetType, conditionType: .below, targetPrice: targetPrice, percentDelta: nil, basePrice: nil, behavior: behavior, isActive: true)
     }
 
     static func above(
@@ -161,17 +132,7 @@ struct CreateAssetPriceAlertRequest: Encodable {
         targetPrice: Decimal,
         behavior: PriceAlertBehavior = .oneShot
     ) -> Self {
-        .init(
-            userId: userId,
-            assetId: assetId,
-            assetType: assetType,
-            conditionType: .above,
-            targetPrice: targetPrice,
-            percentDelta: nil,
-            basePrice: nil,
-            behavior: behavior,
-            isActive: true
-        )
+        .init(userId: userId, assetId: assetId, assetType: assetType, conditionType: .above, targetPrice: targetPrice, percentDelta: nil, basePrice: nil, behavior: behavior, isActive: true)
     }
 
     static func percentChange(
@@ -182,17 +143,7 @@ struct CreateAssetPriceAlertRequest: Encodable {
         basePrice: Decimal,
         behavior: PriceAlertBehavior = .oneShot
     ) -> Self {
-        .init(
-            userId: userId,
-            assetId: assetId,
-            assetType: assetType,
-            conditionType: .percentChange,
-            targetPrice: nil,
-            percentDelta: percentDelta,
-            basePrice: basePrice,
-            behavior: behavior,
-            isActive: true
-        )
+        .init(userId: userId, assetId: assetId, assetType: assetType, conditionType: .percentChange, targetPrice: nil, percentDelta: percentDelta, basePrice: basePrice, behavior: behavior, isActive: true)
     }
 }
 
@@ -202,23 +153,19 @@ extension AssetPriceAlert {
     var conditionDescription: String {
         switch conditionType {
         case .below:
-            let price = targetPrice?.tlFormatted ?? "-"
-            return "Fiyat \(price) altına düşerse"
+            let price = CurrencyFormatter.format(targetPrice ?? 0, currency: .TRY)
+            return String(format: String.localized("alert.desc.below"), price)
         case .above:
-            let price = targetPrice?.tlFormatted ?? "-"
-            return "Fiyat \(price) üstüne çıkarsa"
+            let price = CurrencyFormatter.format(targetPrice ?? 0, currency: .TRY)
+            return String(format: String.localized("alert.desc.above"), price)
         case .percentChange:
-            guard let delta = percentDelta else { return "Yüzde değişim" }
+            let delta = percentDelta ?? 0
             let sign = delta >= 0 ? "+" : ""
-            return "%\(sign)\(delta) değişirse"
+            return String(format: String.localized("alert.desc.percent"), "\(sign)\(delta)")
         }
     }
 
     var statusLabel: String {
-        if !isActive { return "Pasif" }
-        if triggerCount > 0 && behavior == .recurring {
-            return "Aktif"
-        }
-        return "Aktif"
+        return isActive ? String.localized("common.active") : String.localized("common.passive")
     }
 }

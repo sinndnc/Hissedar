@@ -3,7 +3,6 @@
 //  Hissedar
 //
 //  Kullanıcının tüm fiyat alarmlarını listeleyen ekran.
-//  Profil/Ayarlar sayfasından NavigationLink ile açılır.
 //
 
 import SwiftUI
@@ -13,8 +12,9 @@ import Combine
 struct PriceAlertsListView: View {
 
     @StateObject private var vm = PriceAlertsViewModel()
-    @State private var assetTitles: [String: String] = [:]  // "type:id" -> title
-
+    @State private var assetTitles: [String: String] = [:]
+    @Environment(ThemeManager.self) private var themeManager
+    
     @Injected(\.authRepository) private var authVM
     @Injected(\.marketViewModel) private var marketVM
 
@@ -28,13 +28,13 @@ struct PriceAlertsListView: View {
                 alertsList
             }
         }
-        .navigationTitle("Alarmlarım")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
+        .navigationTitle(String.localized("profile.alert.title"))
         .task { await load() }
         .refreshable { await load() }
-        .alert("Hata", isPresented: .constant(vm.errorMessage != nil)) {
-            Button("Tamam") { vm.clearMessages() }
+        .alert(String.localized("common.error"), isPresented: .constant(vm.errorMessage != nil)) {
+            Button(String.localized("common.ok")) { vm.clearMessages() }
         } message: {
             Text(vm.errorMessage ?? "")
         }
@@ -58,25 +58,25 @@ struct PriceAlertsListView: View {
                         }
                     )
                     .padding(.horizontal, 16)
-                    .swipeActions {
+                    .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             Task { await vm.deleteAlert(alert) }
                         } label: {
-                            Label("Sil", systemImage: "trash")
+                            Label(String.localized("common.delete"), systemImage: "trash")
                         }
                     }
                     .contextMenu {
                         Button(role: .destructive) {
                             Task { await vm.deleteAlert(alert) }
                         } label: {
-                            Label("Sil", systemImage: "trash")
+                            Label(String.localized("common.delete"), systemImage: "trash")
                         }
                     }
                 }
 
-                Text("Pasif alarmlar tetiklenmez. Silmek için sağa kaydırın veya basılı tutun.")
+                Text(String.localized("profile.alert.footer_hint"))
                     .font(.system(size: 11))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
@@ -87,9 +87,9 @@ struct PriceAlertsListView: View {
 
     private var headerSummary: some View {
         HStack(spacing: 12) {
-            statCard(count: vm.activeCount, label: "Aktif", color: Color.hsSuccess)
-            statCard(count: vm.alerts.count - vm.activeCount, label: "Pasif", color: Color.hsTextSecondary)
-            statCard(count: vm.alerts.count, label: "Toplam", color: Color.hsPurple400)
+            statCard(count: vm.activeCount, label: String.localized("profile.alert.status.active"), color: Color.hsSuccess)
+            statCard(count: vm.alerts.count - vm.activeCount, label: String.localized("profile.alert.status.passive"), color: Color.hsTextSecondary)
+            statCard(count: vm.alerts.count, label: String.localized("profile.alert.status.total"), color: Color.hsPurple400)
         }
     }
 
@@ -100,15 +100,15 @@ struct PriceAlertsListView: View {
                 .foregroundStyle(color)
             Text(label)
                 .font(.system(size: 11, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
         )
     }
 
@@ -116,10 +116,10 @@ struct PriceAlertsListView: View {
 
     private var loadingView: some View {
         VStack(spacing: 14) {
-            ProgressView().tint(Color.hsPurple400).scaleEffect(1.3)
-            Text("Yükleniyor...")
+            ProgressView().tint(themeManager.theme.accent).scaleEffect(1.3)
+            Text(String.localized("common.loading"))
                 .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -130,57 +130,44 @@ struct PriceAlertsListView: View {
         VStack(spacing: 14) {
             Image(systemName: "bell.slash")
                 .font(.system(size: 44, weight: .light))
-                .foregroundStyle(Color.hsTextSecondary.opacity(0.4))
+                .foregroundStyle(themeManager.theme.textSecondary.opacity(0.4))
 
-            Text("Henüz alarm kurmadınız")
+            Text(String.localized("profile.alert.empty_title"))
                 .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
 
-            Text("Bir varlık detay sayfasında zil ikonuna dokunarak fiyat alarmı oluşturabilirsiniz.")
+            Text(String.localized("profile.alert.empty_desc"))
                 .font(.system(size: 13))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: - Load
+    // MARK: - Data Loading Logic
 
     private func load() async {
-        guard let userId = authVM.currentUserId else { return }
+        guard let userId = await authVM.currentUserId else { return }
         await vm.loadAllAlerts(userId: userId)
         await loadAssetTitles()
     }
 
-    /// Alarmlarda geçen asset'lerin title'larını market VM üzerinden cache'le.
-    /// (Her alarm için tek tek detail fetch etmek verimsiz olur.)
     private func loadAssetTitles() async {
-        // marketViewModel'deki mevcut asset cache/list'i kullan
-        // Eğer marketVM'de `allAssets: [AssetItem]` benzeri bir property varsa oradan al.
-        // Yoksa her unique asset için fetchDetail yapmak zorunda kalırız.
-        //
-        // NOT: Bu kısmı kendi marketViewModel API'na göre adapte et.
-        // Aşağıdaki örnek: marketVM.allAssets şeklinde bir [AssetItem] property'si varsayar.
-
         for alert in vm.alerts {
             let key = "\(alert.assetType.rawValue):\(alert.assetId)"
             guard assetTitles[key] == nil else { continue }
 
-            // Örnek: eğer marketVM'den direkt alabiliyorsan
-            // if let item = marketVM.allAssets.first(where: { $0.id == alert.assetId }) {
-            //     assetTitles[key] = item.title
-            //     continue
-            // }
-
-            // Fallback: detail fetch et (tekil)
             do {
                 await marketVM.fetchDetail(id: alert.assetId)
                 if let detail = marketVM.selectedDetail, detail.id == alert.assetId {
-                    assetTitles[key] = detail.title
+                    // UI güncellenmesi için MainActor'da setlemesi daha sağlıklı olabilir
+                    await MainActor.run {
+                        assetTitles[key] = detail.title
+                    }
                 }
             } catch {
-                // Sessiz fallback
+                // Fallback hatası sessizce geçilir
             }
         }
     }

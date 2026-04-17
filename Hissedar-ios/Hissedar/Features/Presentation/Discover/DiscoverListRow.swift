@@ -1,10 +1,9 @@
 //
-//  AssetDetailView.swift
+//  DiscoverListRow.swift
 //  Hissedar
 //
+//  Piyasa Liste Satırı (Tüm varlık tipleri için)
 //
-// MARK: - DiscoverListRow.swift
-// Hissedar — Piyasa Liste Satırı (Tüm varlık tipleri için)
 
 import SwiftUI
 
@@ -12,7 +11,9 @@ struct DiscoverListRow<Icon: View>: View {
     let rank: Int
     let item: AssetItem
     let icon: Icon
-
+    
+    @Environment(ThemeManager.self) private var themeManager
+    
     init(
         rank: Int,
         item: AssetItem,
@@ -22,55 +23,55 @@ struct DiscoverListRow<Icon: View>: View {
         self.item = item
         self.icon = icon()
     }
-
+    
     var body: some View {
         HStack(spacing: 12) {
             // Rank
             Text("\(rank)")
                 .font(.system(size: 12, weight: .medium, design: .monospaced))
-                .foregroundColor(Color.hsTextTertiary)
+                .foregroundColor(themeManager.theme.textTertiary)
                 .frame(width: 18)
-
+            
             // Icon
             icon
                 .frame(width: 44, height: 44)
-                .background(Color.hsBackgroundSecondary)
+                .background(themeManager.theme.backgroundSecondary)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .overlay(
                     RoundedRectangle(cornerRadius: 15)
-                        .strokeBorder(Color.hsBorder, lineWidth: 1)
+                        .strokeBorder(themeManager.theme.border, lineWidth: 1)
                 )
-
+            
             // Info
             VStack(alignment: .leading, spacing: 10) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(item.title)
                         .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(Color.hsTextPrimary)
+                        .foregroundColor(themeManager.theme.textPrimary)
                         .lineLimit(1)
-
+                    
                     HStack(spacing: 6) {
                         ForEach(Array(item.listMeta.enumerated()), id: \.offset) { index, metaItem in
                             if index > 0 {
                                 Circle()
-                                    .fill(Color.hsTextTertiary)
+                                    .fill(themeManager.theme.textTertiary)
                                     .frame(width: 3, height: 3)
                             }
                             Text(metaItem)
                                 .font(.system(size: 12, weight: .medium))
-                                .foregroundColor(Color.hsTextSecondary)
+                                .foregroundColor(themeManager.theme.textSecondary)
                         }
                     }
                 }
-
-                // Fonlama ilerlemesi (soldTokens / totalTokens)
+                
+                // Fonlama ilerlemesi
                 ProgressView(value: item.fundingPercent / 100)
                     .frame(height: 3)
                     .progressViewStyle(.linear)
-                    .tint(Color.hsPurple400)
+                    .tint(themeManager.theme.accent)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             // Price + Change
             VStack(alignment: .trailing, spacing: 2) {
                 AmountBadge(price: item.formattedPrice)
@@ -79,6 +80,6 @@ struct DiscoverListRow<Icon: View>: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
     }
 }

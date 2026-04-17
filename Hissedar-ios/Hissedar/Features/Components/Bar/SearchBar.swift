@@ -10,19 +10,19 @@ import SwiftUI
 struct SearchBar: View {
     
     @Binding var searchText: String
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View{
         return HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 16, weight: .medium))
-                .foregroundColor(.hsTextPrimary.opacity(0.6))
+                .foregroundColor(themeManager.theme.textPrimary.opacity(0.6))
             
-            TextField("", text: $searchText, prompt:
-                        Text("Varlık, token veya koleksiyon ara…")
-                .foregroundColor(.hsTextPrimary.opacity(0.5))
+            TextField("", text: $searchText, prompt: Text(String.localized("search.placeholder"))
+                .foregroundColor(themeManager.theme.textPrimary.opacity(0.5))
             )
             .font(.system(size: 15))
-            .foregroundColor(.hsLavenderLight)
+            .foregroundColor(themeManager.theme.textTertiary)
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             
@@ -32,19 +32,19 @@ struct SearchBar: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 16))
-                        .foregroundColor(.hsPurple400.opacity(0.5))
+                        .foregroundColor(themeManager.theme.accent.opacity(0.5))
                 }
             }
         }
         .padding(12)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .strokeBorder(
                     searchText.isEmpty
-                    ? Color.hsBorder
-                    : Color.hsSuccess.opacity(0.3),
+                    ? themeManager.theme.border
+                    : themeManager.theme.border.opacity(0.3),
                     lineWidth: 1
                 )
         )

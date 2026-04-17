@@ -1,4 +1,12 @@
 import SwiftUI
+//
+//  SecurityView.swift
+//  Hissedar
+//
+//  Created by Sinan Dinç on 3/27/26.
+//
+
+import SwiftUI
 
 // MARK: - Security View
 struct SecurityView: View {
@@ -7,6 +15,7 @@ struct SecurityView: View {
     @State private var twoFactorEnabled = false
     @State private var loginAlerts = true
     @State private var showChangePassword = false
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -21,13 +30,13 @@ struct SecurityView: View {
             .padding(.top, 8)
             .padding(.bottom, 40)
         }
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Güvenlik")
+                Text(String.localized("security.nav_title"))
                     .font(.hHeadline)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
     }
@@ -37,13 +46,20 @@ struct SecurityView: View {
         VStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .stroke(Color.hWhite.opacity(0.06), lineWidth: 8)
+                    .stroke(themeManager.theme.textPrimary.opacity(0.06), lineWidth: 8)
                     .frame(width: 90, height: 90)
                 
                 Circle()
                     .trim(from: 0, to: 0.75)
                     .stroke(
-                        LinearGradient(colors: [Color.hJade, Color.hEmerald], startPoint: .leading, endPoint: .trailing),
+                        LinearGradient(
+                            colors: [
+                                themeManager.theme.purple900,
+                                themeManager.theme.purple400,
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ),
                         style: StrokeStyle(lineWidth: 8, lineCap: .round)
                     )
                     .frame(width: 90, height: 90)
@@ -52,31 +68,31 @@ struct SecurityView: View {
                 VStack(spacing: 0) {
                     Text("75")
                         .font(.system(size: 28, weight: .bold, design: .rounded))
-                        .foregroundStyle(Color.hWhite)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     Text("/100")
                         .font(.system(size: 11))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                 }
             }
             
             VStack(spacing: 4) {
-                Text("Güvenlik Puanı: İyi")
+                Text("\(String.localized("security.score.label")): \(String.localized("security.score.status_good"))")
                     .font(.hBodyMedium)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 
-                Text("2FA'yı etkinleştirerek puanınızı artırın")
+                Text(String.localized("security.score.hint"))
                     .font(.hLabel)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
         .frame(maxWidth: .infinity)
         .padding(24)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.hsBackgroundSecondary)
+                .fill(themeManager.theme.backgroundSecondary)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.hJade.opacity(0.1), lineWidth: 1)
+                        .stroke(themeManager.theme.accent.opacity(0.1), lineWidth: 1)
                 )
         )
     }
@@ -84,91 +100,71 @@ struct SecurityView: View {
     // MARK: - Auth Section
     private var authSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Kimlik Doğrulama")
-                .font(.hCaptionMed)
-                .foregroundStyle(Color.hsTextPrimary)
-                .padding(.leading, 4)
+            SectionHeader(title: String.localized("security.section.auth"))
             
             VStack(spacing: 0) {
                 SecurityToggleRow(
                     icon: "faceid",
-                    title: "Biyometrik Giriş",
-                    subtitle: "Face ID / Touch ID ile giriş",
+                    title: String.localized("security.auth.biometric.title"),
+                    subtitle: String.localized("security.auth.biometric.desc"),
                     isOn: $biometricEnabled,
-                    accentColor: .hJade
+                    accentColor: themeManager.theme.accent
                 )
                 
-                Divider().background(Color.hWhite.opacity(0.06)).padding(.leading, 56)
+                Divider().background(themeManager.theme.textPrimary.opacity(0.06)).padding(.leading, 56)
                 
                 SecurityToggleRow(
                     icon: "lock.shield.fill",
-                    title: "İki Faktörlü Doğrulama",
-                    subtitle: "SMS veya Authenticator ile",
+                    title: String.localized("security.auth.2fa.title"),
+                    subtitle: String.localized("security.auth.2fa.desc"),
                     isOn: $twoFactorEnabled,
-                    accentColor: .hGold
+                    accentColor: themeManager.theme.accent
                 )
                 
-                Divider().background(Color.hWhite.opacity(0.06)).padding(.leading, 56)
+                Divider().background(themeManager.theme.textPrimary.opacity(0.06)).padding(.leading, 56)
                 
                 SecurityToggleRow(
                     icon: "bell.badge.fill",
-                    title: "Giriş Uyarıları",
-                    subtitle: "Yeni cihaz girişlerinde bildir",
+                    title: String.localized("security.auth.alerts.title"),
+                    subtitle: String.localized("security.auth.alerts.desc"),
                     isOn: $loginAlerts,
-                    accentColor: .hMint
+                    accentColor: themeManager.theme.accent
                 )
             }
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
-            )
+            .background(RoundedRectangle(cornerRadius: 16).fill(themeManager.theme.backgroundSecondary))
         }
     }
     
     // MARK: - Password Section
     private var passwordSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Şifre")
-                .font(.hCaptionMed)
-                .foregroundStyle(Color.hsTextPrimary)
-                .padding(.leading, 4)
+            SectionHeader(title: String.localized("security.section.password"))
             
             Button {
                 showChangePassword = true
             } label: {
                 HStack(spacing: 14) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.hGold.opacity(0.12))
-                            .frame(width: 38, height: 38)
-                        
-                        Image(systemName: "key.fill")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(Color.hGold)
-                    }
+                    IconBadge(icon: "key.fill", color: themeManager.theme.accent)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Şifre Değiştir")
+                        Text(String.localized("security.password.change_title"))
                             .font(.hBody)
-                            .foregroundStyle(Color.hWhite)
+                            .foregroundStyle(themeManager.theme.textPrimary)
                         
-                        Text("Son değişiklik: 45 gün önce")
+                        Text("\(String.localized("security.password.last_change")): 45 \(String.localized("common.time.days_ago"))")
                             .font(.hLabel)
-                            .foregroundStyle(Color.hsTextPrimary)
+                            .foregroundStyle(themeManager.theme.textPrimary)
                     }
                     
                     Spacer()
                     
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
-                .background(
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.hsBackgroundSecondary)
-                )
+                .background(RoundedRectangle(cornerRadius: 16).fill(themeManager.theme.backgroundSecondary))
             }
             .buttonStyle(.plain)
         }
@@ -178,65 +174,47 @@ struct SecurityView: View {
     private var sessionsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("Aktif Oturumlar")
-                    .font(.hCaptionMed)
-                    .foregroundStyle(Color.hsTextPrimary)
-                
+                SectionHeader(title: String.localized("security.section.sessions"))
                 Spacer()
-                
-                Button {
-                    // End all sessions
-                } label: {
-                    Text("Tümünü Kapat")
-                        .font(.hLabel)
-                        .foregroundStyle(Color.hRust)
-                }
+                Button(String.localized("security.sessions.close_all")) { }
+                    .font(.hLabel)
+                    .foregroundStyle(themeManager.theme.accent)
             }
             .padding(.horizontal, 4)
             
             VStack(spacing: 0) {
                 ForEach(SessionItem.samples) { session in
                     HStack(spacing: 14) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.hWhite.opacity(0.05))
-                                .frame(width: 38, height: 38)
-                            
-                            Image(systemName: session.icon)
-                                .font(.system(size: 15))
-                                .foregroundStyle(session.isCurrent ? Color.hJade : Color.hsTextPrimary)
-                        }
+                        IconBadge(icon: session.icon, color: session.isCurrent ? themeManager.theme.accent : themeManager.theme.textPrimary)
                         
                         VStack(alignment: .leading, spacing: 2) {
                             HStack(spacing: 6) {
                                 Text(session.device)
                                     .font(.hBody)
-                                    .foregroundStyle(Color.hWhite)
+                                    .foregroundStyle(themeManager.theme.textPrimary)
                                 
                                 if session.isCurrent {
-                                    Text("Bu cihaz")
+                                    Text(String.localized("security.sessions.current_device"))
                                         .font(.system(size: 9, weight: .semibold))
-                                        .foregroundStyle(Color.hJade)
+                                        .foregroundStyle(themeManager.theme.textSecondary)
                                         .padding(.horizontal, 6)
                                         .padding(.vertical, 2)
-                                        .background(Capsule().fill(Color.hJade.opacity(0.12)))
+                                        .background(Capsule().fill(themeManager.theme.accent.opacity(0.12)))
                                 }
                             }
                             
-                            Text("\(session.location) • \(session.lastActive)")
+                            Text("\(session.location) • \(session.isCurrent ? String.localized("security.sessions.active_now") : session.lastActive)")
                                 .font(.hLabel)
-                                .foregroundStyle(Color.hsTextPrimary)
+                                .foregroundStyle(themeManager.theme.textPrimary)
                         }
                         
                         Spacer()
                         
                         if !session.isCurrent {
-                            Button {
-                                // End session
-                            } label: {
+                            Button { } label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.system(size: 18))
-                                    .foregroundStyle(Color.hsTextPrimary.opacity(0.5))
+                                    .foregroundStyle(themeManager.theme.textPrimary.opacity(0.5))
                             }
                         }
                     }
@@ -244,66 +222,46 @@ struct SecurityView: View {
                     .padding(.vertical, 13)
                     
                     if session.id != SessionItem.samples.last?.id {
-                        Divider()
-                            .background(Color.hWhite.opacity(0.06))
-                            .padding(.leading, 56)
+                        Divider().background(themeManager.theme.textPrimary.opacity(0.06)).padding(.leading, 56)
                     }
                 }
             }
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.hsBackgroundSecondary)
-            )
+            .background(RoundedRectangle(cornerRadius: 16).fill(themeManager.theme.backgroundSecondary))
         }
     }
     
     // MARK: - Danger Zone
     private var dangerZone: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Tehlikeli Bölge")
-                .font(.hCaptionMed)
-                .foregroundStyle(Color.hRust)
-                .padding(.leading, 4)
+            SectionHeader(title: String.localized("security.section.danger_zone"))
+                .foregroundStyle(themeManager.theme.accent)
             
-            Button {
-                // Delete account
-            } label: {
+            Button { } label: {
                 HStack(spacing: 14) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.hRust.opacity(0.12))
-                            .frame(width: 38, height: 38)
-                        
-                        Image(systemName: "trash.fill")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(Color.hRust)
-                    }
+                    IconBadge(icon: "trash.fill", color: themeManager.theme.accent)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Hesabı Sil")
+                        Text(String.localized("security.danger.delete_title"))
                             .font(.hBody)
-                            .foregroundStyle(Color.hRust)
+                            .foregroundStyle(themeManager.theme.accent)
                         
-                        Text("Bu işlem geri alınamaz")
+                        Text(String.localized("security.danger.delete_desc"))
                             .font(.hLabel)
-                            .foregroundStyle(Color.hsTextPrimary)
+                            .foregroundStyle(themeManager.theme.textPrimary)
                     }
                     
                     Spacer()
                     
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.hRust.opacity(0.5))
+                        .foregroundStyle(themeManager.theme.accent.opacity(0.5))
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.hsBackgroundSecondary)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.hRust.opacity(0.15), lineWidth: 1)
-                        )
+                        .fill(themeManager.theme.backgroundSecondary)
+                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(themeManager.theme.accent.opacity(0.15), lineWidth: 1))
                 )
             }
             .buttonStyle(.plain)
@@ -318,6 +276,8 @@ struct SecurityToggleRow: View {
     let subtitle: String
     @Binding var isOn: Bool
     let accentColor: Color
+    
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(spacing: 14) {
@@ -334,17 +294,17 @@ struct SecurityToggleRow: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.hBody)
-                    .foregroundStyle(Color.hWhite)
+                    .foregroundStyle(themeManager.theme.textPrimary)
                 
                 Text(subtitle)
                     .font(.hLabel)
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
             
             Spacer()
             
             Toggle("", isOn: $isOn)
-                .toggleStyle(SwitchToggleStyle(tint: Color.hJade))
+                .toggleStyle(SwitchToggleStyle(tint: themeManager.theme.accent))
                 .labelsHidden()
         }
         .padding(.horizontal, 16)

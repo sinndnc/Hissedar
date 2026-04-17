@@ -4,13 +4,9 @@
 //
 //  Created by Sinan Dinç on 4/10/26.
 //
-//  PurchaseView içindeki successView'ı bu dosyayla değiştir
-//  veya PurchaseView.swift'teki successView fonksiyonunu bu kodla güncelle
-//
 
 import SwiftUI
 
-/// PurchaseView içinde kullanılacak success overlay
 struct PurchaseSuccessOverlay: View {
     
     let asset: AssetItem
@@ -19,42 +15,45 @@ struct PurchaseSuccessOverlay: View {
     let blockchainStatus: String
     let walletAddress: String
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         VStack(spacing: 24) {
             // Success icon
             ZStack {
                 Circle()
-                    .fill(Color.hsSuccess.opacity(0.15))
+                    .fill(themeManager.theme.success.opacity(0.15))
                     .frame(width: 96, height: 96)
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 56))
-                    .foregroundStyle(Color.hsSuccess)
+                    .foregroundStyle(themeManager.theme.success)
             }
             
-            Text("Satın Alma Başarılı!")
+            Text(String.localized("purchase.success.title"))
                 .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
             
             VStack(spacing: 8) {
-                Text("\(purchaseAmount) adet \(asset.title) token'ı")
+                Text(String(format: String.localized("purchase.success.desc"), purchaseAmount, asset.title))
                     .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
+                    .multilineTextAlignment(.center)
                 Text(formattedTotal)
                     .font(.system(size: 28, weight: .bold, design: .monospaced))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
             
             // Blockchain status
             VStack(spacing: 10) {
-                Divider().background(Color.hsBorder)
+                Divider().background(themeManager.theme.border)
                 
                 HStack(spacing: 8) {
                     Image(systemName: "link")
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Color.hsPurple400)
-                    Text("Blockchain")
+                        .foregroundStyle(themeManager.theme.accent)
+                    Text(String.localized("common.blockchain"))
                         .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     
                     Spacer()
                     
@@ -62,42 +61,43 @@ struct PurchaseSuccessOverlay: View {
                         if blockchainStatus == "pending" {
                             ProgressView()
                                 .scaleEffect(0.7)
-                                .tint(Color.hsWarning)
+                                .tint(themeManager.theme.warning)
                         }
-                        Text(blockchainStatus == "pending" ? "İşleniyor..." : "Onaylandı")
+                        Text(blockchainStatus == "pending" ? String.localized("common.processing") : String.localized("common.confirmed"))
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(
                                 blockchainStatus == "pending"
-                                ? Color.hsWarning
-                                : Color.hsSuccess
+                                ? themeManager.theme.warning
+                                : themeManager.theme.success
                             )
                     }
                 }
                 
                 if !walletAddress.isEmpty {
                     HStack {
-                        Text("Cüzdan")
+                        Text(String.localized("common.wallet"))
                             .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(Color.hsTextSecondary)
+                            .foregroundStyle(themeManager.theme.textSecondary)
                         Spacer()
                         Text(shortAddress(walletAddress))
                             .font(.system(size: 12, weight: .medium, design: .monospaced))
-                            .foregroundStyle(Color.hsTextSecondary)
+                            .foregroundStyle(themeManager.theme.textSecondary)
                     }
                 }
             }
             .padding(.horizontal, 4)
             
-            Text("Token'larınız blockchain'e kaydediliyor")
+            Text(String.localized("purchase.success.footer"))
                 .font(.system(size: 13))
-                .foregroundStyle(Color.hsTextTertiary)
+                .foregroundStyle(themeManager.theme.textTertiary)
+                .multilineTextAlignment(.center)
         }
         .padding(24)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(Color.hsBorder, lineWidth: 1)
+                .strokeBorder(themeManager.theme.border, lineWidth: 1)
         )
         .padding(.horizontal, 20)
     }

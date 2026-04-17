@@ -2,8 +2,6 @@
 //  AddAssetStep1View.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/15/26.
-//
 
 import SwiftUI
 
@@ -23,23 +21,23 @@ struct AddAssetStep1View: View {
                 // Header
                 sectionHeader(
                     icon: "doc.text.fill",
-                    title: "Genel Bilgiler",
-                    subtitle: "Varlığınızın temel bilgilerini girin"
+                    title: String.localized("wizard.step.0.title"),
+                    subtitle: String.localized("wizard.step.0.subtitle")
                 )
                 
                 // Başlık & Açıklama
                 VStack(spacing: 16) {
                     FormTextField(
-                        label: "Varlık Başlığı",
-                        placeholder: "örn: Kadıköy Sahil Residence",
+                        label: String.localized("wizard.field.title.label"),
+                        placeholder: String.localized("wizard.field.title.placeholder"),
                         text: $viewModel.title,
                         icon: "textformat"
                     )
                     .focused($focusedField, equals: .title)
                     
                     FormTextEditor(
-                        label: "Açıklama",
-                        placeholder: "Varlık hakkında detaylı bilgi...",
+                        label: String.localized("wizard.field.description.label"),
+                        placeholder: String.localized("wizard.field.description.placeholder"),
                         text: $viewModel.description
                     )
                 }
@@ -47,10 +45,10 @@ struct AddAssetStep1View: View {
                 
                 // Finansal Bilgiler
                 VStack(spacing: 16) {
-                    sectionLabel("Finansal Bilgiler")
+                    sectionLabel(String.localized("wizard.section.financial"))
                     
                     FormTextField(
-                        label: "Toplam Değer (₺)",
+                        label: String.localized("wizard.field.total_value.label"),
                         placeholder: "2.500.000",
                         text: $viewModel.totalValue,
                         icon: "turkishlirasign.circle.fill",
@@ -60,7 +58,7 @@ struct AddAssetStep1View: View {
                     
                     HStack(spacing: 12) {
                         FormTextField(
-                            label: "Token Fiyatı (₺)",
+                            label: String.localized("wizard.field.token_price.label"),
                             placeholder: "2.500",
                             text: $viewModel.tokenPrice,
                             icon: "tag.fill",
@@ -69,7 +67,7 @@ struct AddAssetStep1View: View {
                         .focused($focusedField, equals: .tokenPrice)
                         
                         FormTextField(
-                            label: "Toplam Token",
+                            label: String.localized("wizard.field.total_tokens.label"),
                             placeholder: "1.000",
                             text: $viewModel.totalTokens,
                             icon: "number",
@@ -83,7 +81,7 @@ struct AddAssetStep1View: View {
                         HStack {
                             Image(systemName: "info.circle.fill")
                                 .foregroundStyle(.blue)
-                            Text("Hesaplanan token fiyatı: \(viewModel.calculatedTokenPrice)")
+                            Text("\(String.localized("wizard.calc.token_price")): \(viewModel.calculatedTokenPrice)")
                                 .font(.system(size: 13))
                                 .foregroundStyle(.secondary)
                             Spacer()
@@ -97,11 +95,11 @@ struct AddAssetStep1View: View {
                 
                 // Getiri Bilgileri
                 VStack(spacing: 16) {
-                    sectionLabel("Getiri Bilgileri")
+                    sectionLabel(String.localized("wizard.section.yield"))
                     
                     HStack(spacing: 12) {
                         FormTextField(
-                            label: "Yıllık Getiri (%)",
+                            label: String.localized("wizard.field.annual_yield.label"),
                             placeholder: "8.5",
                             text: $viewModel.annualYield,
                             icon: "chart.line.uptrend.xyaxis",
@@ -110,7 +108,7 @@ struct AddAssetStep1View: View {
                         .focused($focusedField, equals: .annualYield)
                         
                         FormTextField(
-                            label: "Aylık Kira (₺)",
+                            label: String.localized("wizard.field.monthly_rent.label"),
                             placeholder: "12.500",
                             text: $viewModel.monthlyRent,
                             icon: "calendar.badge.clock",
@@ -123,10 +121,10 @@ struct AddAssetStep1View: View {
                 
                 // Görsel & Badge
                 VStack(spacing: 16) {
-                    sectionLabel("Ek Bilgiler")
+                    sectionLabel(String.localized("wizard.section.extra"))
                     
                     FormTextField(
-                        label: "Görsel URL",
+                        label: String.localized("wizard.field.image_url.label"),
                         placeholder: "https://...",
                         text: $viewModel.imageUrl,
                         icon: "photo.fill",
@@ -137,8 +135,8 @@ struct AddAssetStep1View: View {
                     .autocorrectionDisabled()
                     
                     FormTextField(
-                        label: "Rozet (Opsiyonel)",
-                        placeholder: "örn: Popüler, Yeni, Fırsat",
+                        label: String.localized("wizard.field.badge.label"),
+                        placeholder: String.localized("wizard.field.badge.placeholder"),
                         text: $viewModel.badge,
                         icon: "star.fill"
                     )
@@ -151,17 +149,13 @@ struct AddAssetStep1View: View {
         .scrollDismissesKeyboard(.interactively)
     }
     
-    // MARK: - Helpers
-    
     private func sectionHeader(icon: String, title: String, subtitle: String) -> some View {
         VStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.system(size: 36))
                 .foregroundStyle(Color.accentColor)
-            
             Text(title)
                 .font(.system(size: 22, weight: .bold))
-            
             Text(subtitle)
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
@@ -178,87 +172,4 @@ struct AddAssetStep1View: View {
             Spacer()
         }
     }
-}
-
-// MARK: - Reusable Form Components
-
-struct FormTextField: View {
-    let label: String
-    let placeholder: String
-    @Binding var text: String
-    var icon: String? = nil
-    var keyboardType: UIKeyboardType = .default
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(label)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(.secondary)
-            
-            HStack(spacing: 10) {
-                if let icon {
-                    Image(systemName: icon)
-                        .font(.system(size: 16))
-                        .foregroundStyle(.tertiary)
-                        .frame(width: 20)
-                }
-                
-                TextField(placeholder, text: $text)
-                    .font(.system(size: 16))
-                    .keyboardType(keyboardType)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 12)
-            .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-        }
-    }
-}
-
-struct FormTextEditor: View {
-    let label: String
-    let placeholder: String
-    @Binding var text: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(label)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(.secondary)
-            
-            ZStack(alignment: .topLeading) {
-                if text.isEmpty {
-                    Text(placeholder)
-                        .font(.system(size: 16))
-                        .foregroundStyle(.tertiary)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 12)
-                }
-                
-                TextEditor(text: $text)
-                    .font(.system(size: 16))
-                    .scrollContentBackground(.hidden)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .frame(minHeight: 100, maxHeight: 160)
-            }
-            .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-        }
-    }
-}
-
-// MARK: - Section Modifier
-
-extension View {
-    func formSection() -> some View {
-        self
-            .padding(16)
-            .background(Color(.secondarySystemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-    }
-}
-
-#Preview {
-    AddAssetStep1View(viewModel: AddAssetViewModel())
 }

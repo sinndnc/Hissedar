@@ -27,7 +27,7 @@ struct SplashView: View {
                     .frame(width: 160, height: 160)
                 
                 // Slogan - logonun 8pt altında
-                Text("Mülkün parçası, geleceğin ortağı ol")
+                Text(String.localized("splash.slogan"))
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(Color(red: 0.769, green: 0.710, blue: 0.992))
                     .padding(.top, 8)
@@ -35,15 +35,11 @@ struct SplashView: View {
                 Spacer()
                 
                 // Versiyon - safe area bottom'dan 5pt yukarıda
-                Text("Hissedar 1.0.0v")
+                Text("\(String.localized("common.app_name")) 1.0.0v")
                     .font(.system(size: 12))
                     .foregroundColor(.gray)
                     .padding(.bottom, 5)
             }
         }
     }
-}
-
-#Preview {
-    SplashView()
 }

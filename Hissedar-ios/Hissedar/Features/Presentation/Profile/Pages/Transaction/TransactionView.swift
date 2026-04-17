@@ -7,12 +7,11 @@
 import SwiftUI
 
 enum TransactionFilter: String, CaseIterable {
-    case all = "Tümü"
-    case buy = "Alım"
-    case sell = "Satım"
-    case deposit = "Yatırma"
-    case withdraw = "Çekme"
-    case dividend = "Kâr Payı"
+    case all, buy, sell, deposit, withdraw, dividend
+    
+    var localizedTitle: String {
+        String.localized("transactions.filter.\(self.rawValue)")
+    }
     
     var transactionType: TransactionType? {
         switch self {
@@ -28,10 +27,11 @@ enum TransactionFilter: String, CaseIterable {
 
 struct TransactionsView: View {
     @State private var vm = TransactionsViewModel()
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ZStack {
-            Color.hsBackground.ignoresSafeArea()
+            themeManager.theme.background.ignoresSafeArea()
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
@@ -47,13 +47,13 @@ struct TransactionsView: View {
                 }
             }
         }
-        .navigationTitle("Transactions")
+        .navigationTitle(String.localized("transactions.nav_title"))
         .task { await vm.loadTransactions() }
         .sheet(item: $vm.selectedTransaction) { tx in
             TransactionDetailSheet(transaction: tx)
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
-                .presentationBackground(Color.hsBackgroundSecondary)
+                .presentationBackground(themeManager.theme.backgroundSecondary)
         }
     }
     
@@ -64,7 +64,7 @@ struct TransactionsView: View {
             HStack(spacing: 6) {
                 ForEach(TransactionFilter.allCases, id: \.self) { filter in
                     FilterChip(
-                        title: filter.rawValue,
+                        title: filter.localizedTitle,
                         isActive: vm.activeFilter == filter
                     ) {
                         withAnimation(.easeInOut(duration: 0.2)) {
@@ -76,6 +76,7 @@ struct TransactionsView: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
+        .background(themeManager.theme.background)
     }
     
     // MARK: - List
@@ -91,6 +92,7 @@ struct TransactionsView: View {
                     
                     if vm.filteredTransactions.last?.id != tx.id {
                         Divider()
+                            .padding(.leading, 67)
                     }
                 }
             }
@@ -101,25 +103,157 @@ struct TransactionsView: View {
         VStack(spacing: 12) {
             Image(systemName: "tray")
                 .font(.system(size: 40))
-                .foregroundStyle(Color.hsTextTertiary)
+                .foregroundStyle(themeManager.theme.textTertiary)
             
-            Text("İşlem bulunamadı")
+            Text(String.localized("transactions.empty.title"))
                 .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
             
-            Text("Filtrelerinizi değiştirmeyi deneyin")
+            Text(String.localized("transactions.empty.desc"))
                 .font(.system(size: 12))
-                .foregroundStyle(Color.hsTextTertiary)
+                .foregroundStyle(themeManager.theme.textTertiary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
     }
 }
 
+// MARK: - TransactionDetailSheet
+
+struct TransactionDetailSheet: View {
+    let transaction: TransactionItem
+    @Environment(\.dismiss) private var dismiss
+    @Environment(ThemeManager.self) private var themeManager
+    
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 0) {
+                    DetailRow(label: String.localized("transactions.detail.type"), value: transaction.type.label)
+                    DetailRow(label: String.localized("transactions.detail.status")) {
+                        StatusBadge(status: transaction.status)
+                    }
+                    DetailRow(
+                        label: String.localized("transactions.detail.amount"),
+                        value: "\(transaction.type.isPositive ? "+" : "-")\(transaction.formattedAmount)"
+                    )
+                    
+                    if transaction.tokenAmount > 0 {
+                        DetailRow(label: String.localized("transactions.detail.token_count"), value: "\(transaction.tokenAmount)")
+                    }
+                    
+                    if let price = transaction.pricePerToken {
+                        DetailRow(label: String.localized("transactions.detail.token_price"), value: "₺\(price)")
+                    }
+                    
+                    if let fee = transaction.fee, fee > 0 {
+                        DetailRow(label: String.localized("transactions.detail.fee"), value: "₺\(fee)")
+                    }
+                    
+                    DetailRow(label: String.localized("transactions.detail.currency"), value: transaction.currency)
+                    
+                    DetailRow(
+                        label: String.localized("transactions.detail.asset_type"),
+                        value: assetTypeLabel(transaction.assetType)
+                    )
+                    
+                    DetailRow(label: String.localized("transactions.detail.date"), value: transaction.fullDate)
+                    
+                    blockchainSection
+                }
+                .padding(.horizontal)
+            }
+            .background(themeManager.theme.backgroundSecondary)
+            .navigationTitle(String.localized("transactions.detail.nav_title"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(String.localized("common.close")) { dismiss() }
+                        .foregroundStyle(themeManager.theme.accent)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var blockchainSection: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 6) {
+                Image(systemName: "link")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(themeManager.theme.accent)
+                Text(String.localized("transactions.detail.blockchain.title"))
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(themeManager.theme.textPrimary)
+                Spacer()
+                
+                blockchainStatusBadge
+            }
+            .padding(.vertical, 16)
+            
+            if let hash = transaction.txHash, !hash.isEmpty, hash != "pending" {
+                HStack {
+                    Text("TX Hash")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(themeManager.theme.textSecondary)
+                    
+                    Spacer()
+                    
+                    if let url = transaction.polygonscanURL {
+                        Link(destination: url) {
+                            HStack(spacing: 4) {
+                                Text(transaction.truncatedHash)
+                                    .font(.system(size: 13, weight: .medium, design: .monospaced))
+                                Image(systemName: "arrow.up.right")
+                                    .font(.system(size: 10, weight: .bold))
+                            }
+                            .foregroundStyle(themeManager.theme.accent)
+                        }
+                    }
+                    
+                    Button {
+                        UIPasteboard.general.string = hash
+                    } label: {
+                        Image(systemName: "doc.on.doc")
+                            .font(.system(size: 11))
+                            .foregroundStyle(themeManager.theme.accent)
+                    }
+                }
+                .padding(.vertical, 12)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var blockchainStatusBadge: some View {
+        if transaction.hasBlockchainTx {
+            badgeView(text: "On-chain", color: themeManager.theme.success)
+        } else if transaction.isBlockchainPending {
+            badgeView(text: String.localized("transactions.status.processing"), color: themeManager.theme.warning)
+        } else {
+            badgeView(text: "Off-chain", color: themeManager.theme.textTertiary)
+        }
+    }
+    
+    private func badgeView(text: String, color: Color) -> some View {
+        Text(text)
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(color)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(color.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+    }
+    
+    private func assetTypeLabel(_ type: String) -> String {
+        String.localized("asset.type \(type.lowercased())")
+    }
+}
 // MARK: - TransactionRow
 
 struct TransactionRow: View {
     let transaction: TransactionItem
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         HStack(spacing: 12) {
@@ -143,7 +277,7 @@ struct TransactionRow: View {
                 if let description = transaction.description {
                     Text(description)
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                         .lineLimit(1)
                 }
                 
@@ -158,11 +292,11 @@ struct TransactionRow: View {
                     
                     Text(transaction.createdAt)
                         .font(.system(size: 12))
-                        .foregroundStyle(Color.hsTextSecondary)
+                        .foregroundStyle(themeManager.theme.textSecondary)
                     
                     if transaction.status != .confirmed {
                         Circle()
-                            .fill(Color.hsTextTertiary)
+                            .fill(themeManager.theme.textTertiary)
                             .frame(width: 3, height: 3)
                         
                         StatusBadge(status: transaction.status)
@@ -172,11 +306,11 @@ struct TransactionRow: View {
                     if transaction.hasBlockchainTx {
                         Image(systemName: "link")
                             .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(Color.hsSuccess)
+                            .foregroundStyle(themeManager.theme.success)
                     } else if transaction.isBlockchainPending {
                         Image(systemName: "link")
                             .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(Color.hsWarning)
+                            .foregroundStyle(themeManager.theme.warning)
                     }
                 }
             }
@@ -187,184 +321,22 @@ struct TransactionRow: View {
             VStack(alignment: .trailing, spacing: 2) {
                 Text("\(transaction.type.isPositive ? "+" : "-")\(transaction.formattedAmount)")
                     .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    .foregroundStyle(transaction.type.isPositive ? Color.hsSuccess : .hsTextPrimary)
+                    .foregroundStyle(
+                        transaction.type.isPositive
+                        ? themeManager.theme.success :
+                          themeManager.theme.textPrimary
+                    )
                     .monospacedDigit()
                 
                 if transaction.tokenAmount > 0 {
                     Text("\(transaction.tokenAmount) token")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color.hsTextSecondary)
+                        .foregroundStyle(themeManager.theme.textSecondary)
                 }
             }
         }
         .padding(15)
-        .background(Color.hsBackgroundSecondary)
-    }
-}
-
-// MARK: - Detail Sheet
-
-struct TransactionDetailSheet: View {
-    let transaction: TransactionItem
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                // Details
-                DetailRow(label: "İşlem Tipi", value: transaction.type.label)
-                DetailRow(label: "Durum") {
-                    StatusBadge(status: transaction.status)
-                }
-                DetailRow(
-                    label: "Tutar",
-                    value: "\(transaction.type.isPositive ? "+" : "-")\(transaction.formattedAmount)"
-                )
-                
-                if transaction.tokenAmount > 0 {
-                    DetailRow(label: "Token Adedi", value: "\(transaction.tokenAmount)")
-                }
-                
-                if let price = transaction.pricePerToken {
-                    DetailRow(label: "Token Fiyatı", value: "₺\(price)")
-                }
-                
-                if let fee = transaction.fee, fee > 0 {
-                    DetailRow(label: "Komisyon", value: "₺\(fee)")
-                }
-                
-                DetailRow(label: "Para Birimi", value: transaction.currency)
-                
-                DetailRow(
-                    label: "Varlık Tipi",
-                    value: assetTypeLabel(transaction.assetType)
-                )
-                
-                DetailRow(label: "Tarih", value: transaction.fullDate)
-                
-                // Blockchain section
-                blockchainSection
-            }
-            .padding(.horizontal)
-            .toolbar{ closeButton }
-            .scrollBounceBehavior(.basedOnSize)
-            .navigationTitle("Transaciton Detail")
-        }
-    }
-    
-    // MARK: - Blockchain Section
-    @ToolbarContentBuilder
-    private var closeButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button { dismiss() } label: {
-                Text("Close")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.hsPurple400)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.hsPurple600.opacity(0.12))
-                    )
-            }
-        }
-    }
-    
-    
-    @ViewBuilder
-    private var blockchainSection: some View {
-        // Divider before blockchain section
-        Rectangle()
-            .fill(Color.hsPurple400.opacity(0.3))
-            .frame(height: 1)
-            .padding(.vertical, 8)
-        
-        // Blockchain header
-        HStack(spacing: 6) {
-            Image(systemName: "link")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(Color.hsPurple400)
-            Text("Blockchain")
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
-            Spacer()
-            
-            if transaction.hasBlockchainTx {
-                HStack(spacing: 4) {
-                    Circle()
-                        .fill(Color.hsSuccess)
-                        .frame(width: 6, height: 6)
-                    Text("On-chain")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color.hsSuccess)
-                }
-            } else if transaction.isBlockchainPending {
-                HStack(spacing: 4) {
-                    ProgressView()
-                        .scaleEffect(0.6)
-                        .tint(Color.hsWarning)
-                    Text("İşleniyor")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color.hsWarning)
-                }
-            } else {
-                Text("Off-chain")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Color.hsTextTertiary)
-            }
-        }
-        .padding(.vertical, 8)
-        
-        // TX Hash row with Polygonscan link
-        if let hash = transaction.txHash, !hash.isEmpty, hash != "pending" {
-            HStack {
-                Text("TX Hash")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundStyle(Color.hsTextSecondary)
-                
-                Spacer()
-                
-                if let url = transaction.polygonscanURL {
-                    Link(destination: url) {
-                        HStack(spacing: 4) {
-                            Text(transaction.truncatedHash)
-                                .font(.system(size: 13, weight: .medium, design: .monospaced))
-                            Image(systemName: "arrow.up.right")
-                                .font(.system(size: 10, weight: .bold))
-                        }
-                        .foregroundStyle(Color.hsPurple400)
-                    }
-                } else {
-                    Text(transaction.truncatedHash)
-                        .font(.system(size: 13, weight: .medium, design: .monospaced))
-                        .foregroundStyle(Color.hsTextPrimary)
-                }
-                
-                Button {
-                    UIPasteboard.general.string = hash
-                } label: {
-                    Image(systemName: "doc.on.doc")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color.hsPurple400)
-                }
-            }
-            .padding(.vertical, 12)
-            .overlay(alignment: .bottom) {
-                Rectangle()
-                    .fill(Color.hsBorder)
-                    .frame(height: 1)
-            }
-        }
-    }
-    
-    private func assetTypeLabel(_ type: String) -> String {
-        switch type {
-        case "property": "Gayrimenkul"
-        case "art": "Sanat"
-        case "nft": "NFT"
-        case "token": "Token"
-        default: type.capitalized
-        }
+        .background(themeManager.theme.backgroundSecondary)
     }
 }
 
@@ -375,16 +347,26 @@ struct FilterChip: View {
     let isActive: Bool
     let action: () -> Void
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(isActive ? Color.hsPurple400 : .hsTextSecondary)
+                .foregroundStyle(
+                    isActive ?
+                    themeManager.theme.accent :
+                    themeManager.theme.textSecondary
+                )
                 .padding(.horizontal, 14)
                 .padding(.vertical, 7)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(isActive ? Color.hsPurple600.opacity(0.15) : Color.hsBackgroundTertiary)
+                        .fill(
+                            isActive ?
+                            themeManager.theme.accent.opacity(0.15) :
+                            themeManager.theme.backgroundTertiary
+                        )
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -422,6 +404,7 @@ struct DetailRow: View {
     var value: String? = nil
     var isMono: Bool = false
     var trailingContent: (() -> AnyView)? = nil
+    @Environment(ThemeManager.self) private var themeManager
     
     init(label: String, value: String, isMono: Bool = false) {
         self.label = label
@@ -438,7 +421,7 @@ struct DetailRow: View {
         HStack {
             Text(label)
                 .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
             
             Spacer()
             
@@ -451,13 +434,13 @@ struct DetailRow: View {
                         ? .system(size: 13, weight: .medium, design: .monospaced)
                         : .system(size: 14, weight: .medium)
                     )
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
         .padding(.vertical, 12)
         .overlay(alignment: .bottom) {
             Rectangle()
-                .fill(Color.hsBorder)
+                .fill(themeManager.theme.border)
                 .frame(height: 1)
         }
     }

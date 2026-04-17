@@ -5,18 +5,18 @@
 //  Created by Sinan Dinç on 3/30/26.
 //
 
-
 import SwiftUI
 import Factory
 
-struct WalletRootView: View {
+struct WalletView: View {
     
     @State private var vm = WalletViewModel()
     @State private var copiedAddress = false
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ZStack {
-            Color.hsBackground.ignoresSafeArea()
+            themeManager.theme.background.ignoresSafeArea()
             
             if vm.isLoading && vm.wallet == nil {
                 loadingView
@@ -29,9 +29,9 @@ struct WalletRootView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Blockchain Cüzdan")
+                Text(String.localized("wallet.nav_title"))
                     .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
     }
@@ -49,6 +49,7 @@ struct WalletRootView: View {
                     noWalletView
                 }
             }
+            .padding(.top, 12)
          }
         .scrollIndicators(.hidden)
     }
@@ -61,13 +62,7 @@ struct WalletRootView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [Color.hsPurple600, Color.hsPurple400],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .fill(themeManager.theme.accent.gradient)
                         .frame(width: 48, height: 48)
                     
                     Image(systemName: "wallet.bifold.fill")
@@ -76,34 +71,38 @@ struct WalletRootView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Polygon Cüzdan")
+                    Text(String.localized("wallet.card_name"))
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     
                     HStack(spacing: 4) {
                         Circle()
-                            .fill(wallet.isWhitelisted ? Color.hsSuccess : Color.hsWarning)
+                            .fill(wallet.isWhitelisted ?
+                                  themeManager.theme.success :
+                                    themeManager.theme.warning)
                             .frame(width: 8, height: 8)
-                        Text(wallet.isWhitelisted ? "KYC Onaylı" : "Onay Bekleniyor")
+                        Text(wallet.isWhitelisted ? String.localized("wallet.status.kyc_on") : String.localized("wallet.status.kyc_pending"))
                             .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(Color.hsTextSecondary)
+                            .foregroundStyle(themeManager.theme.textSecondary)
                     }
                 }
                 
                 Spacer()
                 
+                // Polygon Logo placeholder - varlık varsa gösterilir
                 Image("polygon-logo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 28, height: 28)
-                    .opacity(0) // Logo yoksa gizle, eklenince opacity 1 yap
+                    .frame(width: 24, height: 24)
+                    .grayscale(1.0)
+                    .opacity(0.3)
             }
             
             // Address
             HStack {
                 Text(wallet.walletAddress)
                     .font(.system(size: 13, weight: .medium, design: .monospaced))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                     .lineLimit(1)
                     .truncationMode(.middle)
                 
@@ -111,19 +110,23 @@ struct WalletRootView: View {
                 
                 Button {
                     UIPasteboard.general.string = wallet.walletAddress
-                    withAnimation { copiedAddress = true }
+                    withAnimation(.spring(response: 0.3)) { copiedAddress = true }
                     Task {
                         try? await Task.sleep(for: .seconds(2))
                         withAnimation { copiedAddress = false }
                     }
                 } label: {
-                    Image(systemName: copiedAddress ? "checkmark" : "doc.on.doc")
+                    Image(systemName: copiedAddress ? "checkmark.circle.fill" : "doc.on.doc")
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(copiedAddress ? Color.hsSuccess : Color.hsPurple400)
+                        .foregroundStyle(
+                            copiedAddress ?
+                            themeManager.theme.success :
+                                themeManager.theme.accent
+                        )
                 }
             }
             .padding(12)
-            .background(Color.hsBackground)
+            .background(themeManager.theme.background)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             
             // Actions
@@ -133,24 +136,24 @@ struct WalletRootView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "arrow.up.right.square")
                                 .font(.system(size: 13, weight: .semibold))
-                            Text("Polygonscan")
+                            Text(String.localized("wallet.action.view_explorer"))
                                 .font(.system(size: 13, weight: .bold))
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
-                        .foregroundStyle(Color.hsPurple400)
-                        .background(Color.hsPurple600.opacity(0.12))
+                        .foregroundStyle(themeManager.theme.accent)
+                        .background(themeManager.theme.accent.opacity(0.12))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                 }
             }
         }
         .padding(16)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(Color.hsBorder, lineWidth: 1)
+                .strokeBorder(themeManager.theme.border, lineWidth: 1)
         )
         .padding(.horizontal)
     }
@@ -162,20 +165,20 @@ struct WalletRootView: View {
             statItem(
                 icon: "checkmark.seal.fill",
                 value: "\(vm.confirmedCount)",
-                label: "Onaylı",
-                color: Color.hsSuccess
+                label: String.localized("wallet.stats.confirmed"),
+                color: themeManager.theme.success
             )
             statItem(
                 icon: "clock.fill",
                 value: "\(vm.pendingCount)",
-                label: "Bekleyen",
-                color: Color.hsWarning
+                label: String.localized("wallet.stats.pending"),
+                color: themeManager.theme.warning
             )
             statItem(
                 icon: "bitcoinsign.circle.fill",
                 value: "\(vm.totalMinted)",
-                label: "Token",
-                color: Color.hsPurple400
+                label: String.localized("wallet.stats.tokens"),
+                color: themeManager.theme.accent
             )
         }
         .padding(.horizontal)
@@ -188,18 +191,18 @@ struct WalletRootView: View {
                 .foregroundStyle(color)
             Text(value)
                 .font(.system(size: 20, weight: .bold, design: .monospaced))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
             Text(label)
                 .font(.system(size: 11, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 16)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .strokeBorder(Color.hsBorder, lineWidth: 1)
+                .strokeBorder(themeManager.theme.border, lineWidth: 1)
         )
     }
     
@@ -210,28 +213,38 @@ struct WalletRootView: View {
             HStack(spacing: 8) {
                 Image(systemName: "list.bullet.rectangle.fill")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.hsPurple400)
-                Text("Blockchain İşlemleri")
+                    .foregroundStyle(themeManager.theme.accent)
+                Text(String.localized("wallet.tx.section_title"))
                     .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
             .padding(.bottom)
             .padding(.horizontal)
             
             if vm.transactions.isEmpty {
-                Text("Henüz blockchain işlemi yok")
+                Text(String.localized("wallet.tx.empty_state"))
                     .font(.system(size: 14))
-                    .foregroundStyle(Color.hsTextTertiary)
+                    .foregroundStyle(themeManager.theme.textTertiary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 32)
             } else {
-                ForEach(vm.transactions) { tx in
-                    transactionRow(tx)
-                    
-                    if (vm.transactions.last?.id != tx.id){
-                        Divider()
+                VStack(spacing: 0) {
+                    ForEach(vm.transactions) { tx in
+                        transactionRow(tx)
+                        
+                        if (vm.transactions.last?.id != tx.id){
+                            Divider()
+                                .padding(.leading, 64)
+                        }
                     }
                 }
+                .background(themeManager.theme.backgroundSecondary)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .strokeBorder(themeManager.theme.border, lineWidth: 1)
+                )
+                .padding(.horizontal)
             }
         }
     }
@@ -251,13 +264,13 @@ struct WalletRootView: View {
             // Info
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
-                    Text(tx.txType == "mint" ? "Token Mint" : tx.txType.capitalized)
+                    Text(tx.txType == "mint" ? String.localized("wallet.tx.type_mint") : tx.txType.capitalized)
                         .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                     
                     Text("× \(tx.tokenAmount)")
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
-                        .foregroundStyle(Color.hsPurple400)
+                        .foregroundStyle(themeManager.theme.accent)
                 }
                 
                 if tx.isConfirmed, let url = tx.polygonscanURL {
@@ -268,12 +281,12 @@ struct WalletRootView: View {
                             Image(systemName: "arrow.up.right")
                                 .font(.system(size: 9, weight: .bold))
                         }
-                        .foregroundStyle(Color.hsPurple400)
+                        .foregroundStyle(themeManager.theme.accent)
                     }
                 } else {
                     Text(tx.statusLabel)
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(Color.hsTextTertiary)
+                        .foregroundStyle(themeManager.theme.textTertiary)
                 }
             }
             
@@ -283,22 +296,21 @@ struct WalletRootView: View {
             VStack(alignment: .trailing, spacing: 4) {
                 Text(tx.createdAt.formatted(.dateTime.hour().minute()))
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                 Text(tx.createdAt.formatted(.dateTime.month(.abbreviated).day()))
                     .font(.system(size: 11))
-                    .foregroundStyle(Color.hsTextTertiary)
+                    .foregroundStyle(themeManager.theme.textTertiary)
             }
         }
         .padding(14)
-        .background(Color.hsBackgroundSecondary)
     }
     
     private func statusColor(_ tx: BlockchainTransaction) -> Color {
         switch tx.status {
-        case "confirmed": return Color.hsSuccess
-        case "pending": return Color.hsWarning
-        case "failed": return Color.hsError
-        default: return Color.hsTextTertiary
+        case "confirmed": return themeManager.theme.success
+        case "pending": return themeManager.theme.warning
+        case "failed": return themeManager.theme.error
+        default: return themeManager.theme.textTertiary
         }
     }
     
@@ -308,15 +320,15 @@ struct WalletRootView: View {
         VStack(spacing: 16) {
             Image(systemName: "wallet.bifold")
                 .font(.system(size: 48, weight: .light))
-                .foregroundStyle(Color.hsPurple400.opacity(0.5))
+                .foregroundStyle(themeManager.theme.accent.opacity(0.5))
             
-            Text("Cüzdan Oluşturulmadı")
+            Text(String.localized("wallet.empty.title"))
                 .font(.system(size: 18, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
             
-            Text("İlk token satın alımınızda\notomatik olarak oluşturulacak.")
+            Text(String.localized("wallet.empty.desc"))
                 .font(.system(size: 14))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .multilineTextAlignment(.center)
         }
         .padding(.top, 80)
@@ -324,10 +336,10 @@ struct WalletRootView: View {
     
     private var loadingView: some View {
         VStack(spacing: 16) {
-            ProgressView().tint(Color.hsPurple400)
-            Text("Cüzdan yükleniyor...")
+            ProgressView().tint(themeManager.theme.accent)
+            Text(String.localized("wallet.loading"))
                 .font(.system(size: 14))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
     }
 }

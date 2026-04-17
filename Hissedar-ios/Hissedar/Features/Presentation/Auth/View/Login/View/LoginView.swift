@@ -5,7 +5,6 @@
 //  Created by Sinan Dinç on 3/22/26.
 //
 
-import Foundation
 import SwiftUI
 
 struct LoginView: View {
@@ -21,34 +20,29 @@ struct LoginView: View {
                     
                     // Hero header
                     ZStack(alignment: .bottom) {
-                        Color.hForest.ignoresSafeArea(edges: .top)
+                        Color.hsBackground.ignoresSafeArea(edges: .top)
                         VStack(spacing: 10) {
-                            HissedarLogoView(size: 56, foreground: .hMint)
-                            Text("Hissedar")
+                            HissedarLogoView(size: 56)
+                            Text(String.localized("common.app_name"))
                                 .font(.hDisplay)
-                                .foregroundStyle(Color.hWhite)
-                            Text("Gayrimenkul yatırımında yeni dönem")
+                                .foregroundStyle(Color.hsTextPrimary)
+                            Text(String.localized("auth.login.subtitle"))
                                 .font(.hCaption)
-                                .foregroundStyle(Color.hMint)
+                                .foregroundStyle(Color.hsTextSecondary)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.top, 60)
                         .padding(.bottom, 36)
                     }
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 28)
-                            .offset(y: -28)
-                            .inset(by: -28)
-                    )
                     
                     // Form
                     VStack(spacing: 20) {
                         VStack(spacing: 14) {
-                            HTextField(label: "E-posta",
+                            HTextField(label: String.localized("auth.field.email"),
                                        placeholder: "ornek@email.com",
                                        text: $vm.email,
                                        keyboardType: .emailAddress)
-                            HTextField(label: "Şifre",
+                            HTextField(label: String.localized("auth.field.password"),
                                        placeholder: "••••••••",
                                        text: $vm.password,
                                        isSecure: true)
@@ -60,7 +54,7 @@ struct LoginView: View {
                                     .font(.system(size: 14))
                                 Text(err).font(.hCaption)
                             }
-                            .foregroundStyle(Color.hRust)
+                            .foregroundStyle(Color.hsError)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         
@@ -69,24 +63,26 @@ struct LoginView: View {
                         } label: {
                             Group {
                                 if vm.isLoading { ProgressView().tint(.white) }
-                                else            { Text("Giriş Yap") }
+                                else            { Text(String.localized("auth.login.action")) }
                             }
                         }
                         .disabled(vm.isLoading)
                         
-                        Button("Şifremi unuttum") { showReset = true }
+                        Button(String.localized("auth.login.forgot_password")) { showReset = true }
                             .font(.hCaption)
-                            .foregroundStyle(Color.hEmerald)
+                            .foregroundStyle(Color.hsTextSecondary)
                     }
                     .padding(.horizontal, 24)
                     .padding(.top, 28)
                     
                     // Kayıt ol
                     HStack(spacing: 4) {
-                        Text("Hesabın yok mu?")
-                            .font(.hCaption).foregroundStyle(Color.hsTextPrimary)
-                        Button("Kayıt Ol") { vm.isRegistering = true }
-                            .font(.hCaptionMed).foregroundStyle(Color.hEmerald)
+                        Text(String.localized("auth.login.no_account"))
+                            .font(.hCaption)
+                            .foregroundStyle(Color.hsTextSecondary)
+                        Button(String.localized("auth.register.title")) { vm.isRegistering = true }
+                            .font(.hCaptionMed)
+                            .foregroundStyle(Color.hsTextPrimary)
                     }
                     .padding(.top, 28)
                     .padding(.bottom, 40)
@@ -94,12 +90,12 @@ struct LoginView: View {
             }
         }
         .navigationBarHidden(true)
-        .alert("Şifre Sıfırlama", isPresented: $showReset) {
-            TextField("E-posta", text: $vm.email).keyboardType(.emailAddress).autocapitalization(.none)
-            Button("Gönder") { Task { await vm.resetPassword() } }
-            Button("İptal", role: .cancel) {}
+        .alert(String.localized("auth.reset.title"), isPresented: $showReset) {
+            TextField(String.localized("auth.field.email"), text: $vm.email).keyboardType(.emailAddress).autocapitalization(.none)
+            Button(String.localized("common.send")) { Task { await vm.resetPassword() } }
+            Button(String.localized("common.cancel"), role: .cancel) {}
         } message: {
-            Text("Şifre sıfırlama bağlantısı gönderilecek.")
+            Text(String.localized("auth.reset.message"))
         }
     }
 }

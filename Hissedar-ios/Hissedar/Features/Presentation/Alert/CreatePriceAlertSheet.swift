@@ -31,8 +31,10 @@ struct CreatePriceAlertSheet: View {
     
     var appState: AppState = Container.shared.appState()
     @StateObject private var vm = PriceAlertsViewModel()
-    @Environment(\.dismiss) private var dismiss
     
+    @Environment(\.dismiss) private var dismiss
+    @Environment(ThemeManager.self) private var themeManager
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -41,6 +43,7 @@ struct CreatePriceAlertSheet: View {
                     conditionCard
                     parametersCard
                     behaviorCard
+                    
                     if let err = vm.formErrorMessage {
                         errorView(err)
                     }
@@ -48,12 +51,12 @@ struct CreatePriceAlertSheet: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 20)
             }
-            .background(Color.hsBackground)
-            .navigationTitle("Fiyat Alarmı")
+            .background(themeManager.theme.background)
+            .navigationTitle(String.localized("alert.create.nav_title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("İptal") { dismiss() }
+                    Button(String.localized("common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -62,7 +65,7 @@ struct CreatePriceAlertSheet: View {
                         if vm.isCreatingAlert {
                             ProgressView()
                         } else {
-                            Text("Oluştur").fontWeight(.semibold)
+                            Text(String.localized("common.create")).fontWeight(.semibold)
                         }
                     }
                     .disabled(vm.isCreatingAlert)
@@ -86,12 +89,12 @@ struct CreatePriceAlertSheet: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(asset.title)
                         .font(.system(size: 15, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
+                        .foregroundStyle(themeManager.theme.textPrimary)
                         .lineLimit(1)
                     if let subtitle = asset.subtitle {
                         Text(subtitle)
                             .font(.system(size: 12))
-                            .foregroundStyle(Color.hsTextSecondary)
+                            .foregroundStyle(themeManager.theme.textSecondary)
                             .lineLimit(1)
                     }
                 }
@@ -101,21 +104,21 @@ struct CreatePriceAlertSheet: View {
             Divider()
 
             HStack {
-                Text("Mevcut fiyat")
+                Text(String.localized("alert.create.current_price"))
                     .font(.system(size: 13))
-                    .foregroundStyle(Color.hsTextSecondary)
+                    .foregroundStyle(themeManager.theme.textSecondary)
                 Spacer()
                 Text(asset.currentValue.tlFormatted)
                     .font(.system(size: 16, weight: .bold, design: .monospaced))
-                    .foregroundStyle(Color.hsTextPrimary)
+                    .foregroundStyle(themeManager.theme.textPrimary)
             }
         }
         .padding(16)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
         )
     }
 
@@ -123,7 +126,7 @@ struct CreatePriceAlertSheet: View {
 
     private var conditionCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            sectionLabel("Alarm koşulu", icon: "slider.horizontal.3")
+            sectionLabel(String.localized("alert.create.condition_label"), icon: "slider.horizontal.3")
 
             Picker("", selection: $vm.selectedCondition) {
                 ForEach(PriceAlertCondition.allCases) { cond in
@@ -133,11 +136,11 @@ struct CreatePriceAlertSheet: View {
             .pickerStyle(.segmented)
         }
         .padding(16)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
         )
     }
 
@@ -164,15 +167,15 @@ struct CreatePriceAlertSheet: View {
 
             Text(parametersFooter)
                 .font(.system(size: 11))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .padding(.top, 4)
         }
         .padding(16)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
         )
     }
 
@@ -182,11 +185,11 @@ struct CreatePriceAlertSheet: View {
                 .keyboardType(.decimalPad)
                 .font(.system(size: 18, weight: .semibold, design: .monospaced))
                 .padding(12)
-                .background(Color.hsBackgroundTertiary)
+                .background(themeManager.theme.backgroundTertiary)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             Text("₺")
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
     }
 
@@ -196,30 +199,32 @@ struct CreatePriceAlertSheet: View {
                 .keyboardType(.decimalPad)
                 .font(.system(size: 18, weight: .semibold, design: .monospaced))
                 .padding(12)
-                .background(Color.hsBackgroundTertiary)
+                .background(themeManager.theme.backgroundTertiary)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             Text("%")
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
     }
 
     private var parametersHeader: String {
         switch vm.selectedCondition {
-        case .below:         return "Altına düşme fiyatı"
-        case .above:         return "Üstüne çıkma fiyatı"
-        case .percentChange: return "Yüzde değişim"
+        case .below:         return String.localized("alert.create.header.below")
+        case .above:         return String.localized("alert.create.header.above")
+        case .percentChange: return String.localized("alert.create.header.percent")
         }
     }
 
     private var parametersFooter: String {
         switch vm.selectedCondition {
         case .below:
-            return "Fiyat bu değerin altına düştüğünde bildirim alırsınız."
+            return String.localized("alert.create.footer.below")
         case .above:
-            return "Fiyat bu değerin üstüne çıktığında bildirim alırsınız."
+            return String.localized("alert.create.footer.above")
         case .percentChange:
-            return "Baz alınan fiyat: \(asset.currentValue.tlFormatted). Bu orandan fazla \(vm.percentDirection.displayName.lowercased()) bildirim alırsınız."
+            let price = asset.currentValue.tlFormatted
+            let direction = vm.percentDirection.displayName.lowercased()
+            return String(format: String.localized("alert.create.footer.percent"), price, direction)
         }
     }
 
@@ -227,7 +232,7 @@ struct CreatePriceAlertSheet: View {
 
     private var behaviorCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            sectionLabel("Davranış", icon: "arrow.triangle.2.circlepath")
+            sectionLabel(String.localized("alert.create.behavior_label"), icon: "arrow.triangle.2.circlepath")
 
             Picker("", selection: $vm.behavior) {
                 ForEach(PriceAlertBehavior.allCases) { b in
@@ -238,15 +243,15 @@ struct CreatePriceAlertSheet: View {
 
             Text(vm.behavior.description)
                 .font(.system(size: 11))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
                 .padding(.top, 4)
         }
         .padding(16)
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
         )
     }
 
@@ -258,10 +263,10 @@ struct CreatePriceAlertSheet: View {
             Text(msg)
                 .font(.system(size: 13, weight: .medium))
         }
-        .foregroundStyle(Color.hsError)
+        .foregroundStyle(themeManager.theme.error)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
-        .background(Color.hsError.opacity(0.1))
+        .background(themeManager.theme.error.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
@@ -271,16 +276,16 @@ struct CreatePriceAlertSheet: View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(Color.hsPurple400)
+                .foregroundStyle(themeManager.theme.accent)
             Text(text)
                 .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
         }
     }
 
     private func submit() async {
         guard let userId = appState.currentUser?.id else {
-            vm.formErrorMessage = "Oturum bilgisi bulunamadı"
+            vm.formErrorMessage = String.localized("auth.error.session_not_found")
             return
         }
 

@@ -11,13 +11,14 @@ import SwiftUI
 
 struct ActiveSearchView: View {
     
-    @Environment(\.dismiss) private var dismiss
     @Bindable var viewModel: SearchViewModel
     @FocusState private var isTextFieldFocused: Bool
+    @Environment(\.dismiss) private var dismiss
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         ZStack {
-            Color.hsBackground
+            themeManager.theme.background
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -60,12 +61,12 @@ struct ActiveSearchView: View {
             HStack(spacing: 10) {
                 Image(systemName: "magnifyingglass")
                     .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.hsTextTertiary)
+                    .foregroundColor(themeManager.theme.textTertiary)
                 
-                TextField("Gayrimenkul, bölge veya şehir ara...", text: $viewModel.searchText)
+                TextField(String.localized("search.placeholder"), text: $viewModel.searchText)
                     .font(.system(size: 15))
-                    .foregroundColor(.hsTextPrimary)
-                    .tint(.hsPurple600)
+                    .foregroundColor(themeManager.theme.textPrimary)
+                    .tint(themeManager.theme.accent)
                     .focused($isTextFieldFocused)
                     .submitLabel(.search)
                     .onSubmit {
@@ -80,27 +81,27 @@ struct ActiveSearchView: View {
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16))
-                            .foregroundColor(.hsTextTertiary)
+                            .foregroundColor(themeManager.theme.textTertiary)
                     }
                 }
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
-            .background(Color.hsBackgroundSecondary)
+            .background(themeManager.theme.backgroundSecondary)
             .clipShape(RoundedRectangle(cornerRadius: 14))
             
             Button {
                 dismiss()
             } label: {
-                Text("İptal")
+                Text(String.localized("common.cancel"))
                     .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(.hsPurple400)
+                    .foregroundColor(themeManager.theme.accent)
             }
         }
         .padding(.top, 12)
         .padding(.bottom, 16)
         .padding(.horizontal, 20)
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
     }
     
     // MARK: - Idle Content
@@ -123,11 +124,11 @@ struct ActiveSearchView: View {
             HStack {
                 Image(systemName: "clock.arrow.circlepath")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.hsPurple400)
+                    .foregroundColor(themeManager.theme.accent)
                 
-                Text("Son aramalar")
+                Text(String.localized("search.recent_title"))
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.hsTextPrimary)
+                    .foregroundColor(themeManager.theme.textPrimary)
                 
                 Spacer()
                 
@@ -136,9 +137,9 @@ struct ActiveSearchView: View {
                         viewModel.clearRecentSearches()
                     }
                 } label: {
-                    Text("Temizle")
+                    Text(String.localized("common.clear"))
                         .font(.system(size: 13))
-                        .foregroundColor(.hsPurple400)
+                        .foregroundColor(themeManager.theme.accent)
                 }
             }
             .padding(.horizontal)
@@ -149,12 +150,12 @@ struct ActiveSearchView: View {
                     
                     if index < viewModel.recentSearches.count - 1 {
                         Divider()
-                            .background(Color.hsBorder)
+                            .background(themeManager.theme.border)
                             .padding(.leading, 48)
                     }
                 }
             }
-            .background(Color.hsBackgroundSecondary)
+            .background(themeManager.theme.backgroundSecondary)
         }
     }
     
@@ -171,20 +172,20 @@ struct ActiveSearchView: View {
                 } label: {
                     Image(systemName: "xmark")
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.hsTextTertiary)
+                        .foregroundColor(themeManager.theme.textTertiary)
                         .frame(width: 24, height: 24)
                 }
                 
                 Text(text)
                     .font(.system(size: 14))
-                    .foregroundColor(.hsTextPrimary)
+                    .foregroundColor(themeManager.theme.textPrimary)
                     .lineLimit(1)
                 
                 Spacer()
                 
                 Image(systemName: "arrow.up.left")
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.hsTextTertiary)
+                    .foregroundColor(themeManager.theme.textTertiary)
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
@@ -198,11 +199,11 @@ struct ActiveSearchView: View {
             HStack(spacing: 8) {
                 Image(systemName: "arrow.up.right.circle.fill")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.hsPurple400)
+                    .foregroundColor(themeManager.theme.accent)
                 
-                Text("Popüler aramalar")
+                Text(String.localized("search.popular_title"))
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.hsTextPrimary)
+                    .foregroundColor(themeManager.theme.textPrimary)
             }
             
             FlowLayout(spacing: 8) {
@@ -222,7 +223,7 @@ struct ActiveSearchView: View {
             }
         }
         .padding(.horizontal)
-        .frame(maxWidth: .infinity,alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     // MARK: - Suggestions Content
@@ -234,12 +235,12 @@ struct ActiveSearchView: View {
                 
                 if index < viewModel.searchResults.count - 1 {
                     Divider()
-                        .background(Color.hsBorder)
+                        .background(themeManager.theme.border)
                         .padding(.leading, 68)
                 }
             }
         }
-        .background(Color.hsBackgroundSecondary)
+        .background(themeManager.theme.backgroundSecondary)
         .padding(.bottom, 100)
     }
     
@@ -263,7 +264,7 @@ struct ActiveSearchView: View {
                     if let subtitle = result.displaySubtitle {
                         Text(subtitle)
                             .font(.system(size: 12))
-                            .foregroundColor(.hsTextTertiary)
+                            .foregroundColor(themeManager.theme.textTertiary)
                             .lineLimit(1)
                     }
                 }
@@ -274,12 +275,12 @@ struct ActiveSearchView: View {
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(price)
                             .font(.system(size: 13, weight: .semibold))
-                            .foregroundColor(.hsTextPrimary)
+                            .foregroundColor(themeManager.theme.textPrimary)
                         
                         if let change = result.changeText {
                             Text(change)
                                 .font(.system(size: 11, weight: .medium))
-                                .foregroundColor(result.isPositive ? .hsSuccess : .hsError)
+                                .foregroundColor(result.isPositive ? themeManager.theme.success : themeManager.theme.error)
                         }
                     }
                 } else if let badge = result.badge {
@@ -293,7 +294,7 @@ struct ActiveSearchView: View {
                 } else {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .medium))
-                        .foregroundColor(.hsTextTertiary)
+                        .foregroundColor(themeManager.theme.textTertiary)
                 }
             }
             .padding(.horizontal, 14)
@@ -317,17 +318,17 @@ struct ActiveSearchView: View {
             
             return Text(before)
                 .font(.system(size: 14))
-                .foregroundColor(.hsTextPrimary)
+                .foregroundColor(themeManager.theme.textPrimary)
             + Text(match)
                 .font(.system(size: 14, weight: .bold))
-                .foregroundColor(.hsPurple400)
+                .foregroundColor(themeManager.theme.accent)
             + Text(after)
                 .font(.system(size: 14))
-                .foregroundColor(.hsTextPrimary)
+                .foregroundColor(themeManager.theme.textPrimary)
         } else {
             return Text(text)
                 .font(.system(size: 14))
-                .foregroundColor(.hsTextPrimary)
+                .foregroundColor(themeManager.theme.textPrimary)
             + Text("")
                 .foregroundColor(.clear)
             + Text("")
@@ -341,15 +342,15 @@ struct ActiveSearchView: View {
         VStack(spacing: 16) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 44))
-                .foregroundColor(.hsTextTertiary)
+                .foregroundColor(themeManager.theme.textTertiary)
             
-            Text("Sonuç bulunamadı")
+            Text(String.localized("search.no_results.title"))
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundColor(.hsTextPrimary)
+                .foregroundColor(themeManager.theme.textPrimary)
             
-            Text("'\(viewModel.searchText)' ile eşleşen sonuç bulunamadı.")
+            Text(String(format: String.localized("search.no_results.subtitle"), viewModel.searchText))
                 .font(.system(size: 14))
-                .foregroundColor(.hsTextSecondary)
+                .foregroundColor(themeManager.theme.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
         }
@@ -390,14 +391,3 @@ struct FlowLayout: Layout {
         return (positions, CGSize(width: maxX, height: y + lineH))
     }
 }
-
-// MARK: - Preview
-
-#if DEBUG
-#Preview {
-    NavigationStack {
-        ActiveSearchView(viewModel: SearchViewModel())
-    }
-    .preferredColorScheme(.dark)
-}
-#endif

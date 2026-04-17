@@ -20,8 +20,8 @@ enum KYCStatus: String, Codable {
     var color: Color {
         switch self {
         case .notStarted: return .hsTextPrimary
-        case .pending: return .hGold
-        case .verified: return .hJade
+        case .pending: return .yellow
+        case .verified: return .hsSuccess
         case .rejected: return .hsError
         }
     }

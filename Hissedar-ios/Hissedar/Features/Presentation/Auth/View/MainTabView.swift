@@ -16,7 +16,6 @@ struct MainTabView: View {
         VStack(spacing: 0) {
             TabContent(selectedTab: selectedTab)
                 .frame(maxHeight: .infinity)
-            
             CustomTabBar(selectedTab: $selectedTab)
         }
         .ignoresSafeArea()
@@ -73,7 +72,7 @@ struct CustomTabBar: View {
                 ForEach(AppTab.allCases, id: \.self) { tab in
                     TabBarItem(
                         icon: tab.icon,
-                        title: tab.rawValue,
+                        title: tab.label,
                         isSelected: selectedTab == tab
                     ) {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
@@ -95,6 +94,8 @@ struct TabBarItem: View {
     let isSelected: Bool
     let action: () -> Void
     
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         Button(action: action) {
             VStack(spacing: 4) {
@@ -105,8 +106,12 @@ struct TabBarItem: View {
                     .fontWeight(.semibold)
                     .font(.system(size: 10, weight: .medium))
             }
-            .shadow(color: Color.hsPurple400, radius: 5)
-            .foregroundColor(isSelected ? .hsPurple400 : .hsTextPrimary.opacity(0.5))
+            .foregroundColor(
+                isSelected
+                ? themeManager.theme.accent :
+                  themeManager.theme.textSecondary
+                    .opacity(0.5)
+            )
             .frame(maxWidth: .infinity)
         }
     }

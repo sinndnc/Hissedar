@@ -18,5 +18,6 @@ enum ProfileDestination: String, Hashable {
     case profile
     case alarms
     case theme
+    case language
     case addProperty
 }

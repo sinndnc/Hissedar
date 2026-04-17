@@ -10,15 +10,16 @@ import SwiftUI
 struct ProfileCardView: View {
     
     let item: ProfileCard
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         Label {
             Text(item.title)
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
                 .font(.system(size: 14,weight: .semibold))
         } icon: {
             Image(systemName: item.icon)
-                .foregroundStyle(Color.hsTextPrimary)
+                .foregroundStyle(themeManager.theme.textPrimary)
                 .font(.system(size: 14,weight: .semibold))
         }
     }

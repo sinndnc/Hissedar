@@ -25,6 +25,7 @@ struct AssetDetailWrapper<Content: View>: View {
     @State private var showBuySheet = false
     @State private var showSellSheet = false
     @State private var showPriceAlertSheet = false
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         Group {
@@ -38,7 +39,7 @@ struct AssetDetailWrapper<Content: View>: View {
             }
         }
         .task { await loadAction() }
-        .background(Color.hsBackground)
+        .background(themeManager.theme.background)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showBuySheet) {
             if let toDisplayItem {
@@ -52,17 +53,9 @@ struct AssetDetailWrapper<Content: View>: View {
                     onToggleWatchlist: {
                         Task { await watchlistVM.toggle(itemId: itemId, itemType: itemType) }
                     },
+                    onAddAlarm: { showPriceAlertSheet.toggle() },
                     onShare: { shareAsset() }
                 )
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showPriceAlertSheet = true
-                } label: {
-                    Image(systemName: "bell.badge")
-                }
-                .accessibilityLabel("Fiyat alarmı kur")
             }
         }
         .sheet(isPresented: $showPriceAlertSheet) {
@@ -72,132 +65,129 @@ struct AssetDetailWrapper<Content: View>: View {
         }
     }
 
-    // MARK: - Loading
-
+    // MARK: - Loading View
     private var loadingView: some View {
         VStack(spacing: 16) {
             ProgressView()
-                .tint(Color.hsPurple400)
+                .tint(themeManager.theme.accent)
                 .scaleEffect(1.3)
-            Text("Yükleniyor...")
+            Text(String.localized("common.loading"))
                 .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: - Empty
-
+    // MARK: - Empty View
     private var emptyView: some View {
         VStack(spacing: 12) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 36, weight: .light))
-                .foregroundStyle(Color.hsTextSecondary.opacity(0.4))
+                .foregroundStyle(themeManager.theme.textSecondary.opacity(0.4))
             Text(emptyMessage)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(Color.hsTextSecondary)
+                .foregroundStyle(themeManager.theme.textSecondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     // MARK: - Bottom Bar
     private var bottomBar: some View {
-        VStack(spacing: 0){
-            Divider()
+        VStack(spacing: 0) {
+            Divider().background(themeManager.theme.border)
             HStack(spacing: 12) {
-                // 1. Üç Nokta (More) Butonu
+                // 1. More Button
                 Button {
-                    // More actions
+                    // Ek aksiyonlar buraya gelebilir
                 } label: {
                     Image(systemName: "ellipsis")
                         .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
-                        .frame(width: 40, height: 40) // Kare form
-                        .background(Color.hsBackgroundSecondary)
-                        .clipShape(Circle()) // Tasarımdaki gibi tam yuvarlak
+                        .foregroundStyle(themeManager.theme.textPrimary)
+                        .frame(width: 40, height: 40)
+                        .background(themeManager.theme.backgroundSecondary)
+                        .clipShape(Circle())
                         .overlay(
                             Circle()
-                                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
                         )
                 }
                 
-                // 2. Sat (Sell) Butonu
+                // 2. Sell Button
                 Button {
                     showSellSheet = true
                 } label: {
-                    Text("Sell")
+                    Text(String.localized("common.sell"))
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(Color.hsTextPrimary)
-                        .frame(maxWidth: .infinity) // Buy ile eşit dağılır
+                        .foregroundStyle(themeManager.theme.textPrimary)
+                        .frame(maxWidth: .infinity)
                         .frame(height: 40)
-                        .background(Color.hsBackgroundSecondary)
-                        .clipShape(Capsule()) // Daha oval bir görünüm
+                        .background(themeManager.theme.backgroundSecondary)
+                        .clipShape(Capsule())
                         .overlay(
                             Capsule()
-                                .strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                                .strokeBorder(themeManager.theme.border, lineWidth: 0.5)
                         )
                 }
                 
-                // 3. Al (Buy) Butonu
+                // 3. Buy Button
                 Button {
                     showBuySheet = true
                 } label: {
-                    Text("Buy")
+                    Text(String.localized("common.buy"))
                         .font(.system(size: 16, weight: .bold))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 40)
                         .background(
                             LinearGradient(
-                                colors: [Color.hsPurple700, Color.hsPurple600],
+                                colors: [
+                                    themeManager.theme.purple700,
+                                    themeManager.theme.purple400
+                                ],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
                         )
-                        .clipShape(Capsule()) // Tasarımdaki modern oval yapı
+                        .clipShape(Capsule())
                 }
                 .buttonStyle(PressableButtonStyle())
             }
-            .padding(.vertical,10)
+            .padding(.vertical, 10)
             .padding(.horizontal)
-            .background(Color.hsBackground)
+            .background(themeManager.theme.background)
         }
     }
-    
-    
+
     private func shareAsset() {
-        // Share sheet — implement with UIActivityViewController
+        // Paylaşım mantığı implementasyonu
     }
 }
 
-// MARK: - PressableButtonStyle
-
-struct PressableButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
-            .opacity(configuration.isPressed ? 0.9 : 1.0)
-            .animation(.easeInOut(duration: 0.12), value: configuration.isPressed)
-    }
-}
-
-// MARK: - AssetDetailToolbar (yeniden tasarım)
+// MARK: - Subcomponents (Hatalar burada düzeltildi)
 
 struct AssetDetailToolbar: View {
     let isInWatchlist: Bool
     let onToggleWatchlist: () -> Void
+    let onAddAlarm: () -> Void
     let onShare: () -> Void
-
+    
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         HStack(spacing: 4) {
             toolbarButton(
                 icon: isInWatchlist ? "heart.fill" : "heart",
-                tint: isInWatchlist ? Color.hsError : Color.hsTextSecondary,
+                tint: isInWatchlist ? Color.hsError : themeManager.theme.textSecondary,
                 action: onToggleWatchlist
             )
             toolbarButton(
+                icon: "bell",
+                tint: themeManager.theme.textSecondary,
+                action: onAddAlarm
+            )
+            toolbarButton(
                 icon: "square.and.arrow.up",
-                tint: Color.hsTextSecondary,
+                tint: themeManager.theme.textSecondary,
                 action: onShare
             )
         }
@@ -209,13 +199,22 @@ struct AssetDetailToolbar: View {
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundStyle(tint)
                 .frame(width: 36, height: 36)
-                .background(Color.hsBackgroundSecondary)
+                .background(themeManager.theme.backgroundSecondary)
                 .clipShape(Circle())
                 .overlay(
-                    Circle().strokeBorder(Color.hsBorder, lineWidth: 0.5)
+                    Circle().strokeBorder(themeManager.theme.border, lineWidth: 0.5)
                 )
         }
         .buttonStyle(.plain)
         .animation(.spring(response: 0.3), value: isInWatchlist)
+    }
+}
+
+struct PressableButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .animation(.easeInOut(duration: 0.12), value: configuration.isPressed)
     }
 }

@@ -50,7 +50,7 @@ struct AssetItem: Codable, Identifiable, Hashable {
     var propertyLongitude: Double?
     var propertySpvName: String?
     var propertySpvTaxNumber: String?
-    var propertyDescription: String?
+    var propertySpvDescription: String? // propertyDescription -> propertySpvDescription (tutarlılık için)
 
     // Art
     var artArtistName: String?
@@ -97,7 +97,7 @@ struct AssetItem: Codable, Identifiable, Hashable {
         case propertyLongitude  = "property_longitude"
         case propertySpvName    = "property_spv_name"
         case propertySpvTaxNumber = "property_spv_tax_number"
-        case propertyDescription = "property_description"
+        case propertySpvDescription = "property_description"
 
         // Art
         case artArtistName      = "art_artist_name"
@@ -113,7 +113,6 @@ struct AssetItem: Codable, Identifiable, Hashable {
         case nftContractAddress = "nft_contract_address"
         case nftMetadataUrl     = "nft_metadata_url"
     }
-    
 }
 
 // MARK: - Currency Helper
@@ -163,7 +162,6 @@ extension AssetItem {
     // Backward compatibility
     var unrealizedGain: Decimal? { unrealizedPnl }
     
-    
     var trendingSubtitle: String {
         category
     }
@@ -171,7 +169,8 @@ extension AssetItem {
     var listMeta: [String] {
         var meta: [String] = [category]
         if let yield = annualYield, yield > 0 {
-            meta.append("%\(CurrencyFormatter.formatValue(yield, currency: .TRY)) Getiri")
+            let yieldVal = CurrencyFormatter.formatValue(yield, currency: .TRY)
+            meta.append(String(format: String.localized("asset.meta.yield"), yieldVal))
         }
         return meta
     }
