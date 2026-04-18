@@ -20,6 +20,12 @@
             "state" : "new",
             "value" : "%1$@ — %2$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — %2$@"
+          }
         }
       }
     },
@@ -28,6 +34,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$@ • %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$@ • %2$@"
           }
         }
@@ -46,6 +58,12 @@
             "state" : "new",
             "value" : "%1$@: %2$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
         }
       }
     },
@@ -59,6 +77,12 @@
             "state" : "new",
             "value" : "%1$@: 45 %2$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: 45 %2$@"
+          }
         }
       }
     },
@@ -67,6 +91,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$@%2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$@%2$@"
           }
         }
@@ -83,6 +113,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$lld / %2$lld"
           }
         }
@@ -124,14 +160,16 @@
     "Açıklama" : {
 
     },
-    "alert.behavior.%@.desc" : {
-
-    },
-    "alert.behavior.%@.display" : {
-
-    },
     "alert.behavior.one_shot.desc" : {
-      "extractionState" : "manual"
+      "extractionState" : "manual",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koşul ilk sağlandığında yalnızca bir kez bildirim gönderilir"
+          }
+        }
+      }
     },
     "alert.behavior.one_shot.display" : {
       "extractionState" : "manual",
@@ -140,6 +178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "One-time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tek seferlik"
           }
         }
       }
@@ -152,6 +196,12 @@
             "state" : "translated",
             "value" : "Notification is sent whenever the condition is met"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koşul her sağlandığında bildirim gönderilir"
+          }
         }
       }
     },
@@ -163,14 +213,14 @@
             "state" : "translated",
             "value" : "Recurring"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekrarlayan"
+          }
         }
       }
-    },
-    "alert.condition.%@.display" : {
-
-    },
-    "alert.condition.%@.short" : {
-
     },
     "alert.condition.above.display" : {
       "extractionState" : "manual",
@@ -179,6 +229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "If price rises above"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat yükselirse"
           }
         }
       }
@@ -191,6 +247,12 @@
             "state" : "translated",
             "value" : "Rises above"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükselirse"
+          }
         }
       }
     },
@@ -201,6 +263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "If price falls below"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat düşerse"
           }
         }
       }
@@ -213,6 +281,12 @@
             "state" : "translated",
             "value" : "Falls below"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düşerse"
+          }
         }
       }
     },
@@ -223,6 +297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Percentage change"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüzde değişimi"
           }
         }
       }
@@ -235,6 +315,12 @@
             "state" : "translated",
             "value" : "%% change"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%% değişim"
+          }
         }
       }
     },
@@ -245,6 +331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Behavior"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Davranış"
           }
         }
       }
@@ -257,6 +349,12 @@
             "state" : "translated",
             "value" : "Alert condition"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm koşulu"
+          }
         }
       }
     },
@@ -267,6 +365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Current price"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güncel fiyat"
           }
         }
       }
@@ -279,6 +383,12 @@
             "state" : "translated",
             "value" : "You will receive a notification when the price rises above this value."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat bu değerin üzerine çıktığında bildirim alacaksınız."
+          }
         }
       }
     },
@@ -289,6 +399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You will receive a notification when the price falls below this value."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat bu değerin altına düştüğünde bildirim alacaksınız."
           }
         }
       }
@@ -301,6 +417,12 @@
             "state" : "translated",
             "value" : "Base price: %@. You will be notified if the price changes by more than this rate in %@ direction."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baz fiyat: %@. Fiyat bu orandan fazla %@ yönünde değişirse bildirim alacaksınız."
+          }
         }
       }
     },
@@ -311,6 +433,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Price rises above"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat yükselirse"
           }
         }
       }
@@ -323,6 +451,12 @@
             "state" : "translated",
             "value" : "Price falls below"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat düşerse"
+          }
         }
       }
     },
@@ -333,6 +467,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Percentage change"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüzde değişimi"
           }
         }
       }
@@ -345,6 +485,12 @@
             "state" : "translated",
             "value" : "Price Alert"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat Alarmı"
+          }
         }
       }
     },
@@ -355,6 +501,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "If price rises above %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat %@ üzerine çıkarsa"
           }
         }
       }
@@ -367,6 +519,12 @@
             "state" : "translated",
             "value" : "If price falls below %@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat %@ altına düşerse"
+          }
         }
       }
     },
@@ -377,6 +535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "If it changes by %@%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@%% değişirse"
           }
         }
       }
@@ -389,11 +553,99 @@
             "state" : "translated",
             "value" : "%@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
         }
       }
     },
-    "art.technique.%@" : {
-
+    "app_tab.type.discover" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discover"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keşfet"
+          }
+        }
+      }
+    },
+    "app_tab.type.portfolio" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portfolio"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Portföy"
+          }
+        }
+      }
+    },
+    "app_tab.type.profile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Profil"
+          }
+        }
+      }
+    },
+    "app_tab.type.search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Araştır"
+          }
+        }
+      }
+    },
+    "app_tab.type.watchlist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Watchlist"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İzleme Listesi"
+          }
+        }
+      }
     },
     "asset.detail.art.artist" : {
       "extractionState" : "manual",
@@ -402,6 +654,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Artist"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanatçı"
           }
         }
       }
@@ -414,6 +672,12 @@
             "state" : "translated",
             "value" : "Dimensions"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boyutlar"
+          }
         }
       }
     },
@@ -424,6 +688,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Medium"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teknik"
           }
         }
       }
@@ -436,6 +706,12 @@
             "state" : "translated",
             "value" : "Artwork Details"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eser Detayları"
+          }
         }
       }
     },
@@ -446,6 +722,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Year"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yıl"
           }
         }
       }
@@ -458,6 +740,12 @@
             "state" : "translated",
             "value" : "Blockchain Verification"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain Doğrulama"
+          }
         }
       }
     },
@@ -468,6 +756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Funding Status"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finansman Durumu"
           }
         }
       }
@@ -480,6 +774,12 @@
             "state" : "translated",
             "value" : "Network"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ağ"
+          }
         }
       }
     },
@@ -490,6 +790,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Collection"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koleksiyon"
           }
         }
       }
@@ -502,6 +808,12 @@
             "state" : "translated",
             "value" : "Contract"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sözleşme"
+          }
         }
       }
     },
@@ -512,6 +824,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "NFT Information"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFT Bilgileri"
           }
         }
       }
@@ -524,6 +842,12 @@
             "state" : "translated",
             "value" : "Asset not found"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık bulunamadı"
+          }
         }
       }
     },
@@ -534,6 +858,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Standard"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standart"
           }
         }
       }
@@ -546,6 +876,12 @@
             "state" : "translated",
             "value" : "Verify on Polygonscan"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polygonscan'de Doğrula"
+          }
         }
       }
     },
@@ -556,6 +892,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tümü"
           }
         }
       }
@@ -568,15 +910,11 @@
             "state" : "translated",
             "value" : "%@ Yield"
           }
-        }
-      }
-    },
-    "asset.sort.%@" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@"
+            "value" : "%@ Getiri"
           }
         }
       }
@@ -589,6 +927,12 @@
             "state" : "translated",
             "value" : "Newest"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Yeni"
+          }
         }
       }
     },
@@ -599,6 +943,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Popular"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popüler"
           }
         }
       }
@@ -611,6 +961,12 @@
             "state" : "translated",
             "value" : "Highest Price"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Yüksek Fiyat"
+          }
         }
       }
     },
@@ -621,6 +977,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lowest Price"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Düşük Fiyat"
           }
         }
       }
@@ -633,15 +995,11 @@
             "state" : "translated",
             "value" : "Highest Yield"
           }
-        }
-      }
-    },
-    "asset.status.%@" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asset Status %@"
+            "value" : "En Yüksek Getiri"
           }
         }
       }
@@ -654,6 +1012,12 @@
             "state" : "translated",
             "value" : "Active"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif"
+          }
         }
       }
     },
@@ -664,6 +1028,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Funded"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fonlandı"
           }
         }
       }
@@ -676,6 +1046,12 @@
             "state" : "translated",
             "value" : "Sold Out"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tükendi"
+          }
         }
       }
     },
@@ -687,27 +1063,14 @@
             "state" : "translated",
             "value" : "Upcoming"
           }
-        }
-      }
-    },
-    "asset.type %@" : {
-
-    },
-    "asset.type.%@" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@"
+            "value" : "Yakında"
           }
         }
       }
-    },
-    "asset.type.%@.subtitle" : {
-
-    },
-    "asset.type.%@.title" : {
-
     },
     "asset.type.apartment" : {
       "extractionState" : "manual",
@@ -716,6 +1079,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apartment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daire"
           }
         }
       }
@@ -728,6 +1097,12 @@
             "state" : "translated",
             "value" : "Art"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanat"
+          }
         }
       }
     },
@@ -739,6 +1114,12 @@
             "state" : "translated",
             "value" : "Land"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arsa"
+          }
         }
       }
     },
@@ -746,6 +1127,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFT"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "NFT"
@@ -761,6 +1148,12 @@
             "state" : "translated",
             "value" : "Office"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ofis"
+          }
         }
       }
     },
@@ -771,6 +1164,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Property"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gayrimenkul"
           }
         }
       }
@@ -783,6 +1182,12 @@
             "state" : "translated",
             "value" : "Real Estate"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emlak"
+          }
         }
       }
     },
@@ -794,11 +1199,14 @@
             "state" : "translated",
             "value" : "Shop"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dükkan"
+          }
         }
       }
-    },
-    "auth.error.session_not_found" : {
-      "extractionState" : "manual"
     },
     "auth.field.email" : {
       "extractionState" : "manual",
@@ -807,6 +1215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Email"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-posta"
           }
         }
       }
@@ -819,6 +1233,12 @@
             "state" : "translated",
             "value" : "Full Name"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad Soyad"
+          }
         }
       }
     },
@@ -829,6 +1249,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your Full Name"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad Soyadınız"
           }
         }
       }
@@ -841,6 +1267,12 @@
             "state" : "translated",
             "value" : "Password"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şifre"
+          }
         }
       }
     },
@@ -851,6 +1283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Min. 8 characters"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En az 8 karakter"
           }
         }
       }
@@ -863,6 +1301,12 @@
             "state" : "translated",
             "value" : "Login"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş Yap"
+          }
         }
       }
     },
@@ -873,6 +1317,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Forgot password"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şifremi unuttum"
           }
         }
       }
@@ -885,6 +1335,12 @@
             "state" : "translated",
             "value" : "Don't have an account?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabınız yok mu?"
+          }
         }
       }
     },
@@ -895,6 +1351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New era in real estate investment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gayrimenkul yatırımında yeni dönem"
           }
         }
       }
@@ -907,6 +1369,12 @@
             "state" : "translated",
             "value" : "Login"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş Yap"
+          }
         }
       }
     },
@@ -917,6 +1385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Create Account"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap Oluştur"
           }
         }
       }
@@ -929,6 +1403,12 @@
             "state" : "translated",
             "value" : "Already have an account?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaten hesabınız var mı?"
+          }
         }
       }
     },
@@ -939,6 +1419,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Partner with big properties with small investments"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küçük yatırımlarla büyük mülklere ortak olun"
           }
         }
       }
@@ -951,6 +1437,12 @@
             "state" : "translated",
             "value" : "By registering, you agree to the Terms of Use."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kayıt olarak Kullanım Koşullarını kabul etmiş olursunuz."
+          }
         }
       }
     },
@@ -961,6 +1453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Create Account"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap Oluştur"
           }
         }
       }
@@ -973,6 +1471,12 @@
             "state" : "translated",
             "value" : "Reset your password"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şifrenizi sıfırlayın"
+          }
         }
       }
     },
@@ -984,18 +1488,21 @@
             "state" : "translated",
             "value" : "Reset"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıfırla"
+          }
         }
       }
     },
     "Blockchain" : {
-
-    },
-    "common.active" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Active"
+            "value" : "Blockchain"
           }
         }
       }
@@ -1008,15 +1515,11 @@
             "state" : "translated",
             "value" : "Add"
           }
-        }
-      }
-    },
-    "common.all" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All"
+            "value" : "Ekle"
           }
         }
       }
@@ -1029,16 +1532,25 @@
             "state" : "translated",
             "value" : "Hissedar"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hissedar"
+          }
         }
       }
-    },
-    "common.back" : {
-
     },
     "common.blockchain" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blockchain"
@@ -1054,6 +1566,12 @@
             "state" : "translated",
             "value" : "Buy"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın Al"
+          }
         }
       }
     },
@@ -1064,6 +1582,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
           }
         }
       }
@@ -1076,6 +1600,12 @@
             "state" : "translated",
             "value" : "Clear"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temizle"
+          }
         }
       }
     },
@@ -1086,6 +1616,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Close"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapat"
           }
         }
       }
@@ -1098,6 +1634,12 @@
             "state" : "translated",
             "value" : "Confirmed"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onaylandı"
+          }
         }
       }
     },
@@ -1108,6 +1650,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Continue"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devam Et"
           }
         }
       }
@@ -1120,6 +1668,12 @@
             "state" : "translated",
             "value" : "Create"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oluştur"
+          }
         }
       }
     },
@@ -1131,15 +1685,11 @@
             "state" : "translated",
             "value" : "Delete"
           }
-        }
-      }
-    },
-    "common.done" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dome"
+            "value" : "Sil"
           }
         }
       }
@@ -1152,6 +1702,12 @@
             "state" : "translated",
             "value" : "Edit"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenle"
+          }
         }
       }
     },
@@ -1162,6 +1718,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hata"
           }
         }
       }
@@ -1174,6 +1736,12 @@
             "state" : "translated",
             "value" : "Loading..."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükleniyor..."
+          }
         }
       }
     },
@@ -1181,6 +1749,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "info@hissedar.com"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "info@hissedar.com"
@@ -1196,15 +1770,11 @@
             "state" : "translated",
             "value" : "OK"
           }
-        }
-      }
-    },
-    "common.passive" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passive"
+            "value" : "Tamam"
           }
         }
       }
@@ -1213,6 +1783,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "privacy@hissedar.com"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "privacy@hissedar.com"
@@ -1228,15 +1804,11 @@
             "state" : "translated",
             "value" : "Processing..."
           }
-        }
-      }
-    },
-    "common.remove" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove"
+            "value" : "İşleniyor..."
           }
         }
       }
@@ -1249,15 +1821,11 @@
             "state" : "translated",
             "value" : "Retry"
           }
-        }
-      }
-    },
-    "common.save" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save"
+            "value" : "Tekrar Dene"
           }
         }
       }
@@ -1270,6 +1838,12 @@
             "state" : "translated",
             "value" : "No results found for '%@'"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'%@' için sonuç bulunamadı"
+          }
         }
       }
     },
@@ -1280,6 +1854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "See All"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tümünü Gör"
           }
         }
       }
@@ -1292,6 +1872,12 @@
             "state" : "translated",
             "value" : "See All →"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tümünü Gör →"
+          }
         }
       }
     },
@@ -1302,6 +1888,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sell"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sat"
           }
         }
       }
@@ -1314,6 +1906,12 @@
             "state" : "translated",
             "value" : "Send"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gönder"
+          }
         }
       }
     },
@@ -1324,6 +1922,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skip"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geç"
           }
         }
       }
@@ -1336,11 +1940,14 @@
             "state" : "translated",
             "value" : "Sort ↓"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sırala ↓"
+          }
         }
       }
-    },
-    "common.success" : {
-
     },
     "common.time.days_ago" : {
       "extractionState" : "manual",
@@ -1350,15 +1957,11 @@
             "state" : "translated",
             "value" : "days ago"
           }
-        }
-      }
-    },
-    "common.wallet" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wallet"
+            "value" : "gün önce"
           }
         }
       }
@@ -1370,6 +1973,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siz"
           }
         }
       }
@@ -1385,6 +1994,12 @@
             "state" : "translated",
             "value" : "%d properties"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d mülk"
+          }
         }
       }
     },
@@ -1395,6 +2010,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All Assets"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Varlıklar"
           }
         }
       }
@@ -1407,6 +2028,12 @@
             "state" : "translated",
             "value" : "Art Market"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanat Piyasası"
+          }
         }
       }
     },
@@ -1417,6 +2044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Featured Art"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öne Çıkan Sanat"
           }
         }
       }
@@ -1429,6 +2062,12 @@
             "state" : "translated",
             "value" : "NFT Collections"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFT Koleksiyonları"
+          }
         }
       }
     },
@@ -1439,6 +2078,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Popular NFTs"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popüler NFT'ler"
           }
         }
       }
@@ -1451,6 +2096,12 @@
             "state" : "translated",
             "value" : "Properties"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mülkler"
+          }
         }
       }
     },
@@ -1461,6 +2112,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trending"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gündemde"
           }
         }
       }
@@ -1473,6 +2130,12 @@
             "state" : "translated",
             "value" : "Trending Properties"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gündemdeki Mülkler"
+          }
         }
       }
     },
@@ -1483,6 +2146,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "List"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liste"
           }
         }
       }
@@ -1495,6 +2164,12 @@
             "state" : "translated",
             "value" : "Map"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harita"
+          }
         }
       }
     },
@@ -1505,6 +2180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Balance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bakiye"
           }
         }
       }
@@ -1517,6 +2198,12 @@
             "state" : "translated",
             "value" : "Buy HSR"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HSR Satın Al"
+          }
         }
       }
     },
@@ -1528,6 +2215,12 @@
             "state" : "translated",
             "value" : "SELL HSR"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HSR Sat"
+          }
         }
       }
     },
@@ -1537,7 +2230,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Balance"
+            "value" : "Fee"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ücret"
           }
         }
       }
@@ -1550,6 +2249,12 @@
             "state" : "translated",
             "value" : "YOU BUY"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALIYORSUNUZ"
+          }
         }
       }
     },
@@ -1560,6 +2265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "YOU SELL"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SATIYORSUNUZ"
           }
         }
       }
@@ -1572,6 +2283,12 @@
             "state" : "translated",
             "value" : "Swap"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takas"
+          }
         }
       }
     },
@@ -1582,6 +2299,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fee"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ücret"
           }
         }
       }
@@ -1594,6 +2317,12 @@
             "state" : "translated",
             "value" : "New HSR Balance"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni HSR Bakiyesi"
+          }
         }
       }
     },
@@ -1604,6 +2333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New TRY Balance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni TRY Bakiyesi"
           }
         }
       }
@@ -1616,6 +2351,12 @@
             "state" : "translated",
             "value" : "Rate"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kur"
+          }
         }
       }
     },
@@ -1626,6 +2367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Received"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alınan"
           }
         }
       }
@@ -1638,6 +2385,12 @@
             "state" : "translated",
             "value" : "Spent"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harcanan"
+          }
         }
       }
     },
@@ -1649,6 +2402,12 @@
             "state" : "translated",
             "value" : "You purchased %@ for %@."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ karşılığında %@ satın aldınız."
+          }
         }
       }
     },
@@ -1658,7 +2417,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You received %@ for %@.\""
+            "value" : "You received %@ for %@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ karşılığında %@ aldınız."
           }
         }
       }
@@ -1670,6 +2435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exchange Successful!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takas Başarılı!"
           }
         }
       }
@@ -1688,6 +2459,12 @@
             "state" : "translated",
             "value" : "Edit IBAN"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IBAN Düzenle"
+          }
         }
       }
     },
@@ -1701,6 +2478,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your IBAN Number"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IBAN Numaranız"
           }
         }
       }
@@ -1722,6 +2505,12 @@
             "state" : "translated",
             "value" : "Start Verification"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulamayı Başlat"
+          }
         }
       }
     },
@@ -1732,6 +2521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Identity verification in compliance with regulatory standards is required to start investing."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yatırım yapmaya başlamak için mevzuat uyumlu kimlik doğrulaması gereklidir."
           }
         }
       }
@@ -1744,6 +2539,12 @@
             "state" : "translated",
             "value" : "Estimated time: 3-5 minutes"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tahmini süre: 3-5 dakika"
+          }
         }
       }
     },
@@ -1754,6 +2555,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your data is protected with 256-bit SSL encryption and used only for regulatory compliance purposes."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verileriniz 256-bit SSL şifrelemesiyle korunmakta ve yalnızca mevzuat uyum amaçlı kullanılmaktadır."
           }
         }
       }
@@ -1766,6 +2573,12 @@
             "state" : "translated",
             "value" : "Verify Your Identity"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimliğinizi Doğrulayın"
+          }
         }
       }
     },
@@ -1776,6 +2589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Identity Verification"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik Doğrulama"
           }
         }
       }
@@ -1788,6 +2607,12 @@
             "state" : "translated",
             "value" : "Your information is being reviewed. This process usually takes a few minutes. You will receive a notification with the result."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilgileriniz inceleniyor. Bu işlem birkaç dakika sürebilir. Sonuç size bildirim olarak iletilecektir."
+          }
         }
       }
     },
@@ -1798,6 +2623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification in Progress"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Devam Ediyor"
           }
         }
       }
@@ -1810,6 +2641,12 @@
             "state" : "translated",
             "value" : "The verification process failed. Please try again or contact our support team."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama işlemi başarısız oldu. Lütfen tekrar deneyin veya destek ekibimizle iletişime geçin."
+          }
         }
       }
     },
@@ -1820,6 +2657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification Failed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Başarısız"
           }
         }
       }
@@ -1832,6 +2675,12 @@
             "state" : "translated",
             "value" : "Your account has been successfully verified. You can now start investing."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabınız başarıyla doğrulandı. Artık yatırım yapmaya başlayabilirsiniz."
+          }
         }
       }
     },
@@ -1842,6 +2691,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification Completed!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Tamamlandı!"
           }
         }
       }
@@ -1854,6 +2709,12 @@
             "state" : "translated",
             "value" : "National ID number and personal details"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TC kimlik numarası ve kişisel bilgiler"
+          }
         }
       }
     },
@@ -1864,6 +2725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personal Information"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kişisel Bilgiler"
           }
         }
       }
@@ -1876,6 +2743,12 @@
             "state" : "translated",
             "value" : "Front and back side of your ID card"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik kartınızın ön ve arka yüzü"
+          }
         }
       }
     },
@@ -1886,6 +2759,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Document Photo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Belge Fotoğrafı"
           }
         }
       }
@@ -1898,6 +2777,12 @@
             "state" : "translated",
             "value" : "Selfie capture for liveness check"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canlılık kontrolü için selfie"
+          }
         }
       }
     },
@@ -1908,6 +2793,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Face Verification"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüz Doğrulama"
           }
         }
       }
@@ -1920,6 +2811,12 @@
             "state" : "translated",
             "value" : "Complete Verification (Test)"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulamayı Tamamla (Test)"
+          }
         }
       }
     },
@@ -1931,6 +2828,12 @@
             "state" : "translated",
             "value" : "Kycaid form will be loaded here using WKWebView"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kycaid formu burada WKWebView ile yüklenecektir"
+          }
         }
       }
     },
@@ -1941,6 +2844,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kycaid Form"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kycaid Formu"
           }
         }
       }
@@ -1957,38 +2866,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İngilizce"
-          }
-        }
-      }
-    },
-    "language.restart.hint" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Some changes will take effect after restarting the app."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bazı değişiklikler uygulamayı yeniden başlattıktan sonra geçerli olur."
-          }
-        }
-      }
-    },
-    "language.title" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Language"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dil"
           }
         }
       }
@@ -2017,6 +2894,12 @@
             "state" : "translated",
             "value" : "Annual Yield"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yıllık Getiri"
+          }
         }
       }
     },
@@ -2027,6 +2910,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detailed descriptions regarding the property will be located here..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mülke ait ayrıntılı açıklamalar burada yer alacaktır..."
           }
         }
       }
@@ -2039,6 +2928,12 @@
             "state" : "translated",
             "value" : "Property Details"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mülk Detayları"
+          }
         }
       }
     },
@@ -2049,6 +2944,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "funded"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fonlandı"
           }
         }
       }
@@ -2061,6 +2962,12 @@
             "state" : "translated",
             "value" : "Token Price"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token Fiyatı"
+          }
         }
       }
     },
@@ -2068,9 +2975,6 @@
 
     },
     "No Wallets" : {
-
-    },
-    "notification.type.%@" : {
 
     },
     "notification.type.dividend" : {
@@ -2083,6 +2987,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KYC Approved"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KYC Onaylandı"
           }
         }
       }
@@ -2107,6 +3017,12 @@
             "state" : "translated",
             "value" : "Mark All as Read"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tümünü Okundu İşaretle"
+          }
         }
       }
     },
@@ -2117,6 +3033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rental income, token transfers, and property updates will appear here"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira geliri, token transferleri ve mülk güncellemeleri burada görünecektir"
           }
         }
       }
@@ -2129,6 +3051,12 @@
             "state" : "translated",
             "value" : "No notifications"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildirim yok"
+          }
         }
       }
     },
@@ -2139,6 +3067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notifications"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildirimler"
           }
         }
       }
@@ -2151,6 +3085,12 @@
             "state" : "translated",
             "value" : "Create Account"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap Oluştur"
+          }
         }
       }
     },
@@ -2162,6 +3102,12 @@
             "state" : "translated",
             "value" : "Have an account? Login"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabınız var mı? Giriş yapın"
+          }
         }
       }
     },
@@ -2171,7 +3117,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invest in Istanbul's most valuable properties with tokens starting from ₺100\""
+            "value" : "Invest in Istanbul's most valuable properties with tokens starting from ₺100"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "₺100'den başlayan tokenlarla İstanbul'un en değerli mülklerine yatırım yapın"
           }
         }
       }
@@ -2184,6 +3136,12 @@
             "state" : "translated",
             "value" : "Become a real\\nestate partner"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gayrimenkulün\northağı olun"
+          }
         }
       }
     },
@@ -2194,6 +3152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How it works? · 1/3"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nasıl çalışır? · 1/3"
           }
         }
       }
@@ -2206,6 +3170,12 @@
             "state" : "translated",
             "value" : "Each property is split into thousands of tokens. Buy as many as you want — minimum ₺100."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her mülk binlerce tokena bölünür. İstediğiniz kadar satın alın — minimum ₺100."
+          }
         }
       }
     },
@@ -2216,6 +3186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Large properties split into small pieces"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Büyük mülkler küçük parçalara bölünür"
           }
         }
       }
@@ -2228,6 +3204,12 @@
             "state" : "translated",
             "value" : "How it works? · 2/3"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nasıl çalışır? · 2/3"
+          }
         }
       }
     },
@@ -2238,6 +3220,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Property rental income reflects on your account based on your token share. Withdraw anytime."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mülk kira geliri, token payınıza göre hesabınıza yansır. İstediğiniz zaman çekin."
           }
         }
       }
@@ -2250,6 +3238,12 @@
             "state" : "translated",
             "value" : "Rental income\\ndeposited monthly"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira geliri\naylık yatırılır"
+          }
         }
       }
     },
@@ -2260,6 +3254,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How it works? · 3/3"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nasıl çalışır? · 3/3"
           }
         }
       }
@@ -2272,6 +3272,12 @@
             "state" : "translated",
             "value" : "Each property is held by a separate SPV company. Deed-protected, blockchain-transparent."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her mülk ayrı bir SPV şirketine aittir. Tapu güvenceli, blockchain şeffaf."
+          }
         }
       }
     },
@@ -2282,6 +3288,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Secure, transparent\\nand regulated"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenli, şeffaf\nve düzenlenmiş"
           }
         }
       }
@@ -2294,6 +3306,12 @@
             "state" : "translated",
             "value" : "Your January 2026 rent share"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocak 2026 kira payınız"
+          }
         }
       }
     },
@@ -2304,6 +3322,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kadikoy Moda 3+1"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kadıköy Moda 3+1"
           }
         }
       }
@@ -2316,6 +3340,12 @@
             "state" : "translated",
             "value" : "500 tokens"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "500 token"
+          }
         }
       }
     },
@@ -2326,6 +3356,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "500 token investment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "500 token yatırımı"
           }
         }
       }
@@ -2338,6 +3374,12 @@
             "state" : "translated",
             "value" : "Annual rental yield"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yıllık kira getirisi"
+          }
         }
       }
     },
@@ -2348,6 +3390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estimated appreciation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tahmini değer artışı"
           }
         }
       }
@@ -2360,6 +3408,12 @@
             "state" : "translated",
             "value" : "50,000 tokens"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "50.000 token"
+          }
         }
       }
     },
@@ -2371,6 +3425,12 @@
             "state" : "translated",
             "value" : "Partner with big properties via small investments"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küçük yatırımlarla büyük mülklere ortak olun"
+          }
         }
       }
     },
@@ -2378,6 +3438,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum ₺100"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimum ₺100"
@@ -2393,6 +3459,12 @@
             "state" : "translated",
             "value" : "From 1 token to as many as you need"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 tokenden istediğiniz kadar"
+          }
         }
       }
     },
@@ -2403,6 +3475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Buy as much as you want"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İstediğiniz kadar satın alın"
           }
         }
       }
@@ -2415,6 +3493,12 @@
             "state" : "translated",
             "value" : "Property valued at ₺5,000,000"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "₺5.000.000 değerinde mülk"
+          }
         }
       }
     },
@@ -2425,6 +3509,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Each property belongs to a separate company. Deed record is protected on your behalf."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her mülk ayrı bir şirkete aittir. Tapu kaydı sizin adınıza güvence altındadır."
           }
         }
       }
@@ -2437,6 +3527,12 @@
             "state" : "translated",
             "value" : "Legal ownership via SPV"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SPV ile yasal mülkiyet"
+          }
         }
       }
     },
@@ -2447,6 +3543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every transaction is recorded on the Polygon network. Verify anytime."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her işlem Polygon ağında kayıt altına alınır. İstediğiniz zaman doğrulayın."
           }
         }
       }
@@ -2459,6 +3561,12 @@
             "state" : "translated",
             "value" : "Blockchain transparency"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain şeffaflığı"
+          }
         }
       }
     },
@@ -2469,6 +3577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Only verified users can make investments."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca doğrulanmış kullanıcılar yatırım yapabilir."
           }
         }
       }
@@ -2481,6 +3595,12 @@
             "state" : "translated",
             "value" : "KYC Requirement"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KYC Zorunluluğu"
+          }
         }
       }
     },
@@ -2491,6 +3611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regulated"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenlenmiş"
           }
         }
       }
@@ -2503,6 +3629,12 @@
             "state" : "translated",
             "value" : "SSL Encrypted"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSL Şifreli"
+          }
         }
       }
     },
@@ -2513,6 +3645,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2FA Protection"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2FA Korumalı"
           }
         }
       }
@@ -2525,6 +3663,12 @@
             "state" : "translated",
             "value" : "Available"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kullanılabilir"
+          }
         }
       }
     },
@@ -2535,6 +3679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cash"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nakit"
           }
         }
       }
@@ -2547,6 +3697,12 @@
             "state" : "translated",
             "value" : "Locked"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilitli"
+          }
         }
       }
     },
@@ -2557,6 +3713,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tokens"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokenlar"
           }
         }
       }
@@ -2569,6 +3731,12 @@
             "state" : "translated",
             "value" : "Start your portfolio by purchasing your first\\ntoken from the Explore tab."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keşfet sekmesinden ilk tokenınızı satın alarak\nportföyünüzü oluşturmaya başlayın."
+          }
         }
       }
     },
@@ -2579,6 +3747,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No Investments Yet"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz Yatırım Yok"
           }
         }
       }
@@ -2591,6 +3765,12 @@
             "state" : "translated",
             "value" : "Portfolio Value"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portföy Değeri"
+          }
         }
       }
     },
@@ -2601,6 +3781,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asset Distribution"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık Dağılımı"
           }
         }
       }
@@ -2613,6 +3799,12 @@
             "state" : "translated",
             "value" : "Loading portfolio..."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portföy yükleniyor..."
+          }
         }
       }
     },
@@ -2624,11 +3816,14 @@
             "state" : "translated",
             "value" : "Portfolio"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portföy"
+          }
         }
       }
-    },
-    "portfolio.sort.%@" : {
-
     },
     "portfolio.sort.gain" : {
       "extractionState" : "manual",
@@ -2637,6 +3832,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profit/Loss"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kâr/Zarar"
           }
         }
       }
@@ -2649,6 +3850,12 @@
             "state" : "translated",
             "value" : "Rent"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira"
+          }
         }
       }
     },
@@ -2659,6 +3866,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Return"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getiri"
           }
         }
       }
@@ -2671,6 +3884,12 @@
             "state" : "translated",
             "value" : "Value"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer"
+          }
         }
       }
     },
@@ -2681,6 +3900,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Browse Properties"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mülklere Göz At"
           }
         }
       }
@@ -2693,6 +3918,12 @@
             "state" : "translated",
             "value" : "Complete KYC"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KYC'yi Tamamla"
+          }
         }
       }
     },
@@ -2703,6 +3934,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Account created"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap oluşturuldu"
           }
         }
       }
@@ -2715,6 +3952,12 @@
             "state" : "translated",
             "value" : "Identity verification (KYC)"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik doğrulama (KYC)"
+          }
         }
       }
     },
@@ -2725,6 +3968,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Make your first investment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlk yatırımınızı yapın"
           }
         }
       }
@@ -2737,6 +3986,12 @@
             "state" : "translated",
             "value" : "Only a few steps left to start investing"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yatırım yapmaya başlamak için birkaç adım kaldı"
+          }
         }
       }
     },
@@ -2747,6 +4002,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Account created!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap oluşturuldu!"
           }
         }
       }
@@ -2759,6 +4020,12 @@
             "state" : "translated",
             "value" : "Contact us for questions regarding our privacy policy."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizlilik politikamıza ilişkin sorularınız için bizimle iletişime geçin."
+          }
         }
       }
     },
@@ -2769,6 +4036,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Have Questions?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorularınız mı var?"
           }
         }
       }
@@ -2781,6 +4054,12 @@
             "state" : "translated",
             "value" : "As Hissedar, protecting your personal data is our top priority."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hissedar olarak kişisel verilerinizi korumak en öncelikli hedefimizdir."
+          }
         }
       }
     },
@@ -2791,6 +4070,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your Data is Safe"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verileriniz Güvende"
           }
         }
       }
@@ -2803,6 +4088,12 @@
             "state" : "translated",
             "value" : "Last updated"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son güncelleme"
+          }
         }
       }
     },
@@ -2813,6 +4104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy Policy"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizlilik Politikası"
           }
         }
       }
@@ -2825,6 +4122,12 @@
             "state" : "translated",
             "value" : "Hissedar operates in full compliance with Capital Markets Board (SPK) regulations. Investor information is stored for the period required by SPK legislation and presented to audit authorities when necessary."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hissedar, Sermaye Piyasası Kurulu (SPK) düzenlemelerine tam uyum içinde faaliyet göstermektedir. Yatırımcı bilgileri, SPK mevzuatının gerektirdiği süre boyunca saklanır ve gerektiğinde denetim mercilerine sunulur."
+          }
         }
       }
     },
@@ -2835,6 +4138,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regulatory Compliance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mevzuat Uyumluluğu"
           }
         }
       }
@@ -2847,6 +4156,12 @@
             "state" : "translated",
             "value" : "Hissedar collects your name, email, phone number, national ID, and address information to provide our services. Your bank account details and investment history are also stored for financial transactions. All data is processed under GDPR/KVKK compliance."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hissedar, hizmetlerimizi sunmak için adınızı, e-postanızı, telefon numaranızı, ulusal kimlik numaranızı ve adres bilgilerinizi toplar. Finansal işlemler için banka hesap bilgileriniz ve yatırım geçmişiniz de saklanır. Tüm veriler GDPR/KVKK uyumluluğu çerçevesinde işlenir."
+          }
         }
       }
     },
@@ -2857,6 +4172,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Collected Data"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplanan Veriler"
           }
         }
       }
@@ -2869,6 +4190,12 @@
             "state" : "translated",
             "value" : "Under KVKK/GDPR, you have the right to access, correct, delete, and transfer your data. You can exercise these rights within the app or by contacting us via email."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KVKK/GDPR kapsamında, verilerinize erişme, düzeltme, silme ve aktarma hakkına sahipsiniz. Bu haklarınızı uygulama içinden veya e-posta yoluyla bizimle iletişime geçerek kullanabilirsiniz."
+          }
         }
       }
     },
@@ -2879,6 +4206,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your Rights"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haklarınız"
           }
         }
       }
@@ -2891,6 +4224,12 @@
             "state" : "translated",
             "value" : "AES-256 encryption, TLS 1.3 protocols, and multi-layered security infrastructure are used. Financial data is protected at bank-level security standards. Regular security audits are conducted."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AES-256 şifreleme, TLS 1.3 protokolleri ve çok katmanlı güvenlik altyapısı kullanılmaktadır. Finansal veriler banka düzeyinde güvenlik standartlarında korunmaktadır. Düzenli güvenlik denetimleri yapılmaktadır."
+          }
         }
       }
     },
@@ -2902,6 +4241,12 @@
             "state" : "translated",
             "value" : "Data Security"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veri Güvenliği"
+          }
         }
       }
     },
@@ -2909,6 +4254,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analytical tools are used to improve the app experience. Cookies are only used for session management and remembering user preferences. Third-party tracking cookies are not used."
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Analytical tools are used to improve the app experience. Cookies are only used for session management and remembering user preferences. Third-party tracking cookies are not used."
@@ -2924,6 +4275,12 @@
             "state" : "translated",
             "value" : "Cookies and Tracking"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çerezler ve İzleme"
+          }
         }
       }
     },
@@ -2934,6 +4291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The data we collect is used solely for service delivery, legal obligations, security verification, and service improvements. Your data is never shared with third parties for marketing purposes."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Topladığımız veriler yalnızca hizmet sunumu, yasal yükümlülükler, güvenlik doğrulaması ve hizmet iyileştirmeleri için kullanılır. Verileriniz hiçbir zaman pazarlama amaçlı olarak üçüncü taraflarla paylaşılmaz."
           }
         }
       }
@@ -2946,6 +4309,12 @@
             "state" : "translated",
             "value" : "Data Usage"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veri Kullanımı"
+          }
         }
       }
     },
@@ -2956,6 +4325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Log Out"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çıkış yap"
           }
         }
       }
@@ -2968,6 +4343,12 @@
             "state" : "translated",
             "value" : "You can create a price alert by tapping the bell icon on an asset detail page."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık detay sayfasındaki zil simgesine dokunarak fiyat uyarısı oluşturabilirsiniz."
+          }
         }
       }
     },
@@ -2979,6 +4360,12 @@
             "state" : "translated",
             "value" : "You haven't set an alarm yet"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz alarm kurmadınız."
+          }
         }
       }
     },
@@ -2989,6 +4376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passive alarms will not be triggered. Swipe left or press and hold to delete"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasif alarmlar tetiklenmeyecektir. Silmek için sola kaydırın veya basılı tutun."
           }
         }
       }
@@ -3021,7 +4414,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Yeni Fırsatlar"
           }
         }
@@ -3072,7 +4465,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kira yatırıldığında bildir"
           }
         }
@@ -3103,6 +4496,12 @@
             "state" : "translated",
             "value" : "Alerts"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmlar"
+          }
         }
       }
     },
@@ -3113,6 +4512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Active"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif"
           }
         }
       }
@@ -3125,6 +4530,12 @@
             "state" : "translated",
             "value" : "Passive"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasif"
+          }
         }
       }
     },
@@ -3136,6 +4547,12 @@
             "state" : "translated",
             "value" : "Total"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam"
+          }
         }
       }
     },
@@ -3146,6 +4563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alerts"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmlar"
           }
         }
       }
@@ -3212,7 +4635,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Varlık"
           }
         }
@@ -3345,6 +4768,12 @@
             "state" : "translated",
             "value" : "Identity verification process is ongoing"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik doğrulama süreci devam ediyor."
+          }
         }
       }
     },
@@ -3355,6 +4784,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification in Progress"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama işlemi devam ediyor."
           }
         }
       }
@@ -3367,6 +4802,12 @@
             "state" : "translated",
             "value" : "Try again or contact support"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekrar deneyin veya destek ekibiyle iletişime geçin."
+          }
         }
       }
     },
@@ -3377,6 +4818,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification Rejected"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Reddedildi"
           }
         }
       }
@@ -3389,6 +4836,12 @@
             "state" : "translated",
             "value" : "Complete KYC verification to start investing"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yatırıma başlamak için KYC doğrulamasını tamamlayın."
+          }
         }
       }
     },
@@ -3399,6 +4852,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Identity Verification Required"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik Doğrulama Gerekli"
           }
         }
       }
@@ -3411,6 +4870,12 @@
             "state" : "translated",
             "value" : "MASAK compliant identity verification active"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MASAK uyumlu kimlik doğrulama aktif"
+          }
         }
       }
     },
@@ -3421,6 +4886,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KYC Verification Completed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KYC Doğrulama Tamamlandı"
           }
         }
       }
@@ -3433,6 +4904,12 @@
             "state" : "translated",
             "value" : "Verification Required"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Gerekli"
+          }
         }
       }
     },
@@ -3443,6 +4920,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verification Pending"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Bekleniyor"
           }
         }
       }
@@ -3455,6 +4938,12 @@
             "state" : "translated",
             "value" : "Verification Rejected"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulama Reddedildi"
+          }
         }
       }
     },
@@ -3465,6 +4954,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verified Account"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğrulanmış Hesap"
           }
         }
       }
@@ -3528,6 +5023,12 @@
             "state" : "translated",
             "value" : "Notifications"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildirimler"
+          }
         }
       }
     },
@@ -3538,6 +5039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Other"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diğerleri"
           }
         }
       }
@@ -3618,6 +5125,12 @@
             "state" : "translated",
             "value" : "Others"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diğerleri"
+          }
         }
       }
     },
@@ -3628,6 +5141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy & Policy"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizlilik ve Politika"
           }
         }
       }
@@ -3691,6 +5210,12 @@
             "state" : "translated",
             "value" : "Save Changes"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklikleri Kaydet"
+          }
         }
       }
     },
@@ -3701,6 +5226,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not added yet"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz eklenmedi"
           }
         }
       }
@@ -3713,6 +5244,12 @@
             "state" : "translated",
             "value" : "Email"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-posta"
+          }
         }
       }
     },
@@ -3724,6 +5261,12 @@
             "state" : "translated",
             "value" : "Full Name"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad Soyad"
+          }
         }
       }
     },
@@ -3731,6 +5274,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IBAN"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "IBAN"
@@ -3746,6 +5295,12 @@
             "state" : "translated",
             "value" : "Phone"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon"
+          }
         }
       }
     },
@@ -3756,6 +5311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "National ID No"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TC Kimlik No."
           }
         }
       }
@@ -3768,6 +5329,12 @@
             "state" : "translated",
             "value" : "Log Out"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çıkış Yap"
+          }
         }
       }
     },
@@ -3778,6 +5345,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to log out of your account?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabınızdan çıkış yapmak istediğinizden emin misiniz?"
           }
         }
       }
@@ -3790,6 +5363,12 @@
             "state" : "translated",
             "value" : "Logout"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çıkış yap"
+          }
         }
       }
     },
@@ -3800,6 +5379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profile Settings"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil Ayarları"
           }
         }
       }
@@ -3812,6 +5397,12 @@
             "state" : "translated",
             "value" : "Financial Information"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finansal Bilgiler"
+          }
         }
       }
     },
@@ -3822,6 +5413,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personal Information"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kişisel Bilgiler"
           }
         }
       }
@@ -3850,6 +5447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "© 2026 Hissedar. All rights reserved."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2026 Hissedar. Tüm hakları saklıdır."
           }
         }
       }
@@ -3889,12 +5492,26 @@
       }
     },
     "property.category.%@" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "property.category.%@"
+          }
+        }
+      }
     },
     "property.category.commercial" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commercial"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Commercial"
@@ -3910,6 +5527,12 @@
             "state" : "translated",
             "value" : "Residential"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yerleşim"
+          }
         }
       }
     },
@@ -3920,6 +5543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Purchase"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın al"
           }
         }
       }
@@ -3932,6 +5561,12 @@
             "state" : "translated",
             "value" : "Insufficient balance"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yetersiz bakiye"
+          }
         }
       }
     },
@@ -3939,6 +5574,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ token"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "/ token"
@@ -3954,6 +5595,12 @@
             "state" : "translated",
             "value" : "How Many Tokens?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaç token?"
+          }
         }
       }
     },
@@ -3964,6 +5611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d tokens left"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d token kaldı"
           }
         }
       }
@@ -3976,6 +5629,12 @@
             "state" : "translated",
             "value" : "%d units of %@ tokens"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d adet %@ token"
+          }
         }
       }
     },
@@ -3986,6 +5645,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your tokens are being recorded on the blockchain"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokenlarınız blok zincirine kaydediliyor."
           }
         }
       }
@@ -3998,6 +5663,12 @@
             "state" : "translated",
             "value" : "Purchase Successful!"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın alma işlemi başarıyla tamamlandı!"
+          }
         }
       }
     },
@@ -4008,6 +5679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Amount"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miktar"
           }
         }
       }
@@ -4020,6 +5697,12 @@
             "state" : "translated",
             "value" : "Balance"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bakiye"
+          }
         }
       }
     },
@@ -4030,6 +5713,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Token Price"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token Fiyatı"
           }
         }
       }
@@ -4042,6 +5731,12 @@
             "state" : "translated",
             "value" : "Total"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam"
+          }
         }
       }
     },
@@ -4052,6 +5747,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No rent payments have been recorded yet."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz hiçbir kira ödemesi kaydedilmedi."
           }
         }
       }
@@ -4064,6 +5765,12 @@
             "state" : "translated",
             "value" : "No rent history found"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira geçmişi bulunamadı."
+          }
         }
       }
     },
@@ -4074,6 +5781,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rent History"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira Geçmişi"
           }
         }
       }
@@ -4086,6 +5799,12 @@
             "state" : "translated",
             "value" : "Unknown Period"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilinmeyen Dönem"
+          }
         }
       }
     },
@@ -4096,6 +5815,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Active"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif"
           }
         }
       }
@@ -4108,6 +5833,12 @@
             "state" : "translated",
             "value" : "Featured"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öne Çıkanlar"
+          }
         }
       }
     },
@@ -4118,6 +5849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hot"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıcak"
           }
         }
       }
@@ -4130,6 +5867,12 @@
             "state" : "translated",
             "value" : "Hurry"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acele et"
+          }
         }
       }
     },
@@ -4141,6 +5884,12 @@
             "state" : "translated",
             "value" : "New"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni"
+          }
         }
       }
     },
@@ -4148,6 +5897,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trend"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trend"
@@ -4163,6 +5918,12 @@
             "state" : "translated",
             "value" : "There are no properties in this category yet."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu kategoride henüz hiçbir mülk bulunmamaktadır."
+          }
         }
       }
     },
@@ -4173,6 +5934,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No results yet"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz sonuç yok."
           }
         }
       }
@@ -4185,6 +5952,12 @@
             "state" : "translated",
             "value" : "Token sale is about to close"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token satışının kapanışı yaklaşıyor."
+          }
         }
       }
     },
@@ -4195,6 +5968,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Almost sold out"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neredeyse tükendi"
           }
         }
       }
@@ -4207,6 +5986,12 @@
             "state" : "translated",
             "value" : "Top performer of each region"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her bölgenin en iyi performans göstereni"
+          }
         }
       }
     },
@@ -4217,6 +6002,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Best by region"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölgeye göre en iyiler"
           }
         }
       }
@@ -4229,6 +6020,12 @@
             "state" : "translated",
             "value" : "Low occupancy + high potential"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düşük doluluk oranı + yüksek potansiyel"
+          }
         }
       }
     },
@@ -4239,6 +6036,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Early entry opportunities"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erken giriş fırsatları"
           }
         }
       }
@@ -4251,6 +6054,12 @@
             "state" : "translated",
             "value" : "Properties with high appreciation potential"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüksek değer artışı potansiyeline sahip gayrimenkuller"
+          }
         }
       }
     },
@@ -4261,6 +6070,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Highest potential"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En yüksek potansiyel"
           }
         }
       }
@@ -4273,6 +6088,12 @@
             "state" : "translated",
             "value" : "Properties with highest annual yield"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En yüksek yıllık getiriye sahip mülkler"
+          }
         }
       }
     },
@@ -4283,6 +6104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Highest rental yield"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En yüksek kira getirisi"
           }
         }
       }
@@ -4295,6 +6122,12 @@
             "state" : "translated",
             "value" : "Properties in your current location"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bulunduğunuz konumdaki mülkler"
+          }
         }
       }
     },
@@ -4305,6 +6138,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opportunities in your city"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şehrinizdeki fırsatlar"
           }
         }
       }
@@ -4317,6 +6156,12 @@
             "state" : "translated",
             "value" : "Based on your investment history"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yatırım geçmişinize dayanarak"
+          }
         }
       }
     },
@@ -4327,6 +6172,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Properties you might like"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlginizi çekebilecek varlıklar"
           }
         }
       }
@@ -4339,6 +6190,12 @@
             "state" : "translated",
             "value" : "Highest monthly returns"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En yüksek aylık getiriler"
+          }
         }
       }
     },
@@ -4349,6 +6206,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Top gainers (30 days)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En çok kazananlar (30 gün)"
           }
         }
       }
@@ -4361,6 +6224,12 @@
             "state" : "translated",
             "value" : "Properties with the highest number of investors"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En fazla yatırımcıya sahip gayrimenkuller"
+          }
         }
       }
     },
@@ -4371,6 +6240,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Most investors"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çoğu yatırımcı"
           }
         }
       }
@@ -4383,6 +6258,12 @@
             "state" : "translated",
             "value" : "Weekly most active tokens"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haftalık en aktif tokenlar"
+          }
         }
       }
     },
@@ -4393,6 +6274,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Most traded this week"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu hafta en çok işlem görenler"
           }
         }
       }
@@ -4405,6 +6292,12 @@
             "state" : "translated",
             "value" : "Properties most followed by users"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kullanıcılar tarafından en çok takip edilen özellikler"
+          }
         }
       }
     },
@@ -4415,6 +6308,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Most watchlisted"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En çok izlenenler"
           }
         }
       }
@@ -4427,6 +6326,12 @@
             "state" : "translated",
             "value" : "New properties on the platform"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platformda yeni özellikler"
+          }
         }
       }
     },
@@ -4437,6 +6342,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Newly added"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni eklenenler"
           }
         }
       }
@@ -4449,6 +6360,12 @@
             "state" : "translated",
             "value" : "Selected based on portfolio analysis"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portföy analizine göre seçilmiştir."
+          }
         }
       }
     },
@@ -4459,6 +6376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recommended for you"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sizin için önerilenler"
           }
         }
       }
@@ -4471,6 +6394,12 @@
             "state" : "translated",
             "value" : "Locations showing appreciation trends"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer artışı eğilimi gösteren lokasyonlar"
+          }
         }
       }
     },
@@ -4481,6 +6410,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rising regions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükselen bölgeler"
           }
         }
       }
@@ -4493,6 +6428,12 @@
             "state" : "translated",
             "value" : "Opportunities near properties you follow"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takip ettiğiniz mülklerin yakınındaki fırsatlar"
+          }
         }
       }
     },
@@ -4503,6 +6444,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Similar to your watchlist"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "izleme listenize benzer"
           }
         }
       }
@@ -4515,6 +6462,12 @@
             "state" : "translated",
             "value" : "Highest value increase in the last 7 days"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son 7 günde en yüksek değer artışı"
+          }
         }
       }
     },
@@ -4525,6 +6478,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Top gainers"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En çok kazananlar"
           }
         }
       }
@@ -4537,6 +6496,12 @@
             "state" : "translated",
             "value" : "Explore"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keşfetmek"
+          }
         }
       }
     },
@@ -4547,6 +6512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No matches found for '%@'."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'%@' için hiçbir eşleşme bulunamadı."
           }
         }
       }
@@ -4559,6 +6530,12 @@
             "state" : "translated",
             "value" : "No results found"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiçbir sonuç bulunamadı."
+          }
         }
       }
     },
@@ -4569,6 +6546,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search real estate, region or city..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölge veya şehir bazında varlık arayın..."
           }
         }
       }
@@ -4581,6 +6564,12 @@
             "state" : "translated",
             "value" : "Popular searches"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popüler aramalar"
+          }
         }
       }
     },
@@ -4591,6 +6580,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent searches"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son aramalar"
           }
         }
       }
@@ -4603,6 +6598,12 @@
             "state" : "translated",
             "value" : "Market performance"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piyasa performansı"
+          }
         }
       }
     },
@@ -4613,6 +6614,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opportunity oriented"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fırsat odaklı"
           }
         }
       }
@@ -4625,6 +6632,12 @@
             "state" : "translated",
             "value" : "Personalized"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kişiselleştirilmiş"
+          }
         }
       }
     },
@@ -4635,6 +6648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regional"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölgesel"
           }
         }
       }
@@ -4647,6 +6666,12 @@
             "state" : "translated",
             "value" : "Social proof"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sosyal kanıt"
+          }
         }
       }
     },
@@ -4657,6 +6682,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Via SMS or Authenticator"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SMS veya Kimlik Doğrulayıcı aracılığıyla"
           }
         }
       }
@@ -4669,6 +6700,12 @@
             "state" : "translated",
             "value" : "Two-Factor Authentication"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İki Faktörlü Kimlik Doğrulama"
+          }
         }
       }
     },
@@ -4679,6 +6716,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notify on new device logins"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni cihaz oturum açmalarında bildirim gönder"
           }
         }
       }
@@ -4691,6 +6734,12 @@
             "state" : "translated",
             "value" : "Login Alerts"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş Uyarıları"
+          }
         }
       }
     },
@@ -4701,6 +6750,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Login with Face ID / Touch ID"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face ID / Touch ID ile giriş yapın"
           }
         }
       }
@@ -4713,6 +6768,12 @@
             "state" : "translated",
             "value" : "Biometric Login"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biyometrik Giriş"
+          }
         }
       }
     },
@@ -4723,6 +6784,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This action is irreversible and all data will be lost"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu işlem geri alınamaz ve tüm veriler kaybolacaktır."
           }
         }
       }
@@ -4735,6 +6802,12 @@
             "state" : "translated",
             "value" : "Delete Account"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabı Sil"
+          }
         }
       }
     },
@@ -4745,6 +6818,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Security Settings"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik Ayarları"
           }
         }
       }
@@ -4757,6 +6836,12 @@
             "state" : "translated",
             "value" : "Change Password"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şifre değiştir"
+          }
         }
       }
     },
@@ -4767,6 +6852,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Last changed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son değişiklik"
           }
         }
       }
@@ -4779,6 +6870,12 @@
             "state" : "translated",
             "value" : "Enable 2FA to improve your score"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puanınızı iyileştirmek için 2FA'yı etkinleştirin."
+          }
         }
       }
     },
@@ -4789,6 +6886,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Security Score"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik Skoru"
           }
         }
       }
@@ -4801,6 +6904,12 @@
             "state" : "translated",
             "value" : "Good"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi"
+          }
         }
       }
     },
@@ -4811,6 +6920,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Authentication"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik doğrulama"
           }
         }
       }
@@ -4823,6 +6938,12 @@
             "state" : "translated",
             "value" : "Danger Zone"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tehlikeli bölge"
+          }
         }
       }
     },
@@ -4833,6 +6954,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Password Actions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parola İşlemleri"
           }
         }
       }
@@ -4845,6 +6972,12 @@
             "state" : "translated",
             "value" : "Active Sessions"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif Oturumlar"
+          }
         }
       }
     },
@@ -4855,6 +6988,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Active now"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif Şuan"
           }
         }
       }
@@ -4867,6 +7006,12 @@
             "state" : "translated",
             "value" : "Close All"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hepsini Seç"
+          }
         }
       }
     },
@@ -4878,11 +7023,24 @@
             "state" : "translated",
             "value" : "This device"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Cihaz"
+          }
         }
       }
     },
     "Selected" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçildi"
+          }
+        }
+      }
     },
     "splash.slogan" : {
       "extractionState" : "manual",
@@ -4891,6 +7049,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Own a piece of property, partner with the future"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mülkün sahibi, geleceğin ortağı olun."
           }
         }
       }
@@ -4903,6 +7067,12 @@
             "state" : "translated",
             "value" : "E-mail"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-posta"
+          }
         }
       }
     },
@@ -4913,6 +7083,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "24 hours"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24 Saat"
           }
         }
       }
@@ -4925,6 +7101,12 @@
             "state" : "translated",
             "value" : "Live Support"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canlı Destek"
+          }
         }
       }
     },
@@ -4936,6 +7118,12 @@
             "state" : "translated",
             "value" : "~2 min"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~2 dakika"
+          }
         }
       }
     },
@@ -4943,6 +7131,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "09:00 - 18:00"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "09:00 - 18:00"
@@ -4958,6 +7152,12 @@
             "state" : "translated",
             "value" : "Phone"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon"
+          }
         }
       }
     },
@@ -4968,6 +7168,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You can purchase tokens in any amount by clicking the 'Buy' button on an asset page. Payment is automatically deducted from your wallet balance."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir varlık sayfasındaki 'Satın Al' düğmesine tıklayarak istediğiniz miktarda token satın alabilirsiniz. Ödeme otomatik olarak cüzdan bakiyenizden düşülür."
           }
         }
       }
@@ -4980,6 +7186,12 @@
             "state" : "translated",
             "value" : "Rental yields are automatically distributed to token holders on the 1st and 15th of each month. Yield is calculated based on your token share."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira getirileri, her ayın 1'i ve 15'inde otomatik olarak token sahiplerine dağıtılır. Getiri, token payınıza göre hesaplanır."
+          }
         }
       }
     },
@@ -4990,6 +7202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How to buy tokens?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token nasıl satın alınır?"
           }
         }
       }
@@ -5002,6 +7220,12 @@
             "state" : "translated",
             "value" : "You can purchase tokens in any amount by clicking the 'Buy' button on an asset page. Payment is automatically deducted from your wallet balance."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir varlık sayfasındaki 'Satın Al' düğmesine tıklayarak istediğiniz miktarda token satın alabilirsiniz. Ödeme otomatik olarak cüzdan bakiyenizden düşülür."
+          }
         }
       }
     },
@@ -5012,6 +7236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How to buy tokens?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token nasıl satın alınır?"
           }
         }
       }
@@ -5024,6 +7254,12 @@
             "state" : "translated",
             "value" : "When are rental yields distributed?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira gelirleri ne zaman dağıtılır?"
+          }
         }
       }
     },
@@ -5034,6 +7270,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rental yields are automatically distributed to token holders on the 1st and 15th of each month. Yield is calculated based on your token share."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira getirileri, her ayın 1'i ve 15'inde otomatik olarak token sahiplerine dağıtılır. Getiri, token payınıza göre hesaplanır."
           }
         }
       }
@@ -5046,6 +7288,12 @@
             "state" : "translated",
             "value" : "When are rental yields distributed?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira gelirleri ne zaman dağıtılır?"
+          }
         }
       }
     },
@@ -5056,6 +7304,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Withdrawals via bank transfer are typically completed within 1-3 business days. Please ensure your IBAN information is correct."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banka havalesi yoluyla para çekme işlemleri genellikle 1-3 iş günü içinde tamamlanır. Lütfen IBAN bilgilerinizin doğru olduğundan emin olun."
           }
         }
       }
@@ -5068,6 +7322,12 @@
             "state" : "translated",
             "value" : "How long does withdrawal take?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para çekme işlemi ne kadar sürer?"
+          }
         }
       }
     },
@@ -5078,6 +7338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimum investment varies by asset but generally starts from ₺100. You can see the minimum purchase amount for each asset on its detail page."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum yatırım tutarı varlığa göre değişmekle birlikte genellikle 100 TL'den başlar. Her varlığın minimum satın alma tutarını ilgili varlığın detay sayfasında görebilirsiniz."
           }
         }
       }
@@ -5090,6 +7356,12 @@
             "state" : "translated",
             "value" : "What is the minimum investment?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum yatırım miktarı nedir?"
+          }
         }
       }
     },
@@ -5100,6 +7372,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Currently, P2P token transfer is not supported. You can provide liquidity by selling your tokens on the platform."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şu anda P2P token transferi desteklenmemektedir. Platformda tokenlarınızı satarak likidite sağlayabilirsiniz."
           }
         }
       }
@@ -5112,6 +7390,12 @@
             "state" : "translated",
             "value" : "Can I transfer tokens to someone else?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token'ları başka birine aktarabilir miyim?"
+          }
         }
       }
     },
@@ -5122,6 +7406,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Our 24/7 support team is here"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7/24 destek ekibimiz burada."
           }
         }
       }
@@ -5134,6 +7424,12 @@
             "state" : "translated",
             "value" : "How can we help?"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size nasıl yardımcı olabiliriz?"
+          }
         }
       }
     },
@@ -5144,6 +7440,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support Center"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destek Merkezi"
           }
         }
       }
@@ -5156,6 +7458,12 @@
             "state" : "translated",
             "value" : "Search your question..."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorunuzu arayın..."
+          }
         }
       }
     },
@@ -5166,6 +7474,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Frequently Asked Questions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıkça Sorulan Sorular"
           }
         }
       }
@@ -5178,6 +7492,12 @@
             "state" : "translated",
             "value" : "Support Tickets"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destek Talepleri"
+          }
         }
       }
     },
@@ -5188,6 +7508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Withdrawal delay"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para çekme gecikmesi"
           }
         }
       }
@@ -5200,6 +7526,12 @@
             "state" : "translated",
             "value" : "Rental yield not reflected"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kira getirisi yansıtılmamıştır."
+          }
         }
       }
     },
@@ -5210,6 +7542,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In Progress"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İşleniyor"
           }
         }
       }
@@ -5222,6 +7560,12 @@
             "state" : "translated",
             "value" : "Resolved"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çözüldü"
+          }
         }
       }
     },
@@ -5233,6 +7577,12 @@
             "state" : "translated",
             "value" : "Send a detailed issue report"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaylı hata raporu gönderin"
+          }
         }
       }
     },
@@ -5243,6 +7593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Create New Ticket"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni talep oluştur"
           }
         }
       }
@@ -5285,7 +7641,14 @@
       }
     },
     "token" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token"
+          }
+        }
+      }
     },
     "TR00 0000 0000 0000 0000 0000 00" : {
 
@@ -5298,6 +7661,12 @@
             "state" : "translated",
             "value" : "Amount"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat"
+          }
         }
       }
     },
@@ -5308,6 +7677,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asset Type"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık Tipi"
           }
         }
       }
@@ -5320,6 +7695,12 @@
             "state" : "translated",
             "value" : "Blockchain Record"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain Kayıtları"
+          }
         }
       }
     },
@@ -5330,6 +7711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Currency"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para Birimi"
           }
         }
       }
@@ -5342,6 +7729,12 @@
             "state" : "translated",
             "value" : "Date"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarih"
+          }
         }
       }
     },
@@ -5352,6 +7745,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fee"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ücret"
           }
         }
       }
@@ -5364,6 +7763,12 @@
             "state" : "translated",
             "value" : "Transaction Result"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İşlem geçmişi sonucu"
+          }
         }
       }
     },
@@ -5374,6 +7779,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Status"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durum"
           }
         }
       }
@@ -5386,6 +7797,12 @@
             "state" : "translated",
             "value" : "Token Quantity"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token Adeti"
+          }
         }
       }
     },
@@ -5396,6 +7813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Token Price"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token Fiyatı"
           }
         }
       }
@@ -5408,6 +7831,12 @@
             "state" : "translated",
             "value" : "Transaction Type"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İşlem Geçmişi tipi"
+          }
         }
       }
     },
@@ -5418,6 +7847,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Try changing your filters"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filitreyi değiştirmeyi deneyin"
           }
         }
       }
@@ -5430,11 +7865,14 @@
             "state" : "translated",
             "value" : "No transactions found"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiç işlem geçmişi bulunamadı"
+          }
         }
       }
-    },
-    "transactions.filter.%@" : {
-
     },
     "transactions.filter.all" : {
       "extractionState" : "manual",
@@ -5443,6 +7881,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hepsi"
           }
         }
       }
@@ -5455,6 +7899,12 @@
             "state" : "translated",
             "value" : "Buy"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al"
+          }
         }
       }
     },
@@ -5465,6 +7915,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deposit"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para Yatırma"
           }
         }
       }
@@ -5477,6 +7933,12 @@
             "state" : "translated",
             "value" : "Dividend"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölüştür"
+          }
         }
       }
     },
@@ -5487,6 +7949,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sell"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sat"
           }
         }
       }
@@ -5499,6 +7967,12 @@
             "state" : "translated",
             "value" : "Withdraw"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para Çekimi"
+          }
         }
       }
     },
@@ -5510,11 +7984,14 @@
             "state" : "translated",
             "value" : "Transactions"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İşlem Geçmişi"
+          }
         }
       }
-    },
-    "transactions.status.%@" : {
-
     },
     "transactions.status.completed" : {
       "extractionState" : "manual",
@@ -5523,6 +8000,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamamlandı"
           }
         }
       }
@@ -5535,6 +8018,12 @@
             "state" : "translated",
             "value" : "Completed"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamamlandı"
+          }
         }
       }
     },
@@ -5545,6 +8034,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarısız oldu"
           }
         }
       }
@@ -5557,6 +8052,12 @@
             "state" : "translated",
             "value" : "Pending"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onay Bekliyor"
+          }
         }
       }
     },
@@ -5567,6 +8068,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Awaiting Blockchain"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain Bekleniyor"
           }
         }
       }
@@ -5579,11 +8086,14 @@
             "state" : "translated",
             "value" : "Processing"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İşleniyor"
+          }
         }
       }
-    },
-    "transactions.type.%@" : {
-
     },
     "transactions.type.buy" : {
       "extractionState" : "manual",
@@ -5592,6 +8102,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Buy"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al"
           }
         }
       }
@@ -5604,6 +8120,12 @@
             "state" : "translated",
             "value" : "HSR Buy"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HSR al"
+          }
         }
       }
     },
@@ -5614,6 +8136,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deposit"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para Yatırma"
           }
         }
       }
@@ -5626,6 +8154,12 @@
             "state" : "translated",
             "value" : "Dividend"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölüştür"
+          }
         }
       }
     },
@@ -5636,6 +8170,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sell"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sat"
           }
         }
       }
@@ -5648,6 +8188,12 @@
             "state" : "translated",
             "value" : "HSR Sell"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HSR Sat"
+          }
         }
       }
     },
@@ -5659,19 +8205,36 @@
             "state" : "translated",
             "value" : "Withdraw"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para Çekimi"
+          }
         }
       }
     },
     "TX Hash" : {
-
-    },
-    "Varlık, token veya koleksiyon ara…" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TX hash"
+          }
+        }
+      }
     },
     "wallet.action.view_explorer" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polygonscan"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Polygonscan"
@@ -5687,6 +8250,12 @@
             "state" : "translated",
             "value" : "Polygon Wallet"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polygon Cüzdanı"
+          }
         }
       }
     },
@@ -5697,6 +8266,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "It will be automatically generated with your first token purchase."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlk alışverişinizi yaptığınızda Cüzdanınız otomatik olarak oluşturulacaktır."
           }
         }
       }
@@ -5709,6 +8284,12 @@
             "state" : "translated",
             "value" : "Wallet not created."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz cüzdan oluşturulmadı"
+          }
         }
       }
     },
@@ -5719,6 +8300,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading wallet..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cüzdan yükleniyor…"
           }
         }
       }
@@ -5731,6 +8318,12 @@
             "state" : "translated",
             "value" : "Blockchain Wallet"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain Cüzdanı"
+          }
         }
       }
     },
@@ -5741,6 +8334,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirmed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onaylandı"
           }
         }
       }
@@ -5753,6 +8352,12 @@
             "state" : "translated",
             "value" : "Pending"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onay Bekliyor"
+          }
         }
       }
     },
@@ -5760,6 +8365,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Token"
@@ -5775,6 +8386,12 @@
             "state" : "translated",
             "value" : "KYC Verified"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KYC Onaylandı"
+          }
         }
       }
     },
@@ -5785,6 +8402,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirmation is pending"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onay Bekleniyor"
           }
         }
       }
@@ -5797,6 +8420,12 @@
             "state" : "translated",
             "value" : "No blockchain transactions yet"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiç blockchain işlem geçmişi yok."
+          }
         }
       }
     },
@@ -5807,6 +8436,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blockchain Transactions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blockchain İşlem Geçmişi"
           }
         }
       }
@@ -5819,6 +8454,12 @@
             "state" : "translated",
             "value" : "Token Generation (Mint)"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token Yaratıcı (Mint)"
+          }
         }
       }
     },
@@ -5829,6 +8470,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set alert"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm kur"
           }
         }
       }
@@ -5841,6 +8488,12 @@
             "state" : "translated",
             "value" : "Add assets to your watchlist to neasily track price changes."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiyat değişikliklerini kolaylıkla takip etmek için Varlık ekle."
+          }
         }
       }
     },
@@ -5851,6 +8504,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Watchlist is Empty"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İzleme Listen Boş"
           }
         }
       }
@@ -5863,6 +8522,12 @@
             "state" : "translated",
             "value" : "Watchlist"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İzleme Listesi"
+          }
         }
       }
     },
@@ -5873,6 +8538,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Publish Listing"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlanı Yayınla"
           }
         }
       }
@@ -5885,11 +8556,14 @@
             "state" : "translated",
             "value" : "Calculated token price"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesaplanan token fiyatı"
+          }
         }
       }
-    },
-    "wizard.error.select_type" : {
-
     },
     "wizard.field.address.label" : {
       "extractionState" : "manual",
@@ -5899,11 +8573,14 @@
             "state" : "translated",
             "value" : "Address"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adres"
+          }
         }
       }
-    },
-    "wizard.field.address.placeholder" : {
-
     },
     "wizard.field.annual_yield.label" : {
       "extractionState" : "manual",
@@ -5913,20 +8590,14 @@
             "state" : "translated",
             "value" : "Annual Yield (%)"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yıllık Verim (%)"
+          }
         }
       }
-    },
-    "wizard.field.artist.label" : {
-
-    },
-    "wizard.field.badge.label" : {
-
-    },
-    "wizard.field.badge.placeholder" : {
-
-    },
-    "wizard.field.category.label" : {
-
     },
     "wizard.field.city.label" : {
       "extractionState" : "manual",
@@ -5936,17 +8607,14 @@
             "state" : "translated",
             "value" : "City"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şehir"
+          }
         }
       }
-    },
-    "wizard.field.city.placeholder" : {
-
-    },
-    "wizard.field.collection.label" : {
-
-    },
-    "wizard.field.contract.label" : {
-
     },
     "wizard.field.description.label" : {
       "extractionState" : "manual",
@@ -5956,23 +8624,14 @@
             "state" : "translated",
             "value" : "Description"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Açıklama"
+          }
         }
       }
-    },
-    "wizard.field.description.placeholder" : {
-
-    },
-    "wizard.field.dimensions.label" : {
-
-    },
-    "wizard.field.image_url.label" : {
-
-    },
-    "wizard.field.lat.label" : {
-
-    },
-    "wizard.field.lng.label" : {
-
     },
     "wizard.field.monthly_rent.label" : {
       "extractionState" : "manual",
@@ -5982,11 +8641,14 @@
             "state" : "translated",
             "value" : "Monthly Rent (₺)"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aylık Kira (₺)"
+          }
         }
       }
-    },
-    "wizard.field.technique.label" : {
-
     },
     "wizard.field.title.label" : {
       "extractionState" : "manual",
@@ -5996,11 +8658,14 @@
             "state" : "translated",
             "value" : "Asset Title"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık Başlığı"
+          }
         }
       }
-    },
-    "wizard.field.title.placeholder" : {
-
     },
     "wizard.field.token_price.label" : {
       "extractionState" : "manual",
@@ -6009,6 +8674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Token Price (₺)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token Fiyatı (₺)"
           }
         }
       }
@@ -6021,6 +8692,12 @@
             "state" : "translated",
             "value" : "Total Tokens"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Token"
+          }
         }
       }
     },
@@ -6032,11 +8709,14 @@
             "state" : "translated",
             "value" : "Total Value (₺)"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Değeri (₺)"
+          }
         }
       }
-    },
-    "wizard.field.year.label" : {
-
     },
     "wizard.nav_title" : {
       "extractionState" : "manual",
@@ -6045,6 +8725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add Asset"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık ekle"
           }
         }
       }
@@ -6057,6 +8743,12 @@
             "state" : "translated",
             "value" : "Your listing will be reviewed by our team before being published."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yayınlanmadan önce Ekibimiz tarafında incelenip onaylanacaktır."
+          }
         }
       }
     },
@@ -6067,6 +8759,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Extra Information"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekstra Bilgiler"
           }
         }
       }
@@ -6079,15 +8777,11 @@
             "state" : "translated",
             "value" : "Financial Information"
           }
-        }
-      }
-    },
-    "wizard.section.general" : {
-      "localizations" : {
-        "en" : {
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "Finansal Bilgiler"
           }
         }
       }
@@ -6100,6 +8794,12 @@
             "state" : "translated",
             "value" : "Location Information"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konum Bilgisi"
+          }
         }
       }
     },
@@ -6111,11 +8811,14 @@
             "state" : "translated",
             "value" : "Yield Information"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verim bilgisi"
+          }
         }
       }
-    },
-    "wizard.step.%lld.title" : {
-
     },
     "wizard.step.0.subtitle" : {
       "extractionState" : "manual",
@@ -6124,6 +8827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enter the basic information of your asset"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlığınızın temel bilgilerini girin"
           }
         }
       }
@@ -6136,6 +8845,12 @@
             "state" : "translated",
             "value" : "General Info"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genel Bilgiler"
+          }
         }
       }
     },
@@ -6146,6 +8861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Determine the type of asset you want to tokenize"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokenize etmek istediğin varlık türünü seç."
           }
         }
       }
@@ -6158,11 +8879,14 @@
             "state" : "translated",
             "value" : "Select Asset Type"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varlık Tipi Seç"
+          }
         }
       }
-    },
-    "wizard.step.2.art_subtitle" : {
-
     },
     "wizard.step.2.art_title" : {
       "extractionState" : "manual",
@@ -6172,11 +8896,14 @@
             "state" : "translated",
             "value" : "Artwork Details"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanat Detayları"
+          }
         }
       }
-    },
-    "wizard.step.2.nft_subtitle" : {
-
     },
     "wizard.step.2.nft_title" : {
       "extractionState" : "manual",
@@ -6186,11 +8913,14 @@
             "state" : "translated",
             "value" : "NFT Details"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFT Detayları"
+          }
         }
       }
-    },
-    "wizard.step.2.property_subtitle" : {
-
     },
     "wizard.step.2.property_title" : {
       "extractionState" : "manual",
@@ -6199,6 +8929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Real Estate Details"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gayrimenkul Detayları"
           }
         }
       }
@@ -6211,6 +8947,12 @@
             "state" : "translated",
             "value" : "Check the information and publish the listing"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilgileri kontrol et ve yayınla"
+          }
         }
       }
     },
@@ -6222,11 +8964,14 @@
             "state" : "translated",
             "value" : "Preview"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önizleme"
+          }
         }
       }
-    },
-    "wizard.success.message" : {
-
     },
     "Zaman" : {
 

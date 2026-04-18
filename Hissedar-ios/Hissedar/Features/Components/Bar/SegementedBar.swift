@@ -29,11 +29,17 @@ struct SegmentedBar<T: Hashable & CaseIterable>: View {
                         impact.impactOccurred()
                         withAnimation(animation) { selected = item }
                     } label: {
-                        Text(label(item))
-                            .font(.system(size: 13, weight: .semibold))
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 5)
-                            .frame(maxWidth: .infinity)
+                        VStack{
+                            Text(label(item))
+                                .lineLimit(1)
+                                .padding(.vertical, 5)
+                                .font(.system(size: 13, weight: .semibold))
+                            Rectangle()
+                                .frame(height: 2)
+                                .foregroundStyle(
+                                    isSelected ?themeManager.theme.accent :Color.clear
+                                )
+                        }
                     }
                     .buttonStyle(.plain)
                     .foregroundStyle(
@@ -41,16 +47,9 @@ struct SegmentedBar<T: Hashable & CaseIterable>: View {
                         ? themeManager.theme.accent :
                             themeManager.theme.textSecondary
                     )
-                    
-                    Rectangle()
-                        .frame(height: isSelected ? 2 : 0.5)
-                        .foregroundStyle(
-                            isSelected ?
-                            themeManager.theme.accent :
-                                Color.gray
-                                .opacity(0.2)
-                        )
+                    Divider()
                 }
+                .frame(maxWidth: .infinity)
             }
         }
     }

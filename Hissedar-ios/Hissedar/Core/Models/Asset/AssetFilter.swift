@@ -31,7 +31,7 @@ enum AssetFilter: CaseIterable, Hashable, Identifiable {
     
     var icon: String {
         switch self {
-        case .all:            return "square.grid.2x2.fill"
+        case .all: return "square.grid.2x2.fill"
         case .type(let t):    return t.icon
         }
     }

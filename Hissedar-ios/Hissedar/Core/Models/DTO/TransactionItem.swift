@@ -2,8 +2,6 @@
 //  TransactionItem.swift
 //  Hissedar
 //
-//  Created by Sinan Dinç on 4/8/26.
-//
 
 import Foundation
 import SwiftUI
@@ -48,7 +46,7 @@ struct TransactionItem: Codable, Identifiable {
     var formattedAmount: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencyCode = currency // Dinamik kur desteği
+        formatter.currencyCode = currency
         formatter.maximumFractionDigits = 2
         return formatter.string(from: NSNumber(value: amount ?? 0)) ?? "\(currency)\(amount ?? 0)"
     }
@@ -62,7 +60,6 @@ struct TransactionItem: Codable, Identifiable {
     
     var polygonscanURL: URL? {
         guard let hash = txHash, hash.count > 10, hash != "pending" else { return nil }
-        // Testnet Amoy kullanıldığı için Amoy URL'i kalmıştır
         return URL(string: "https://amoy.polygonscan.com/tx/\(hash)")
     }
     
@@ -75,15 +72,12 @@ struct TransactionItem: Codable, Identifiable {
         status == .pendingBlockchain
     }
     
-    // Dile duyarlı göreceli tarih (Örn: "2 saat önce" veya "2 hours ago")
     var relativeDate: String {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .full
-        // Sistem dilini otomatik kullanır (tr veya en)
         return formatter.localizedString(for: createdDate, relativeTo: Date())
     }
     
-    // Dile duyarlı tam tarih (Örn: "17 Nisan 2026")
     var fullDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -97,29 +91,31 @@ enum TransactionType: String, Codable, CaseIterable {
     case buyHsr = "buy_hsr"
     case sellHsr = "sell_hsr"
     
+    /// Localization key: rawValue zaten "buy_hsr" / "sell_hsr" döndürür,
+    /// xcstrings'deki "transactions.type.buy_hsr" keyleriyle birebir eşleşir.
     var label: String {
-        return String.localized("transactions.type.\(self.rawValue)")
+        String.localized("transactions.type.\(rawValue)")
     }
     
     var icon: String {
         switch self {
-        case .buy: return "arrow.down.left"
-        case .sell: return "arrow.up.right"
-        case .deposit: return "plus.circle"
-        case .withdraw: return "minus.circle"
-        case .dividend: return "sparkles"
+        case .buy:              return "arrow.down.left"
+        case .sell:             return "arrow.up.right"
+        case .deposit:          return "plus.circle"
+        case .withdraw:         return "minus.circle"
+        case .dividend:         return "sparkles"
         case .buyHsr, .sellHsr: return "arrow.left.arrow.right"
         }
     }
     
     var color: Color {
         switch self {
-        case .buy: return .hsPurple600
-        case .sell: return Color(hex: "#F472B6")
+        case .buy:     return .hsPurple600
+        case .sell:    return Color(hex: "#F472B6")
         case .deposit: return .hsSuccess
         case .withdraw: return .hsWarning
         case .dividend: return Color(hex: "#60A5FA")
-        case .buyHsr: return .hsPurple400
+        case .buyHsr:  return .hsPurple400
         case .sellHsr: return Color(hex: "#F472B6")
         }
     }
@@ -127,7 +123,7 @@ enum TransactionType: String, Codable, CaseIterable {
     var isPositive: Bool {
         switch self {
         case .sell, .deposit, .dividend, .sellHsr: return true
-        case .buy, .withdraw, .buyHsr: return false
+        case .buy, .withdraw, .buyHsr:             return false
         }
     }
 }
@@ -135,17 +131,18 @@ enum TransactionType: String, Codable, CaseIterable {
 enum TransactionStatus: String, Codable {
     case confirmed, completed, pending, failed
     case pendingBlockchain = "pending_blockchain"
-
+    
+    /// rawValue "pending_blockchain" → key "transactions.status.pending_blockchain" ✓
     var label: String {
-        return String.localized("transactions.status.\(self.rawValue)")
+        String.localized("transactions.status.\(rawValue)")
     }
     
     var color: Color {
         switch self {
         case .confirmed, .completed: return .hsSuccess
-        case .pending: return .hsWarning
-        case .failed: return .hsError
-        case .pendingBlockchain: return .hsPurple400
+        case .pending:               return .hsWarning
+        case .failed:                return .hsError
+        case .pendingBlockchain:     return .hsPurple400
         }
     }
 }

@@ -2,7 +2,6 @@
 //  TransactionsView.swift
 //  Hissedar
 //
-//
 
 import SwiftUI
 
@@ -10,15 +9,16 @@ enum TransactionFilter: String, CaseIterable {
     case all, buy, sell, deposit, withdraw, dividend
     
     var localizedTitle: String {
-        String.localized("transactions.filter.\(self.rawValue)")
+        /// rawValue: "all", "buy", "sell" … → "transactions.filter.all" vb.
+        String.localized("transactions.filter.\(rawValue)")
     }
     
     var transactionType: TransactionType? {
         switch self {
-        case .all: nil
-        case .buy: .buy
-        case .sell: .sell
-        case .deposit: .deposit
+        case .all:      nil
+        case .buy:      .buy
+        case .sell:     .sell
+        case .deposit:  .deposit
         case .withdraw: .withdraw
         case .dividend: .dividend
         }
@@ -193,7 +193,7 @@ struct TransactionDetailSheet: View {
             
             if let hash = transaction.txHash, !hash.isEmpty, hash != "pending" {
                 HStack {
-                    Text("TX Hash")
+                    Text(String.localized("TX Hash"))
                         .font(.system(size: 14, weight: .medium))
                         .foregroundStyle(themeManager.theme.textSecondary)
                     
@@ -245,10 +245,19 @@ struct TransactionDetailSheet: View {
             .clipShape(RoundedRectangle(cornerRadius: 6))
     }
     
+    /// "asset_type" alanı API'den snake_case gelir (örn: "real_estate").
+    /// Noktalı key formatına dönüştürüp localize edilir.
     private func assetTypeLabel(_ type: String) -> String {
-        String.localized("asset.type \(type.lowercased())")
+        // API'den gelen değer zaten "property", "apartment" gibi
+        // xcstrings'de "asset.type.property" şeklinde kayıtlı
+        let normalized = type.lowercased().replacingOccurrences(of: "_", with: "")
+        let key = "asset.type.\(normalized)"
+        let localized = String.localized(key)
+        // Eğer key bulunamazsa (localize edilmemiş) ham değeri döndür
+        return localized == key ? type : localized
     }
 }
+
 // MARK: - TransactionRow
 
 struct TransactionRow: View {
@@ -257,7 +266,6 @@ struct TransactionRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            // Icon
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(transaction.type.color.opacity(0.12))
@@ -272,7 +280,6 @@ struct TransactionRow: View {
             }
             .frame(width: 40, height: 40)
             
-            // Info
             VStack(alignment: .leading, spacing: 3) {
                 if let description = transaction.description {
                     Text(description)
@@ -302,7 +309,6 @@ struct TransactionRow: View {
                         StatusBadge(status: transaction.status)
                     }
                     
-                    // Blockchain badge
                     if transaction.hasBlockchainTx {
                         Image(systemName: "link")
                             .font(.system(size: 9, weight: .bold))
@@ -317,14 +323,13 @@ struct TransactionRow: View {
             
             Spacer(minLength: 4)
             
-            // Value
             VStack(alignment: .trailing, spacing: 2) {
                 Text("\(transaction.type.isPositive ? "+" : "-")\(transaction.formattedAmount)")
                     .font(.system(size: 14, weight: .semibold, design: .rounded))
                     .foregroundStyle(
                         transaction.type.isPositive
-                        ? themeManager.theme.success :
-                          themeManager.theme.textPrimary
+                        ? themeManager.theme.success
+                        : themeManager.theme.textPrimary
                     )
                     .monospacedDigit()
                 
@@ -354,18 +359,18 @@ struct FilterChip: View {
             Text(title)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(
-                    isActive ?
-                    themeManager.theme.accent :
-                    themeManager.theme.textSecondary
+                    isActive
+                    ? themeManager.theme.accent
+                    : themeManager.theme.textSecondary
                 )
                 .padding(.horizontal, 14)
                 .padding(.vertical, 7)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .fill(
-                            isActive ?
-                            themeManager.theme.accent.opacity(0.15) :
-                            themeManager.theme.backgroundTertiary
+                            isActive
+                            ? themeManager.theme.accent.opacity(0.15)
+                            : themeManager.theme.backgroundTertiary
                         )
                 )
                 .overlay(
@@ -376,8 +381,6 @@ struct FilterChip: View {
         .buttonStyle(.plain)
     }
 }
-
-
 
 // MARK: - StatusBadge
 
@@ -399,6 +402,7 @@ struct StatusBadge: View {
 }
 
 // MARK: - DetailRow
+
 struct DetailRow: View {
     let label: String
     var value: String? = nil

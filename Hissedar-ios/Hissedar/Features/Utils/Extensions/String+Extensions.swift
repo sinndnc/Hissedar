@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    static func localized(_ key: String.LocalizationValue) -> String {
-        String(localized: key, bundle: LanguageManager.shared.bundle)
+    static func localized(_ key: String) -> String {
+        NSLocalizedString(key, bundle: LanguageManager.shared.bundle, comment: "")
     }
 }
